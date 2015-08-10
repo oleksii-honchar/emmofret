@@ -6,6 +6,9 @@ window.Router = require('react-router')
 window.RB = require('react-bootstrap')
 window.RRB = require('react-router-bootstrap')
 
+import { Icon } from './components/helpers/FontAwesome.jsx'
+window.Icon = Icon
+
 let {Route, DefaultRoute} = Router
 
 let App = require('./pages/App.jsx')

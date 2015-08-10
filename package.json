@@ -10,7 +10,14 @@
     "standard": "node ./node_modules/standard/bin/cmd.js",
     "build-style": "node ./node_modules/stylus/bin/stylus -m -r --use url --with \"{paths:['']}\" --include-css -u autoprefixer-stylus -c src/front-end/styles/index.bundle.styl --out build/styles/index.bundle.css"
   },
-  "keywords": [ "boilerplate", "express", "react", "flux", "REST", "CRUD"],
+  "keywords": [
+    "boilerplate",
+    "express",
+    "react",
+    "flux",
+    "REST",
+    "CRUD"
+  ],
   "author": "Tuiteraz",
   "license": "ISC",
   "repository": {
