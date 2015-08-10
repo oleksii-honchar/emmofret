@@ -13,6 +13,10 @@
   "keywords": [ "boilerplate", "express", "react", "flux", "REST", "CRUD"],
   "author": "Tuiteraz",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:aleksey-gonchar/emmofret.git"
+  },
   "dependencies": {
     "async": "^1.4.0",
     "autoprefixer-stylus": "0.7.1",
