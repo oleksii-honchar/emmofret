@@ -51,7 +51,6 @@ var Store = _.assign({ state: modals }, EventEmitter.prototype, {
 Dispatcher.register( (action) => {
   switch(action.actionType) {
     case ModalConstants.SHOW_MODAL:
-      // TODO: hide any other visible
       Store.show(action.name)
       break
     case ModalConstants.HIDE_MODAL:

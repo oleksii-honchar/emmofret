@@ -1,8 +1,11 @@
+import UserActions from '../../actions/UserActions.js'
 import ModalActions from '../../actions/ModalActions.js'
 import ModalStore from '../../stores/ModalStore.js'
 
 import EmailInput from '../inputs/EmailInput.jsx'
 import PasswordInput from '../inputs/PasswordInput.jsx'
+
+import _ from 'lodash'
 
 let { Modal, Button } = RB
 let { Header, Body, Title, Footer } = Modal
@@ -10,9 +13,10 @@ let { Header, Body, Title, Footer } = Modal
 class LoginModal extends React.Component{
   constructor(props) {
     super(props)
-    this.state = this.getState()
+    this.state = this.getStoreState()
 
     this.onChange = this.onChange.bind(this)
+    this.login = this.login.bind(this)
   }
 
   componentDidMount () {
@@ -27,14 +31,19 @@ class LoginModal extends React.Component{
     ModalActions.hide('login')
   }
 
-  getState () {
+  getStoreState () {
     return {
       store: ModalStore.getState().get('login')
     }
   }
 
+  login () {
+    let credentials = _.pick(this.state, ['email', 'password'])
+    UserActions.login(credentials)
+  }
+
   onChange () {
-    this.setState(this.getState())
+    this.setState(this.getStoreState())
   }
 
   onChangeProp (propName) {
@@ -57,7 +66,7 @@ class LoginModal extends React.Component{
           <PasswordInput onSave={this.onChangeProp('password').bind(this)}/>
         </Body>
         <Footer>
-          <Button bsStyle='primary' onClick={this.close}>Log in</Button>
+          <Button bsStyle='primary' onClick={this.login}>Log in</Button>
         </Footer>
       </Modal>
     )
