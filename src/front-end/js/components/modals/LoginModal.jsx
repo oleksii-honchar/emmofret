@@ -11,14 +11,16 @@ class LoginModal extends React.Component{
   constructor(props) {
     super(props)
     this.state = this.getState()
+
+    this.onChange = this.onChange.bind(this)
   }
 
   componentDidMount () {
-    ModalStore.addChangeListener(this.onChange.bind(this))
+    ModalStore.addChangeListener(this.onChange)
   }
 
   componentWillUnmount () {
-    ModalStore.removeChangeListener(this.onChange.bind(this))
+    ModalStore.removeChangeListener(this.onChange)
   }
 
   close () {
