@@ -1,0 +1,10 @@
+--require ./test/helpers/index.js
+--reporter spec
+--slow 2000
+--timeout 5000
+--recursive
+--check-leaks
+--no-exit
+--trace
+--harmony
+--globals projection

@@ -1,0 +1,9 @@
+{
+  "meta" : {
+    "title": "EMMOFRET",
+    "description": "express.js + mongoose + mocha/chai + flux + react.js + TWBP boilerplate",
+    "keywords": "boilerplate, express.js, react.js, flux.js, node.js, TWBP, REST, CRUD",
+    "author": "Alex Potter",
+    "version": "0.0.1"
+  }
+}
