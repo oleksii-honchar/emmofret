@@ -7,13 +7,14 @@ class PasswordInput extends React.Component {
     this.state = _.clone(props)
   }
 
-  getValidationState () {
-    let pwd = this.state.value
+  getValidationScore () {
+    let val = this.state.value
     let res = [
-      pwd.match(/[A-Z]/),
-      pwd.match(/[a-z]/),
-      pwd.match(/\d/),
-      pwd.match(/[\W]/)
+      val.match(/[A-Z]/),
+      val.match(/[a-z]/),
+      val.match(/\d/),
+      val.match(/[\W]/),
+      (val.length > 6)
     ]
 
     let score = 0
@@ -21,18 +22,27 @@ class PasswordInput extends React.Component {
       score += val ? 1 : 0
     })
 
-    score = pwd.length >= 6 ? score : 0
+    return score
+  }
 
-    console.log(score)
-
-    if (!_.isEmpty(pwd)) {
-      return score === 4 ? 'success' : 'warning'
+  getValidationState () {
+    if (!_.isEmpty(this.state.value)) {
+      return this.state.validationScore === 5 ? 'success' : 'warning'
     }
   }
 
   onChange (e) {
     this.setState({
       value: e.target.value
+    })
+
+    let score = this.getValidationScore()
+    this.setState({
+      validationScore: score
+    })
+
+    this.setState({
+      isValid : score === 5 ? true : false
     })
   }
 
@@ -60,6 +70,7 @@ class PasswordInput extends React.Component {
           onChange={this.onChange.bind(this)}
           onBlur={this.onSave.bind(this)}
           {...props}
+          data-is-valid={this.state.isValid}
           />
         <ProgressBar />
       </div>
