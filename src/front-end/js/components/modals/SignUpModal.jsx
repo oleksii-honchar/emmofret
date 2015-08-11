@@ -18,7 +18,6 @@ class SignUpModal extends React.Component{
       fullName: '',
       email: '',
       password: '',
-      passwordRepeat: '',
       isFormCompleted: false
     }
     this.state = _.extend(this.state, this.getStoreState())
@@ -81,7 +80,6 @@ class SignUpModal extends React.Component{
           <FullNameInput onSave={this.onChangeState('fullName').bind(this)}/>
           <EmailInput onSave={this.onChangeState('email').bind(this)}/>
           <PasswordInput onSave={this.onChangeState('password').bind(this)}/>
-          <PasswordInput onSave={this.onChangeState('passwordRepeat').bind(this)}/>
         </Body>
         <Footer>
           <Button bsStyle='primary' onClick={this.signUp} {...props}>Sign up</Button>
