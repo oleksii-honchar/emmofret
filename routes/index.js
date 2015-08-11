@@ -1,11 +1,18 @@
 var express = require('express')
 var router = express.Router()
 var apiRouter = express.Router()
-var frontCfg = require('konphyg')(process.cwd() + '/config')('front-end')
+var pkg = require(process.cwd() + '/package.json')
 var serverCfg = require('konphyg')(process.cwd() + '/config')('server')
 
 router.get('/', function (req, res) {
-  res.render('index', frontCfg.meta)
+  let opts = {
+    title: pkg.title,
+    author: pkg.author,
+    description: pkg.description,
+    version: pkg.version,
+    keywords: pkg.keywords.join(', ')
+  }
+  res.render('index', opts)
 })
 
 require('./auth/jwt')(apiRouter)

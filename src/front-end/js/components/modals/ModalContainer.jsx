@@ -23,6 +23,13 @@ class ModalContainer extends React.Component {
     ModalStore.removeChangeListener(this.onChange.bind(this))
   }
 
+  shouldComponentUpdate (nextProps, nextState) {
+    let currEntry = this.state.data.findEntry( (modal) => modal.get('isOpen') )
+    let nextEntry = nextState.data.findEntry( (modal) => modal.get('isOpen') )
+
+    return !currEntry || !nextEntry || currEntry[0] !== nextEntry[0]
+  }
+
   onChange () { this.setState(this.getState()) }
 
   render () {

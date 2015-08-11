@@ -1,11 +1,10 @@
 let { Input } = RB
 
-class EmailInput extends React.Component {
+class PasswordInput extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: props.value,
-      placeholder: props.placeholder,
+      value: props.value
     }
   }
 
@@ -24,11 +23,11 @@ class EmailInput extends React.Component {
   }
 
   render () {
-    let icon = <Icon fw name='envelope-o'/>
+    let icon = <Icon fw name='lock'/>
     return (
       <Input
         addonBefore={icon}
-        type='text' ref='EmailInput'
+        type='password' ref='PasswordInput'
         id={this.props.id}
         className={this.props.className}
         placeholder={this.props.placeholder}
@@ -36,23 +35,20 @@ class EmailInput extends React.Component {
         value={this.state.value}
         onChange={this.onChange.bind(this)}
         onBlur={this.onSave.bind(this)}
-        autoFocus={true}
         />
     )
   }
 }
 
-EmailInput.propTypes = {
+PasswordInput.propTypes = {
   onSave: React.PropTypes.func.isRequired,
   value: React.PropTypes.string,
   id: React.PropTypes.string,
-  className: React.PropTypes.string,
-  placeholder: React.PropTypes.string
+  className: React.PropTypes.string
 }
 
-EmailInput.defaultProps = {
-  value: '',
-  placeholder: 'your@email.com'
+PasswordInput.defaultProps = {
+  value: ''
 }
 
-export default EmailInput
+export default PasswordInput

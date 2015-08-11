@@ -10,7 +10,14 @@
     "standard": "node ./node_modules/standard/bin/cmd.js",
     "build-style": "node ./node_modules/stylus/bin/stylus -m -r --use url --with \"{paths:['']}\" --include-css -u autoprefixer-stylus -c src/front-end/styles/index.bundle.styl --out build/styles/index.bundle.css"
   },
-  "keywords": [ "boilerplate", "express", "react", "flux", "REST", "CRUD"],
+  "keywords": [
+    "boilerplate",
+    "express",
+    "react",
+    "flux",
+    "REST",
+    "CRUD"
+  ],
   "author": "Tuiteraz",
   "license": "ISC",
   "repository": {
@@ -24,6 +31,7 @@
     "bcryptjs": "^2.2.0",
     "bluebird": "^2.9.34",
     "body-parser": "^1.13.2",
+    "bootstrap-notify": "^3.1.3",
     "bootstrap-styl": "^4.0.5",
     "browserify": "^11.0.0",
     "bunyan": "^1.4.0",

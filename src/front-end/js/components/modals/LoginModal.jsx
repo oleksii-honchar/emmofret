@@ -1,7 +1,11 @@
+import UserActions from '../../actions/UserActions.js'
 import ModalActions from '../../actions/ModalActions.js'
 import ModalStore from '../../stores/ModalStore.js'
 
 import EmailInput from '../inputs/EmailInput.jsx'
+import PasswordInput from '../inputs/PasswordInput.jsx'
+
+import _ from 'lodash'
 
 let { Modal, Button } = RB
 let { Header, Body, Title, Footer } = Modal
@@ -9,56 +13,73 @@ let { Header, Body, Title, Footer } = Modal
 class LoginModal extends React.Component{
   constructor(props) {
     super(props)
-    this.state = this.getState()
+    this.state = this.getStoreState()
+
+    this.onChange = this.onChange.bind(this)
+    this.login = this.login.bind(this)
   }
 
   componentDidMount () {
-    ModalStore.addChangeListener(this.onChange.bind(this))
+    ModalStore.addChangeListener(this.onChange)
   }
 
   componentWillUnmount () {
-    ModalStore.removeChangeListener(this.onChange.bind(this))
+    ModalStore.removeChangeListener(this.onChange)
   }
 
   close () {
     ModalActions.hide('login')
   }
 
-  getChildContext () {
+  getStoreState () {
     return {
-      email : 'test@mail.com'
+      store: ModalStore.getState().get('login')
     }
   }
 
-  getState () {
-    return {
-      data: ModalStore.getState().get('login')
+  getClassName () {
+    let res = ''
+    if (this.state.store.get('shaking')) {
+      res = `shake shake-constant shake-${this.state.store.get('shakeStyle')}`
     }
+    return res
+  }
+
+  login () {
+    let credentials = _.pick(this.state, ['email', 'password'])
+    UserActions.login(credentials)
   }
 
   onChange () {
-    this.setState(this.getState())
+    this.setState(this.getStoreState())
+  }
+
+  onChangeProp (propName) {
+    let state = {}
+
+    return (newValue) => {
+      state[propName] = newValue
+      this.setState(state)
+    }
   }
 
   render () {
     return (
-      <Modal show={this.state.data.get('isOpen')} onHide={this.close} bsSize='sm'>
+      <Modal show={this.state.store.get('isOpen')} onHide={this.close} bsSize='sm'
+             dialogClassName={this.getClassName()}>
         <Header closeButton>
           <Title>Login</Title>
         </Header>
         <Body>
-          <EmailInput />
+          <EmailInput onSave={this.onChangeProp('email').bind(this)}/>
+          <PasswordInput onSave={this.onChangeProp('password').bind(this)}/>
         </Body>
         <Footer>
-          <Button onClick={this.close}>Close</Button>
+          <Button bsStyle='primary' onClick={this.login}>Log in</Button>
         </Footer>
       </Modal>
     )
   }
-}
-
-LoginModal.childContextTypes = {
-  email: React.PropTypes.string
 }
 
 LoginModal.propsTypes = {
