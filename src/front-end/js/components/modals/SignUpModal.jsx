@@ -15,15 +15,28 @@ class SignUpModal extends React.Component{
     super(props)
 
     this.state = {
-      fullName: '',
-      email: '',
-      password: '',
+      form : {
+        fullName: '',
+        email: '',
+        password: ''
+      },
       isFormCompleted: false
     }
     this.state = _.extend(this.state, this.getStoreState())
 
     this.onChangeStore = this.onChangeStore.bind(this)
     this.signUp = this.signUp.bind(this)
+  }
+
+  checkSignUpBtnState () {
+    let isAllValid =  _.every(this.state.form, (prop, key) => {
+      if (_.isObject(prop)) {
+        return prop.isValid
+      } else
+        return false
+    })
+
+    this.setState({ isFormCompleted : isAllValid })
   }
 
   getStoreState () {
@@ -45,11 +58,13 @@ class SignUpModal extends React.Component{
   }
 
   onChangeState (propName) {
-    let state = {}
-
     return (newValue) => {
-      state[propName] = newValue
+      let state = { form: this.state.form }
+      state.form[propName] = newValue
       this.setState(state)
+
+      // TODO: when all prop is valid i need to click somewhere to fire btn check state
+      this.checkSignUpBtnState()
     }
   }
 
@@ -58,7 +73,12 @@ class SignUpModal extends React.Component{
   }
 
   signUp () {
-    let data = _.pick(this.state, ['fullName', 'email', 'password'])
+    let data = {
+      firstName : this.state.form.fullName.firstName,
+      lastName : this.state.form.fullName.lastName,
+      email : this.state.form.email.value,
+      password : this.state.form.password.value
+    }
     UserActions.signUp(data)
   }
 

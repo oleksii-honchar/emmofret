@@ -7,22 +7,49 @@ class FullNameInput extends React.Component {
     this.state = _.clone(props)
   }
 
-  getValidationState () {
-    let words = _.words(this.state.value)
+  validateValue (value=null) {
+    value = _.isNull(value) ? this.state.value : value
 
+    let words = _.words(value)
+
+    return words.length === 2 && !_.isEmpty(value)
+  }
+
+  /*
+   * @params {string} name - 'first' | 'last' -> _[name]()
+   */
+  getName (name) {
+    return _.chain(this.state.value).words()[name]().value()
+  }
+
+  getValidationState () {
     if (!_.isEmpty(this.state.value)) {
-      return words.length === 2 ? 'success' : 'warning'
+      return this.state.isValid ? 'success' : 'warning'
     }
   }
 
   onChange (e) {
+    let value = e.target.value
+    let isValid = this.validateValue(value)
+
     this.setState({
-      value: e.target.value
+      value: value,
+      isValid : isValid
     })
+
+    this.onSave()
   }
 
   onSave () {
-    this.props.onSave(this.state.value)
+    let res = {
+      firstName: this.getName('first'),
+      lastName: this.getName('last')
+    }
+
+    if (!this.props.noValidation)
+      res.isValid = this.state.isValid
+
+    this.props.onSave(res)
   }
 
   render () {

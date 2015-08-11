@@ -41,7 +41,8 @@ class PasswordInput extends React.Component {
       now: now,
       bsStyle: styles[score],
       label : labels[score],
-      active: score < maxScore
+      active: score < maxScore,
+      'data-class': 'PasswordProgressBar'
     }
 
     return <ProgressBar {...props} />
