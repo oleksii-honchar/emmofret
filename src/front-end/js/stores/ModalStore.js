@@ -29,6 +29,22 @@ var Store = _.assign({ state: modals }, EventEmitter.prototype, {
     return this.state;
   },
 
+  hide (modalName) {
+    this.state = this.state.setIn([modalName, 'isOpen'], false)
+    this.emitChange()
+  },
+
+  shake (modalName) {
+    this.state = this.state.setIn([modalName, 'shaking'], true)
+      .setIn([modalName, 'shakeStyle'], 'horizontal')
+    this.emitChange()
+
+    setTimeout( function () {
+      this.state = this.state.setIn([modalName, 'shaking'], false)
+      this.emitChange()
+    }.bind(this), 200)
+  },
+
   show (modalName) {
     this.state = this.state.map((opts, name) => {
       var res
@@ -40,21 +56,19 @@ var Store = _.assign({ state: modals }, EventEmitter.prototype, {
       return res
     })
     this.emitChange()
-  },
-
-  hide (modalName) {
-    this.state = this.state.setIn([modalName, 'isOpen'], false)
-    this.emitChange()
   }
 })
 
 Dispatcher.register( (action) => {
   switch(action.actionType) {
+    case ModalConstants.SHAKE_MODAL:
+      Store.shake(action.data)
+      break
     case ModalConstants.SHOW_MODAL:
-      Store.show(action.name)
+      Store.show(action.data)
       break
     case ModalConstants.HIDE_MODAL:
-      Store.hide(action.name)
+      Store.hide(action.data)
       break
     default:
       // no op

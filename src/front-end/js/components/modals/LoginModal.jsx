@@ -37,6 +37,14 @@ class LoginModal extends React.Component{
     }
   }
 
+  getClassName () {
+    let res = ''
+    if (this.state.store.get('shaking')) {
+      res = `shake shake-constant shake-${this.state.store.get('shakeStyle')}`
+    }
+    return res
+  }
+
   login () {
     let credentials = _.pick(this.state, ['email', 'password'])
     UserActions.login(credentials)
@@ -57,7 +65,8 @@ class LoginModal extends React.Component{
 
   render () {
     return (
-      <Modal show={this.state.store.get('isOpen')} onHide={this.close} bsSize='sm'>
+      <Modal show={this.state.store.get('isOpen')} onHide={this.close} bsSize='sm'
+             dialogClassName={this.getClassName()}>
         <Header closeButton>
           <Title>Login</Title>
         </Header>

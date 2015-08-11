@@ -5,14 +5,21 @@ var ModalActions = {
   show: (modalName) => {
     Dispatcher.dispatch({
       actionType: ModalConstants.SHOW_MODAL,
-      name: modalName
+      data: modalName
     })
   },
 
   hide: (modalName) => {
     Dispatcher.dispatch({
       actionType: ModalConstants.HIDE_MODAL,
-      name: modalName
+      data: modalName
+    })
+  },
+
+  shakeModal: (modalName) => {
+    Dispatcher.dispatch({
+      actionType: ModalConstants.SHAKE_MODAL,
+      data: modalName
     })
   }
 }
