@@ -11,15 +11,23 @@ function shakeLogin () {
   })
 }
 
+function login (data) {
+  request.post('/api/users/login')
+    .set('Content-Type', 'application/json')
+    .send(_.pick(data, ['email', 'password']))
+    .end((err, res) => {
+      if (err) { return shakeLogin()}
+    })
+}
+
+function signUp(data) {
+  console.log('UserActions: sign-up pending')
+  console.dir(data)
+}
+
 let UserActions = {
-  login: (data) => {
-    request.post('/api/users/login')
-      .set('Content-Type', 'application/json')
-      .send(_.pick(data, ['email', 'password']))
-      .end((err, res) => {
-        if (err) { return shakeLogin()}
-      })
-  }
+  login: login,
+  signUp: signUp
 }
 
 export default UserActions

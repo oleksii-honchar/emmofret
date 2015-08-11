@@ -13,18 +13,23 @@ let { Header, Body, Title, Footer } = Modal
 class LoginModal extends React.Component{
   constructor(props) {
     super(props)
-    this.state = this.getStoreState()
 
-    this.onChange = this.onChange.bind(this)
+    this.state = {
+      email: '',
+      password: ''
+    }
+    this.state = _.extend(this.state, this.getStoreState())
+
+    this.onChangeStore = this.onChangeStore.bind(this)
     this.login = this.login.bind(this)
   }
 
   componentDidMount () {
-    ModalStore.addChangeListener(this.onChange)
+    ModalStore.addChangeListener(this.onChangeStore)
   }
 
   componentWillUnmount () {
-    ModalStore.removeChangeListener(this.onChange)
+    ModalStore.removeChangeListener(this.onChangeStore)
   }
 
   close () {
@@ -50,11 +55,11 @@ class LoginModal extends React.Component{
     UserActions.login(credentials)
   }
 
-  onChange () {
+  onChangeStore () {
     this.setState(this.getStoreState())
   }
 
-  onChangeProp (propName) {
+  onChangeState (propName) {
     let state = {}
 
     return (newValue) => {
@@ -71,8 +76,8 @@ class LoginModal extends React.Component{
           <Title>Login</Title>
         </Header>
         <Body>
-          <EmailInput onSave={this.onChangeProp('email').bind(this)}/>
-          <PasswordInput onSave={this.onChangeProp('password').bind(this)}/>
+          <EmailInput autoFocus noValidation onSave={this.onChangeState('email').bind(this)}/>
+          <PasswordInput onSave={this.onChangeState('password').bind(this)}/>
         </Body>
         <Footer>
           <Button bsStyle='primary' onClick={this.login}>Log in</Button>
