@@ -6,7 +6,7 @@ var serverCfg = require('konphyg')(process.cwd() + '/config')('server')
 
 router.get('/', function (req, res) {
   let opts = {
-    title: pkg.title,
+    title: pkg.name,
     author: pkg.author,
     description: pkg.description,
     version: pkg.version,

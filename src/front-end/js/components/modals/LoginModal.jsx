@@ -14,10 +14,7 @@ class LoginModal extends React.Component{
   constructor(props) {
     super(props)
 
-    this.state = {
-      email: '',
-      password: ''
-    }
+    this.state = _.clone(props)
     this.state = _.extend(this.state, this.getStoreState())
 
     this.onChangeStore = this.onChangeStore.bind(this)
@@ -77,7 +74,7 @@ class LoginModal extends React.Component{
         </Header>
         <Body>
           <EmailInput autoFocus noValidation onSave={this.onChangeState('email').bind(this)}/>
-          <PasswordInput onSave={this.onChangeState('password').bind(this)}/>
+          <PasswordInput noValidation onSave={this.onChangeState('password').bind(this)}/>
         </Body>
         <Footer>
           <Button bsStyle='primary' onClick={this.login}>Log in</Button>
@@ -88,8 +85,8 @@ class LoginModal extends React.Component{
 }
 
 LoginModal.propsTypes = {
-  email: React.PropTypes.string.isRequired,
-  password: React.PropTypes.string.isRequired
+  email: React.PropTypes.any,
+  password: React.PropTypes.any
 }
 
 LoginModal.defaultsProps = {

@@ -8,23 +8,39 @@ class EmailInput extends React.Component {
     this.state = _.clone(props)
   }
 
-  getValidationState () {
+  validateValue (value=null) {
+    value = _.isNull(value) ? this.state.value : value
     let reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i
-    let isValid = reg.test(this.state.value)
+    let isValid = reg.test(value)
 
+    return !_.isEmpty(value) && isValid
+  }
+
+  getValidationState () {
     if (!_.isEmpty(this.state.value)) {
-      return isValid ? 'success' : 'warning'
+      return this.state.isValid ? 'success' : 'warning'
     }
   }
 
   onChange (e) {
+    let value = e.target.value
+    let isValid = this.validateValue(value)
+
     this.setState({
-      value: e.target.value
+      value: value,
+      isValid : isValid
     })
+
+    this.onSave()
   }
 
   onSave () {
-    this.props.onSave(this.state.value)
+    let res = { value: this.state.value }
+
+    if (!this.props.noValidation)
+      res.isValid = this.state.isValid
+
+    this.props.onSave(res)
   }
 
   render () {

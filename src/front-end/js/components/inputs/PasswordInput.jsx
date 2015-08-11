@@ -7,14 +7,14 @@ class PasswordInput extends React.Component {
     this.state = _.clone(props)
   }
 
-  getValidationScore () {
-    let val = this.state.value
+  validateValue (value=null) {
+    value = _.isNull(value) ? this.state.value : value
     let res = [
-      val.match(/[A-Z]/),
-      val.match(/[a-z]/),
-      val.match(/\d/),
-      val.match(/[\W]/),
-      (val.length > 6)
+      value.match(/[A-Z]/),
+      value.match(/[a-z]/),
+      value.match(/\d/),
+      value.match(/[\W]/),
+      (value.length > 6)
     ]
 
     let score = 0
@@ -31,31 +31,54 @@ class PasswordInput extends React.Component {
     }
   }
 
+  getValidationProgress () {
+    let score = this.state.validationScore
+    let maxScore = this.state.maxValidationScore
+    let now = Math.trunc((score/maxScore)*100)
+    let labels = ['weird', 'weakest', 'weak', 'better', 'good', 'ok']
+    let styles = ['danger', 'danger', 'danger', 'warning', 'warning', 'success']
+    let props = {
+      now: now,
+      bsStyle: styles[score],
+      label : labels[score],
+      active: score < maxScore
+    }
+
+    return <ProgressBar {...props} />
+  }
+
   onChange (e) {
-    this.setState({
-      value: e.target.value
-    })
-
-    let score = this.getValidationScore()
-    this.setState({
-      validationScore: score
-    })
+    let value = e.target.value
+    let score = this.validateValue(value)
 
     this.setState({
-      isValid : score === 5 ? true : false
+      value: value,
+      validationScore: score,
+      isValid : score === this.state.maxValidationScore ? true : false
     })
+
+    this.onSave()
   }
 
   onSave () {
-    this.props.onSave(this.state.value)
+    let res = { value: this.state.value }
+
+    if (!this.props.noValidation)
+      res.isValid = this.state.isValid
+
+    this.props.onSave(res)
   }
 
   render () {
     let icon = <Icon fw name='lock'/>
 
     let props = {}
-    if (!this.props.noValidation)
+    let validationProgress = {}
+    if (!this.props.noValidation) {
       props.bsStyle = this.getValidationState()
+      validationProgress = this.getValidationProgress()
+    } else
+      validationProgress  = null
 
     return (
       <div>
@@ -70,9 +93,9 @@ class PasswordInput extends React.Component {
           onChange={this.onChange.bind(this)}
           onBlur={this.onSave.bind(this)}
           {...props}
-          data-is-valid={this.state.isValid}
+          data-valid={this.state.isValid}
           />
-        <ProgressBar />
+        {validationProgress}
       </div>
     )
   }
@@ -82,11 +105,15 @@ PasswordInput.propTypes = {
   onSave: React.PropTypes.func.isRequired,
   value: React.PropTypes.string,
   id: React.PropTypes.string,
-  className: React.PropTypes.string
+  className: React.PropTypes.string,
+  isValid: React.PropTypes.bool,
+  maxValidationScore: React.PropTypes.number
 }
 
 PasswordInput.defaultProps = {
-  value: ''
+  value: '',
+  isValid: false,
+  maxValidationScore: 5
 }
 
 export default PasswordInput
