@@ -1,5 +1,5 @@
 import _ from 'lodash'
 
-module.exports = _.keyMirror({
+export default _.keyMirror({
   LOGIN: null
 })

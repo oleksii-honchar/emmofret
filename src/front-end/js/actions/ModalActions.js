@@ -16,7 +16,7 @@ var ModalActions = {
     })
   },
 
-  shakeModal: (modalName) => {
+  shake: (modalName) => {
     Dispatcher.dispatch({
       actionType: ModalConstants.SHAKE_MODAL,
       data: modalName
