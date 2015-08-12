@@ -83,11 +83,12 @@ class PasswordInput extends React.Component {
     } else
       validationProgress  = null
 
+    let type = this.props.visible ? 'text' : 'password'
     return (
       <div>
         <Input
           addonBefore={icon}
-          type='text' ref='PasswordInput'
+          type={type} ref='PasswordInput'
           id={this.props.id}
           className={this.props.className}
           placeholder={this.props.placeholder}
@@ -110,13 +111,15 @@ PasswordInput.propTypes = {
   id: React.PropTypes.string,
   className: React.PropTypes.string,
   isValid: React.PropTypes.bool,
-  maxValidationScore: React.PropTypes.number
+  maxValidationScore: React.PropTypes.number,
+  visible: React.PropTypes.bool
 }
 
 PasswordInput.defaultProps = {
   value: '',
   isValid: false,
-  maxValidationScore: 5
+  maxValidationScore: 5,
+  visible: false
 }
 
 export default PasswordInput

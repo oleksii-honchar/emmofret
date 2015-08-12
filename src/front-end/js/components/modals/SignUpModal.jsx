@@ -100,7 +100,7 @@ class SignUpModal extends React.Component{
         <Body>
           <FullNameInput onSave={this.onChangeFormState('fullName').bind(this)}/>
           <EmailInput onSave={this.onChangeFormState('email').bind(this)}/>
-          <PasswordInput onSave={this.onChangeFormState('password').bind(this)}/>
+          <PasswordInput visible onSave={this.onChangeFormState('password').bind(this)}/>
         </Body>
         <Footer>
           <Button bsStyle='primary' onClick={this.signUp} {...props}>Sign up</Button>

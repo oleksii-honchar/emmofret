@@ -5,6 +5,13 @@ import zIndexConstants from '../constants/zIndexConstands.js'
 import request from 'superagent'
 import _ from 'lodash'
 
+function hideSignUp () {
+  Dispatcher.dispatch({
+    actionType: ModalConstants.HIDE_MODAL,
+    data: 'sign-up'
+  })
+}
+
 function shakeLogin () {
   Dispatcher.dispatch({
     actionType: ModalConstants.SHAKE_MODAL,
@@ -12,7 +19,7 @@ function shakeLogin () {
   })
 }
 
-function showError (body) {
+function notifyError (body) {
   let msg = ''
 
   if(_.has(body, 'error')) { msg = body.error }
@@ -35,6 +42,16 @@ function showError (body) {
   })
 }
 
+function notifySuccess (msg) {
+  $.notify({
+    message: msg
+  }, {
+    type: 'success',
+    delay: 5000,
+    z_index: zIndexConstants.notify
+  })
+}
+
 function login (data) {
   request.post('/api/users/login')
     .set('Content-Type', 'application/json')
@@ -49,8 +66,10 @@ function signUp(data) {
     .set('Content-Type', 'application/json')
     .send(_.pick(data, ['firstName', 'lastName', 'email', 'password']))
     .end((err, res) => {
-      if (err) { return showError(res.body) }
-      console.dir(res.body)
+      if (err) { return notifyError(res.body) }
+
+      notifySuccess('User successfully registered. Now you can login.')
+      hideSignUp()
     })
 }
 
