@@ -5,6 +5,13 @@ import zIndexConstants from '../constants/zIndexConstands.js'
 import request from 'superagent'
 import _ from 'lodash'
 
+function hideLogin () {
+  Dispatcher.dispatch({
+    actionType: ModalConstants.HIDE_MODAL,
+    data: 'login'
+  })
+}
+
 function hideSignUp () {
   Dispatcher.dispatch({
     actionType: ModalConstants.HIDE_MODAL,
@@ -38,7 +45,11 @@ function notifyError (body) {
   }, {
     type: 'danger',
     delay: 5000,
-    z_index: zIndexConstants.notify
+    z_index: zIndexConstants.notify,
+    animate: {
+      enter: 'animated flipInX',
+      exit: 'animated flipOutX'
+    }
   })
 }
 
@@ -48,7 +59,11 @@ function notifySuccess (msg) {
   }, {
     type: 'success',
     delay: 5000,
-    z_index: zIndexConstants.notify
+    z_index: zIndexConstants.notify,
+    animate: {
+      enter: 'animated flipInX',
+      exit: 'animated flipOutX'
+    }
   })
 }
 
@@ -58,6 +73,9 @@ function login (data) {
     .send(_.pick(data, ['email', 'password']))
     .end((err, res) => {
       if (err) { return shakeLogin()}
+
+      notifySuccess('User successfully logged in')
+      hideLogin()
     })
 }
 

@@ -48,7 +48,11 @@ class LoginModal extends React.Component{
   }
 
   login () {
-    let credentials = _.pick(this.state, ['email', 'password'])
+    let credentials = {
+      email : this.state.email.value,
+      password : this.state.password.value
+    }
+
     UserActions.login(credentials)
   }
 
