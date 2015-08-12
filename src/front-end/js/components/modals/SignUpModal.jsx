@@ -26,6 +26,7 @@ class SignUpModal extends React.Component{
 
     this.onChangeStore = this.onChangeStore.bind(this)
     this.signUp = this.signUp.bind(this)
+    this.checkSignUpBtnState = this.checkSignUpBtnState.bind(this)
   }
 
   checkSignUpBtnState () {
@@ -47,6 +48,7 @@ class SignUpModal extends React.Component{
 
   componentDidMount () {
     ModalStore.addChangeListener(this.onChangeStore)
+    window.SignUpModal = this
   }
 
   componentWillUnmount () {
@@ -57,14 +59,13 @@ class SignUpModal extends React.Component{
     ModalActions.hide('sign-up')
   }
 
-  onChangeState (propName) {
+  onChangeFormState (propName) {
     return (newValue) => {
       let state = { form: this.state.form }
       state.form[propName] = newValue
       this.setState(state)
 
-      // TODO: when all prop is valid i need to click somewhere to fire btn check state
-      this.checkSignUpBtnState()
+      _.debounce(this.checkSignUpBtnState, 200)()
     }
   }
 
@@ -97,9 +98,9 @@ class SignUpModal extends React.Component{
           <Title>Sign up</Title>
         </Header>
         <Body>
-          <FullNameInput onSave={this.onChangeState('fullName').bind(this)}/>
-          <EmailInput onSave={this.onChangeState('email').bind(this)}/>
-          <PasswordInput onSave={this.onChangeState('password').bind(this)}/>
+          <FullNameInput onSave={this.onChangeFormState('fullName').bind(this)}/>
+          <EmailInput onSave={this.onChangeFormState('email').bind(this)}/>
+          <PasswordInput onSave={this.onChangeFormState('password').bind(this)}/>
         </Body>
         <Footer>
           <Button bsStyle='primary' onClick={this.signUp} {...props}>Sign up</Button>

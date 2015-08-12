@@ -5,6 +5,8 @@ class PasswordInput extends React.Component {
   constructor(props) {
     super(props)
     this.state = _.clone(props)
+    this.onSave = this.onSave.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
   validateValue (value=null) {
@@ -58,7 +60,7 @@ class PasswordInput extends React.Component {
       isValid : score === this.state.maxValidationScore ? true : false
     })
 
-    this.onSave()
+    _.debounce(this.onSave, 300)()
   }
 
   onSave () {
@@ -91,8 +93,8 @@ class PasswordInput extends React.Component {
           placeholder={this.props.placeholder}
           hasFeedback
           value={this.state.value}
-          onChange={this.onChange.bind(this)}
-          onBlur={this.onSave.bind(this)}
+          onChange={this.onChange}
+          onBlur={this.onSave}
           {...props}
           data-valid={this.state.isValid}
           />
