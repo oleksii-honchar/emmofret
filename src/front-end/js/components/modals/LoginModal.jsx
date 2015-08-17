@@ -13,22 +13,45 @@ let { Header, Body, Title, Footer } = Modal
 class LoginModal extends React.Component{
   constructor(props) {
     super(props)
-    this.state = this.getStoreState()
 
-    this.onChange = this.onChange.bind(this)
+    this.state = {
+      form : {
+        email: '',
+        password: ''
+      },
+      isFormCompleted: false
+    }
+
+    this.state = _.extend(this.state, this.getStoreState()) // -> {store: object}
+
+    this.onChangeStore = this.onChangeStore.bind(this)
     this.login = this.login.bind(this)
+    this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
+    this.onChangeFormState = this.onChangeFormState.bind(this)
+    this.submitOnReturn = this.submitOnReturn.bind(this)
   }
 
   componentDidMount () {
-    ModalStore.addChangeListener(this.onChange)
+    ModalStore.addChangeListener(this.onChangeStore)
   }
 
   componentWillUnmount () {
-    ModalStore.removeChangeListener(this.onChange)
+    ModalStore.removeChangeListener(this.onChangeStore)
   }
 
   close () {
     ModalActions.hide('login')
+  }
+
+  checkSubmitBtnState () {
+    let isAllValid =  _.every(this.state.form, (prop, key) => {
+      if (_.isObject(prop)) {
+        return !_.isEmpty(prop.value)
+      } else
+        return false
+    })
+
+    this.setState({ isFormCompleted : isAllValid })
   }
 
   getStoreState () {
@@ -46,24 +69,48 @@ class LoginModal extends React.Component{
   }
 
   login () {
-    let credentials = _.pick(this.state, ['email', 'password'])
+    let credentials = {
+      email : this.state.form.email.value,
+      password : this.state.form.password.value
+    }
+
     UserActions.login(credentials)
   }
 
-  onChange () {
+  onChangeStore () {
     this.setState(this.getStoreState())
   }
 
-  onChangeProp (propName) {
-    let state = {}
-
+  onChangeFormState (propName) {
     return (newValue) => {
-      state[propName] = newValue
+      let state = { form : this.state.form }
+      state.form[propName] = newValue
       this.setState(state)
+
+      _.debounce(this.checkSubmitBtnState, 200)()
+    }
+  }
+
+  submitOnReturn (e) {
+    if(e.charCode === 13 && this.state.isFormCompleted) {
+      this.login()
     }
   }
 
   render () {
+    let btnProps = {}
+
+    if (this.state.isFormCompleted) {
+      btnProps.disabled = false
+    } else {
+      btnProps.disabled = true
+    }
+
+    let inputProps = {
+      onKeyPress: this.submitOnReturn,
+      noValidation: true
+    }
+
     return (
       <Modal show={this.state.store.get('isOpen')} onHide={this.close} bsSize='sm'
              dialogClassName={this.getClassName()}>
@@ -71,25 +118,15 @@ class LoginModal extends React.Component{
           <Title>Login</Title>
         </Header>
         <Body>
-          <EmailInput onSave={this.onChangeProp('email').bind(this)}/>
-          <PasswordInput onSave={this.onChangeProp('password').bind(this)}/>
+          <EmailInput autoFocus onSave={this.onChangeFormState('email')} {...inputProps}/>
+          <PasswordInput onSave={this.onChangeFormState('password')} {...inputProps}/>
         </Body>
         <Footer>
-          <Button bsStyle='primary' onClick={this.login}>Log in</Button>
+          <Button bsStyle='primary' onClick={this.login} {...btnProps}>Log in</Button>
         </Footer>
       </Modal>
     )
   }
-}
-
-LoginModal.propsTypes = {
-  email: React.PropTypes.string.isRequired,
-  password: React.PropTypes.string.isRequired
-}
-
-LoginModal.defaultsProps = {
-  email: '',
-  password: ''
 }
 
 export default LoginModal

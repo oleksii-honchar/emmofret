@@ -42,7 +42,7 @@ var Store = _.assign({ state: modals }, EventEmitter.prototype, {
     setTimeout( function () {
       this.state = this.state.setIn([modalName, 'shaking'], false)
       this.emitChange()
-    }.bind(this), 200)
+    }.bind(this), 300)
   },
 
   show (modalName) {
