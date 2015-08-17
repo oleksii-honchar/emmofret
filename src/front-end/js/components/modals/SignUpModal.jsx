@@ -50,7 +50,6 @@ class SignUpModal extends React.Component{
 
   componentDidMount () {
     ModalStore.addChangeListener(this.onChangeStore)
-    window.SignUpModal = this
   }
 
   componentWillUnmount () {

@@ -1,6 +1,7 @@
 import Dispatcher from '../dispatcher.js'
 import UserConstants from '../constants/UserConstants.js'
 import ModalConstants from '../constants/ModalConstants.js'
+import MeConstants from '../constants/MeConstants.js'
 import zIndexConstants from '../constants/zIndexConstands.js'
 import request from 'superagent'
 import _ from 'lodash'
@@ -76,6 +77,13 @@ function login (data) {
 
       notifySuccess('User successfully logged in')
       hideLogin()
+
+      Dispatcher.dispatch({
+        actionType: MeConstants.SET_TOKEN,
+        data: res.body.token
+      })
+
+      Dispatcher.dispatch({ actionType: MeConstants.FETCH_CURRENT })
     })
 }
 

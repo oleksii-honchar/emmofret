@@ -1,6 +1,6 @@
 import TopNavbar from '../components/TopNavbar.jsx'
 import ModalContainer from '../components/modals/ModalContainer.jsx'
-import UserStore from '../stores/UserStore.js'
+import MeStore from '../stores/MeStore.js'
 
 let { RouteHandler } = Router
 
