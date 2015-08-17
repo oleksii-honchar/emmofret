@@ -26,10 +26,12 @@ class SignUpModal extends React.Component{
 
     this.onChangeStore = this.onChangeStore.bind(this)
     this.signUp = this.signUp.bind(this)
-    this.checkSignUpBtnState = this.checkSignUpBtnState.bind(this)
+    this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
+    this.onChangeFormState = this.onChangeFormState.bind(this)
+    this.submitOnReturn = this.submitOnReturn.bind(this)
   }
 
-  checkSignUpBtnState () {
+  checkSubmitBtnState () {
     let isAllValid =  _.every(this.state.form, (prop, key) => {
       if (_.isObject(prop)) {
         return prop.isValid
@@ -65,7 +67,7 @@ class SignUpModal extends React.Component{
       state.form[propName] = newValue
       this.setState(state)
 
-      _.debounce(this.checkSignUpBtnState, 200)()
+      _.debounce(this.checkSubmitBtnState, 200)()
     }
   }
 
@@ -83,13 +85,23 @@ class SignUpModal extends React.Component{
     UserActions.signUp(data)
   }
 
+  submitOnReturn (e) {
+    if(e.charCode === 13 && this.state.isFormCompleted) {
+      this.signUp()
+    }
+  }
+
   render () {
-    let props = {}
+    let btnProps = {}
 
     if (this.state.isFormCompleted) {
-      props.disabled = false
+      btnProps.disabled = false
     } else {
-      props.disabled = true
+      btnProps.disabled = true
+    }
+
+    let inputProps = {
+      onKeyPress: this.submitOnReturn,
     }
 
     return (
@@ -98,12 +110,12 @@ class SignUpModal extends React.Component{
           <Title>Sign up</Title>
         </Header>
         <Body>
-          <FullNameInput onSave={this.onChangeFormState('fullName').bind(this)}/>
-          <EmailInput onSave={this.onChangeFormState('email').bind(this)}/>
-          <PasswordInput visible onSave={this.onChangeFormState('password').bind(this)}/>
+          <FullNameInput onSave={this.onChangeFormState('fullName')} {...inputProps}/>
+          <EmailInput onSave={this.onChangeFormState('email')} {...inputProps}/>
+          <PasswordInput visible onSave={this.onChangeFormState('password')} {...inputProps}/>
         </Body>
         <Footer>
-          <Button bsStyle='primary' onClick={this.signUp} {...props}>Sign up</Button>
+          <Button bsStyle='primary' onClick={this.signUp} {...btnProps}>Sign up</Button>
         </Footer>
       </Modal>
     )

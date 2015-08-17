@@ -95,6 +95,7 @@ class PasswordInput extends React.Component {
           hasFeedback
           value={this.state.value}
           onChange={this.onChange}
+          onKeyPress={this.props.onKeyPress}
           onBlur={this.onSave}
           {...props}
           data-valid={this.state.isValid}
@@ -107,6 +108,7 @@ class PasswordInput extends React.Component {
 
 PasswordInput.propTypes = {
   onSave: React.PropTypes.func.isRequired,
+  onKeyPress: React.PropTypes.func,
   value: React.PropTypes.string,
   id: React.PropTypes.string,
   className: React.PropTypes.string,

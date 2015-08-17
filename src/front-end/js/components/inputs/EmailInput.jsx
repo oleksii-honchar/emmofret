@@ -63,6 +63,7 @@ class EmailInput extends React.Component {
         value={this.state.value}
         onChange={this.onChange}
         onBlur={this.onSave}
+        onKeyPress={this.props.onKeyPress}
         autoFocus={this.props.autoFocus}
         {...props}
         />
@@ -72,6 +73,7 @@ class EmailInput extends React.Component {
 
 EmailInput.propTypes = {
   onSave: React.PropTypes.func.isRequired,
+  onKeyPress: React.PropTypes.func,
   value: React.PropTypes.string,
   id: React.PropTypes.string,
   className: React.PropTypes.string,
