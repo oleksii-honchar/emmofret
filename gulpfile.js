@@ -16,10 +16,10 @@ gulp.task('style', function () {
     .pipe(sourcemaps.init())
     .pipe(gstylus({
       use: autoprefixer(),
-      'include css': true,
-      define: {
-        url: stylus.resolver()
-      }
+      'include css': true
+      //define: {
+      //  url: stylus.resolver()
+      //}
     }))
     .pipe(debug())
     .on('error', gutil.log)

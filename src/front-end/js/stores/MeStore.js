@@ -1,8 +1,12 @@
 import Dispatcher from '../dispatcher.js'
+
 import UserConstants from '../constants/UserConstants.js'
 import MeConstants from '../constants/MeConstants.js'
+import ModalStore from '../stores/ModalStore.js'
+
 import _ from 'lodash'
 import Backbone from 'backbone'
+import notify from '../helpers/notify.js'
 
 let Model = Backbone.Model.extend({})
 
@@ -26,13 +30,11 @@ let Collection = Backbone.Collection.extend({
           headers: {
             authorization: this.token
           },
-          success: function (data) {
-            console.log('me get-current success')
-            console.dir(data)
+          success: function (body) {
+            window.sessionStorage.me = JSON.stringify(body)
           },
           error: function (err) {
-            console.error('me get-current error')
-            console.dir(err)
+            notify.error(err)
           }
         })
         break
@@ -49,7 +51,18 @@ let Collection = Backbone.Collection.extend({
   }
 })
 
-let Me = new Model()
+let data = {}
+if (_.has(window.sessionStorage, 'me')) {
+  try {
+    data = JSON.parse(window.sessionStorage.me)
+  } catch (e) {
+    delete window.sessionStorage.me
+  }
+}
+
+let Me = new Model(data)
 let Store = new Collection([Me])
-window.MeStore = Store
+
+// TODO: debug only
+//window.MeStore = Store
 export default Store

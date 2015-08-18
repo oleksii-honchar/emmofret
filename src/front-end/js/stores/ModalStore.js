@@ -59,7 +59,7 @@ var Store = _.assign({ state: modals }, EventEmitter.prototype, {
   }
 })
 
-Dispatcher.register( (action) => {
+Store.dispatchToken = Dispatcher.register( (action) => {
   switch(action.actionType) {
     case ModalConstants.SHAKE_MODAL:
       Store.shake(action.data)
@@ -74,5 +74,4 @@ Dispatcher.register( (action) => {
       // no op
   }
 })
-window.ModalStore = Store
 export default Store
