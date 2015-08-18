@@ -28,8 +28,8 @@ function shakeLogin () {
 }
 
 
-function login (data) {
-  request.post('/api/users/login')
+function logIn (data) {
+  request.post('/api/users/log-in')
     .set('Content-Type', 'application/json')
     .send(_.pick(data, ['email', 'password']))
     .end((err, res) => {
@@ -50,6 +50,16 @@ function login (data) {
     })
 }
 
+function logOut () {
+  request.post('/api/users/log-out')
+    .set('Content-Type', 'application/json')
+    .end((err, res) => {
+      if (err) { return notify.error(err) }
+      notify.success('User successfully logged out')
+      Dispatcher.dispatch({ actionType: MeConstants.LOG_OUT })
+    })
+}
+
 function signUp(data) {
   request.post('/api/users/register')
     .set('Content-Type', 'application/json')
@@ -57,14 +67,13 @@ function signUp(data) {
     .end((err, res) => {
       if (err) { return notify.error(res.body) }
 
-      notify.success('User successfully registered. Now you can login.')
+      notify.success('User successfully registered. Now you can log in.')
       hideSignUp()
     })
 }
 
-let UserActions = {
-  login: login,
+export default {
+  logIn: logIn,
+  logOut: logOut,
   signUp: signUp
 }
-
-export default UserActions

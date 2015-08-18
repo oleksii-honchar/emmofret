@@ -7,7 +7,8 @@ var User = $require('models/user')
 
 module.exports = function (router) {
   router.get('/users/current', [ apiHelpers.allowLogged, usersCtrl.current ])
-  router.post('/users/login', usersCtrl.login)
+  router.post('/users/log-in', usersCtrl.logIn)
+  router.post('/users/log-out', usersCtrl.logOut)
   router.post('/users/register', usersCtrl.register)
 
   router.use('/users', apiHelpers.buildCRUD(User, {

@@ -1,4 +1,5 @@
 import ModalActions from '../actions/ModalActions.js'
+import UserActions from '../actions/UserActions.js'
 import MeStore from '../stores/MeStore.js'
 import _ from 'lodash'
 
@@ -43,7 +44,7 @@ class UserNavbar extends React.Component {
       let fullName = `${this.state.store.firstName} ${this.state.store.lastName}`
       let title = (
         <span className='user-pic'>
-          <img src='/public/images/user-unknown.png'/>
+          <img src='/public/images/avatar-flat-man-1.png'/>
           {fullName}
         </span>
       )
@@ -51,7 +52,7 @@ class UserNavbar extends React.Component {
       return (
         <Nav data-class='UserNavbar' navbar right >
           <DropdownButton title={title}>
-            <MenuItem>Logout</MenuItem>
+            <MenuItem onSelect={UserActions.logOut}>Logout</MenuItem>
           </DropdownButton>
         </Nav>
       )

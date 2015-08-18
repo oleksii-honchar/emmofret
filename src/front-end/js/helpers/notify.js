@@ -1,6 +1,18 @@
 import zIndexConstants from '../constants/zIndexConstands.js'
 import _ from 'lodash'
 
+let commonOpts = {
+  z_index: zIndexConstants.notify,
+  animate: {
+    enter: 'animated flipInX',
+    exit: 'animated flipOutX'
+  },
+  placement: {
+    from: 'top',
+    align: 'center'
+  }
+}
+
 export function error (body) {
   let msg = ''
 
@@ -18,31 +30,21 @@ export function error (body) {
     }
   }
 
-  $.notify({
-    message: msg
-  }, {
+  let opts = _.extend({
     type: 'danger',
     delay: 5000,
-    z_index: zIndexConstants.notify,
-    animate: {
-      enter: 'animated flipInX',
-      exit: 'animated flipOutX'
-    }
-  })
+  }, commonOpts)
+
+  $.notify({ message: msg }, opts)
 }
 
 export function success (msg) {
-  $.notify({
-    message: msg
-  }, {
+  let opts = _.extend({
     type: 'success',
     delay: 5000,
-    z_index: zIndexConstants.notify,
-    animate: {
-      enter: 'animated flipInX',
-      exit: 'animated flipOutX'
-    }
-  })
+  }, commonOpts)
+
+  $.notify({ message: msg }, opts)
 }
 
 export default {

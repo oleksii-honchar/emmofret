@@ -41,6 +41,11 @@ let Collection = Backbone.Collection.extend({
       case MeConstants.SET_TOKEN:
         self.token = payload.data
         break
+      case MeConstants.LOG_OUT:
+        self.token = null
+        self.me.clear()
+        delete window.sessionStorage.me
+        break
       default:
       // no op
     }
@@ -63,6 +68,4 @@ if (_.has(window.sessionStorage, 'me')) {
 let Me = new Model(data)
 let Store = new Collection([Me])
 
-// TODO: debug only
-//window.MeStore = Store
 export default Store

@@ -1,7 +1,7 @@
 /* global before, after, it, expect, faker, describe, helpers */
 var request = require('superagent')
 
-describe('login', function () {
+describe('log in', function () {
    var currUser
   var userData = {
     email: faker.internet.email(),
@@ -10,7 +10,7 @@ describe('login', function () {
     lastName: faker.name.lastName()
   }
 
-  var testUrl = helpers.variables.apiEndpoint + '/users/login'
+  var testUrl = helpers.variables.apiEndpoint + '/users/log-in'
 
   before(helpers.start)
   before((next) => {
@@ -21,7 +21,7 @@ describe('login', function () {
   })
   after(helpers.stop)
 
-  it('login user', function (next) {
+  it('log in user', function (next) {
     request.post(testUrl)
       .send(userData)
       .set('Accept', 'application/json')

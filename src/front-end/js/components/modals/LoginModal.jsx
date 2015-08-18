@@ -25,7 +25,7 @@ class LoginModal extends React.Component{
     this.state = _.extend(this.state, this.getStoreState()) // -> {store: object}
 
     this.onChangeStore = this.onChangeStore.bind(this)
-    this.login = this.login.bind(this)
+    this.login = this.logIn.bind(this)
     this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
     this.onChangeFormState = this.onChangeFormState.bind(this)
     this.submitOnReturn = this.submitOnReturn.bind(this)
@@ -70,13 +70,13 @@ class LoginModal extends React.Component{
     return res
   }
 
-  login () {
+  logIn () {
     let credentials = {
       email : this.state.form.email.value,
       password : this.state.form.password.value
     }
 
-    UserActions.login(credentials)
+    UserActions.logIn(credentials)
   }
 
   onChangeStore () {
@@ -126,7 +126,7 @@ class LoginModal extends React.Component{
           <PasswordInput onSave={this.onChangeFormState('password')} {...inputProps}/>
         </Body>
         <Footer>
-          <Button bsStyle='primary' onClick={this.login} {...btnProps}>Log in</Button>
+          <Button bsStyle='primary' onClick={this.logIn} {...btnProps}>Log in</Button>
         </Footer>
       </Modal>
     )
