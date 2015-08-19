@@ -32,12 +32,12 @@ class LoginModal extends React.Component{
   }
 
   componentDidMount () {
-    ModalStore.addChangeListener(this.onChangeStore)
+    ModalStore.on('change', this.onChangeStore)
     this.mounted = true
   }
 
   componentWillUnmount () {
-    ModalStore.removeChangeListener(this.onChangeStore)
+    ModalStore.off('change', this.onChangeStore, this)
     this.mounted = false
   }
 
@@ -46,6 +46,7 @@ class LoginModal extends React.Component{
   }
 
   checkSubmitBtnState () {
+    if(!this.mounted) return
     let isAllValid =  _.every(this.state.form, (prop, key) => {
       if (_.isObject(prop)) {
         return !_.isEmpty(prop.value)
@@ -58,14 +59,14 @@ class LoginModal extends React.Component{
 
   getStoreState () {
     return {
-      store: ModalStore.getState().get('login')
+      store: _.findWhere(ModalStore.getState(), { name:'login' })
     }
   }
 
   getClassName () {
     let res = ''
-    if (this.state.store.get('shaking')) {
-      res = `shake shake-constant shake-${this.state.store.get('shakeStyle')}`
+    if (this.state.store.isShaking) {
+      res = `shake shake-constant shake-${this.state.store.shakeStyle}`
     }
     return res
   }
@@ -82,7 +83,10 @@ class LoginModal extends React.Component{
   onChangeStore () {
     if(!this.mounted) return
 
-    this.setState(this.getStoreState())
+    let state = this.getStoreState()
+    if(state.store.isOpen) {
+      this.setState(this.getStoreState())
+    }
   }
 
   onChangeFormState (propName) {
@@ -116,7 +120,7 @@ class LoginModal extends React.Component{
     }
 
     return (
-      <Modal show={this.state.store.get('isOpen')} onHide={this.close} bsSize='sm'
+      <Modal show={this.state.store.isOpen} onHide={this.close} bsSize='sm'
              dialogClassName={this.getClassName()}>
         <Header closeButton>
           <Title>Login</Title>
