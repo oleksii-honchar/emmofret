@@ -87,6 +87,7 @@ class PasswordInput extends React.Component {
     return (
       <div>
         <Input
+          name='password'
           addonBefore={icon}
           type={type} ref='PasswordInput'
           id={this.props.id}

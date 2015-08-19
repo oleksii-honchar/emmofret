@@ -25,7 +25,7 @@ class LoginModal extends React.Component{
     this.state = _.extend(this.state, this.getStoreState()) // -> {store: object}
 
     this.onChangeStore = this.onChangeStore.bind(this)
-    this.login = this.logIn.bind(this)
+    this.logIn = this.logIn.bind(this)
     this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
     this.onChangeFormState = this.onChangeFormState.bind(this)
     this.submitOnReturn = this.submitOnReturn.bind(this)
@@ -97,7 +97,7 @@ class LoginModal extends React.Component{
 
   submitOnReturn (e) {
     if(e.charCode === 13 && this.state.isFormCompleted) {
-      this.login()
+      this.logIn()
     }
   }
 
@@ -122,8 +122,10 @@ class LoginModal extends React.Component{
           <Title>Login</Title>
         </Header>
         <Body>
-          <EmailInput autoFocus onSave={this.onChangeFormState('email')} {...inputProps}/>
-          <PasswordInput onSave={this.onChangeFormState('password')} {...inputProps}/>
+          <form>
+            <EmailInput autoFocus onSave={this.onChangeFormState('email')} {...inputProps}/>
+            <PasswordInput onSave={this.onChangeFormState('password')} {...inputProps}/>
+          </form>
         </Body>
         <Footer>
           <Button bsStyle='primary' onClick={this.logIn} {...btnProps}>Log in</Button>
