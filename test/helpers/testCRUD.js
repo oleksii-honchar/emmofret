@@ -63,7 +63,7 @@ var defaults = {
   },
   'list-paginated': {
     header: () => { return _.result(currOptions['patch-valid'], 'header') },
-    path: () => { return '?' + qs.stringify(_.result(this, 'data')) },
+    path: () => { return '?' + qs.stringify(_.result(currOptions['list-paginated'], 'data')) },
     data: () => {
       var largerCursor = moment(currDoc.created).add(1, 'second').toObjectId()
       return {
@@ -228,7 +228,7 @@ function createTestCRUDFunction (baseUrl, options) {
 
           request[method](actionUrl)
             .set(header)
-            .send(opt.data)
+            .send(_.result(opt, 'data'))
             .end((err, res) => {
               _.each(opt.expects, (fn) => {
                 _.isFunction(fn) && fn(err, res)

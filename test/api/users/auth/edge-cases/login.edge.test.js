@@ -10,7 +10,7 @@ describe('[EDGE CASES] login', function () {
     lastName: faker.name.lastName()
   }
 
-  var testUrl = helpers.variables.apiEndpoint + '/users/login'
+  var testUrl = helpers.variables.apiEndpoint + '/users/log-in'
 
   before(helpers.start)
   before((next) => {
