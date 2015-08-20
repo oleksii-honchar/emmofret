@@ -1,6 +1,7 @@
 import UserNavbar from './UserNavbar.jsx'
 
-let { Link } = Router
+import { Link } from 'react-router'
+
 let { Nav, Navbar, NavItem, CollapsibleNav } = RB
 let { NavItemLink } = RRB
 
