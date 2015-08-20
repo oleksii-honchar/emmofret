@@ -5,7 +5,7 @@ import SignUpModal from './SignUpModal.jsx'
 
 import _ from 'lodash'
 
-class ModalContainer extends React.Component {
+export default class ModalContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = this.getStoreState()
@@ -56,5 +56,3 @@ class ModalContainer extends React.Component {
     )
   }
 }
-
-export default ModalContainer

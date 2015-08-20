@@ -10,7 +10,7 @@ import _ from 'lodash'
 let { Modal, Button } = RB
 let { Header, Body, Title, Footer } = Modal
 
-class LoginModal extends React.Component{
+export default class LoginModal extends React.Component{
   constructor(props) {
     super(props)
 
@@ -135,5 +135,3 @@ class LoginModal extends React.Component{
     )
   }
 }
-
-export default LoginModal

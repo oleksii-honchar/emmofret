@@ -10,7 +10,7 @@ import PasswordInput from '../inputs/PasswordInput.jsx'
 let { Modal, Button } = RB
 let { Header, Body, Title, Footer } = Modal
 
-class SignUpModal extends React.Component{
+export default class SignUpModal extends React.Component{
   constructor(props) {
     super(props)
 
@@ -126,5 +126,3 @@ class SignUpModal extends React.Component{
     )
   }
 }
-
-export default SignUpModal

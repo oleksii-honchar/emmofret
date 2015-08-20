@@ -32,9 +32,6 @@ class App extends React.Component {
 
     let transitionPath = RouterStore.nextTransitionPath || '/';
 
-    console.log("*** App onChangeLoggedInState event: isLoggedIn=", this.state.isLoggedIn,
-      "nextTransitionPath=", transitionPath);
-
     if(this.state.isLoggedIn){
       router.transitionTo(transitionPath);
     }else{

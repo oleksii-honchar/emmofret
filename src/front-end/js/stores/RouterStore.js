@@ -6,15 +6,14 @@ import Backbone from 'backbone'
 class Store {
   constructor() {
     this.nextRouterPath = null
+    this.dispatchToken = Dispatcher.register(this.dispatchCallback.bind(this))
   }
   dispatchCallback (payload) {
     let self = this
-    if (!this.me)
-      this.me = this.models[0]
 
     switch(payload.actionType) {
       case RouterConstants.NEXT_TRANSITION_PATH:
-        this.nextRouterPath = payload.data
+        self.nextRouterPath = payload.data
         break
       default:
       // no op
