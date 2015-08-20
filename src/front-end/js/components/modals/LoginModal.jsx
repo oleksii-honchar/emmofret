@@ -47,13 +47,13 @@ class LoginModal extends React.Component{
 
   checkSubmitBtnState () {
     if(!this.mounted) return
+
     let isAllValid =  _.every(this.state.form, (prop, key) => {
       if (_.isObject(prop)) {
         return !_.isEmpty(prop.value)
       } else
         return false
     })
-
     this.setState({ isFormCompleted : isAllValid })
   }
 
@@ -83,10 +83,7 @@ class LoginModal extends React.Component{
   onChangeStore () {
     if(!this.mounted) return
 
-    let state = this.getStoreState()
-    if(state.store.isOpen) {
-      this.setState(this.getStoreState())
-    }
+    this.setState(this.getStoreState())
   }
 
   onChangeFormState (propName) {

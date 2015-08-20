@@ -32,6 +32,8 @@ class SignUpModal extends React.Component{
   }
 
   checkSubmitBtnState () {
+    if(!this.mounted) return
+
     let isAllValid =  _.every(this.state.form, (prop, key) => {
       if (_.isObject(prop)) {
         return prop.isValid
@@ -44,17 +46,17 @@ class SignUpModal extends React.Component{
 
   getStoreState () {
     return {
-      store: ModalStore.getState().get('sign-up')
+      store: _.findWhere(ModalStore.getState(), { name:'sign-up' })
     }
   }
 
   componentDidMount () {
-    ModalStore.addChangeListener(this.onChangeStore)
+    ModalStore.on('change', this.onChangeStore)
     this.mounted = true
   }
 
   componentWillUnmount () {
-    ModalStore.removeChangeListener(this.onChangeStore)
+    ModalStore.off('change', this.onChangeStore, this)
     this.mounted = false
   }
 
@@ -108,7 +110,7 @@ class SignUpModal extends React.Component{
     }
 
     return (
-      <Modal show={this.state.store.get('isOpen')} onHide={this.close} bsSize='sm'>
+      <Modal show={this.state.store.isOpen} onHide={this.close} bsSize='sm'>
         <Header closeButton>
           <Title>Sign up</Title>
         </Header>

@@ -1,7 +1,7 @@
 import zIndexConstants from '../constants/zIndexConstands.js'
 import _ from 'lodash'
 
-let commonOpts = {
+$.notifyDefaults({
   z_index: zIndexConstants.notify,
   animate: {
     enter: 'animated flipInX',
@@ -11,7 +11,7 @@ let commonOpts = {
     from: 'top',
     align: 'center'
   }
-}
+})
 
 export function error (body) {
   let msg = ''
@@ -30,19 +30,19 @@ export function error (body) {
     }
   }
 
-  let opts = _.extend({
+  let opts = {
     type: 'danger',
-    delay: 5000,
-  }, commonOpts)
+    delay: 5000
+  }
 
   $.notify({ message: msg }, opts)
 }
 
 export function success (msg) {
-  let opts = _.extend({
+  let opts = {
     type: 'success',
-    delay: 5000,
-  }, commonOpts)
+    delay: 5000
+  }
 
   $.notify({ message: msg }, opts)
 }

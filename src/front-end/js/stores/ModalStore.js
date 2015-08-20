@@ -56,15 +56,15 @@ let Collection = Backbone.Collection.extend({
   },
 
   shake (modalName) {
-    console.log('shake pending')
-    //this.state = this.state.setIn([modalName, 'shaking'], true)
-    //  .setIn([modalName, 'shakeStyle'], 'horizontal')
-    //this.emitChange()
-    //
-    //setTimeout( function () {
-    //  this.state = this.state.setIn([modalName, 'shaking'], false)
-    //  this.emitChange()
-    //}.bind(this), 300)
+    let modal = this.findWhere({ name: modalName })
+    modal.set({
+      isShaking: true,
+      shakeStyle: 'horizontal'
+    })
+
+    setTimeout( function () {
+      modal.set('isShaking', false)
+    }.bind(this), 300)
   },
 
   show: function (modalName) {
