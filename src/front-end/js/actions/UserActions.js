@@ -1,7 +1,6 @@
 import Dispatcher from '../dispatcher.js'
 import UserConstants from '../constants/UserConstants.js'
 import ModalConstants from '../constants/ModalConstants.js'
-import MeConstants from '../constants/MeConstants.js'
 import notify from '../helpers/notify.js'
 import request from 'superagent'
 import _ from 'lodash'
@@ -27,7 +26,6 @@ function shakeLogin () {
   })
 }
 
-
 function logIn (data) {
   request.post('/api/users/log-in')
     .set('Content-Type', 'application/json')
@@ -42,11 +40,11 @@ function logIn (data) {
       hideLogin()
 
       Dispatcher.dispatch({
-        actionType: MeConstants.SET_TOKEN,
+        actionType: UserConstants.LOG_IN,
         data: res.body.token
       })
 
-      Dispatcher.dispatch({ actionType: MeConstants.FETCH_CURRENT })
+      Dispatcher.dispatch({ actionType: UserConstants.FETCH_CURRENT })
     })
 }
 
@@ -56,7 +54,7 @@ function logOut () {
     .end((err, res) => {
       if (err) { return notify.error(err) }
       notify.success('User successfully logged out')
-      Dispatcher.dispatch({ actionType: MeConstants.LOG_OUT })
+      Dispatcher.dispatch({ actionType: UserConstants.LOG_OUT })
     })
 }
 

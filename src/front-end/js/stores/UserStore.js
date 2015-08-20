@@ -1,7 +1,6 @@
 import Dispatcher from '../dispatcher.js'
 
 import UserConstants from '../constants/UserConstants.js'
-import MeConstants from '../constants/MeConstants.js'
 import ModalStore from '../stores/ModalStore.js'
 
 import _ from 'lodash'
@@ -25,34 +24,46 @@ let Collection = Backbone.Collection.extend({
       this.me = this.models[0]
 
     switch(payload.actionType) {
-      case MeConstants.FETCH_CURRENT:
-        self.me.fetch({
-          headers: {
-            authorization: this.token
-          },
-          success: function (body) {
-            window.sessionStorage.me = JSON.stringify(body)
-          },
-          error: function (err) {
-            notify.error(err)
-          }
-        })
+      case UserConstants.FETCH_CURRENT:
+        self.fetchCurrent()
         break
-      case MeConstants.SET_TOKEN:
+      case UserConstants.LOG_IN:
         self.token = payload.data
         break
-      case MeConstants.LOG_OUT:
-        self.token = null
-        self.me.clear()
-        delete window.sessionStorage.me
+      case UserConstants.LOG_OUT:
+        self.logOut()
         break
       default:
       // no op
     }
   },
 
+  fetchCurrent: function () {
+    this.me.fetch({
+      headers: {
+        authorization: this.token
+      },
+      success: function (body) {
+        window.sessionStorage.me = JSON.stringify(body)
+      },
+      error: function (err) {
+        notify.error(err)
+      }
+    })
+  },
+
   getState: function () {
     return this.toJSON()[0]
+  },
+
+  isLoggedIn: function () {
+    return _.has(this.toJSON()[0], 'id')
+  },
+
+  logOut: function () {
+    this.token = null
+    this.me.clear()
+    delete window.sessionStorage.me
   }
 })
 

@@ -1,6 +1,6 @@
 import ModalActions from '../actions/ModalActions.js'
 import UserActions from '../actions/UserActions.js'
-import MeStore from '../stores/MeStore.js'
+import UserStore from '../stores/UserStore.js'
 import _ from 'lodash'
 
 let { Nav, NavItem, DropdownButton, MenuItem } = RB
@@ -13,17 +13,17 @@ class UserNavbar extends React.Component {
   }
 
   componentDidMount () {
-    MeStore.on('change', this.onChangeStore)
+    UserStore.on('change', this.onChangeStore)
     window.UserNavbar = this
   }
 
   componentWillUnmount () {
-    MeStore.off('change', this.onChangeStore, this)
+    UserStore.off('change', this.onChangeStore, this)
   }
 
   getStoreState () {
     return {
-      store: MeStore.getState()
+      store: UserStore.getState()
     }
   }
 
