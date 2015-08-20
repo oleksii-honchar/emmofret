@@ -113,7 +113,8 @@
     "ignore": [
       "**/build/**",
       "**/public/**",
-      "**/uploads/**"
+      "**/uploads/**",
+      "**/labelauty.js"
     ],
     "parser": "babel-eslint"
   },

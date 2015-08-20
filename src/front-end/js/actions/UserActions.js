@@ -32,7 +32,7 @@ function logIn (data) {
     .send(_.pick(data, ['email', 'password']))
     .end((err, res) => {
       if (err) {
-        if(err.status !== 401) { notify.error(err) }
+        if (err.status !== 401) { notify.error(err) }
         return shakeLogin()
       }
 
@@ -58,7 +58,7 @@ function logOut () {
     })
 }
 
-function signUp(data) {
+function signUp (data) {
   request.post('/api/users/register')
     .set('Content-Type', 'application/json')
     .send(_.pick(data, ['firstName', 'lastName', 'email', 'password']))

@@ -1,3 +1,4 @@
+/* global RB, React */
 import UserActions from '../../actions/UserActions.js'
 import ModalActions from '../../actions/ModalActions.js'
 import ModalStore from '../../stores/ModalStore.js'
@@ -11,7 +12,7 @@ let { Modal, Button } = RB
 let { Header, Body, Title, Footer } = Modal
 
 export default class LoginModal extends React.Component{
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {

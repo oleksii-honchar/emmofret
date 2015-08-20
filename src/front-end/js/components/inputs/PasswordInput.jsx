@@ -1,8 +1,9 @@
+/* global RB, React, Icon */
 let { Input, ProgressBar } = RB
 import _ from 'lodash'
 
-class PasswordInput extends React.Component {
-  constructor(props) {
+export default class PasswordInput extends React.Component {
+  constructor (props) {
     super(props)
     this.state = _.clone(props)
     this.onSave = this.onSave.bind(this)
@@ -36,13 +37,13 @@ class PasswordInput extends React.Component {
   getValidationProgress () {
     let score = this.state.validationScore
     let maxScore = this.state.maxValidationScore
-    let now = Math.trunc((score/maxScore)*100)
+    let now = Math.trunc((score / maxScore) * 100)
     let labels = ['weird', 'weakest', 'weak', 'better', 'good', 'ok']
     let styles = ['danger', 'danger', 'danger', 'warning', 'warning', 'success']
     let props = {
       now: now,
       bsStyle: styles[score],
-      label : labels[score],
+      label: labels[score],
       active: score < maxScore,
       'data-class': 'PasswordProgressBar'
     }
@@ -57,7 +58,7 @@ class PasswordInput extends React.Component {
     this.setState({
       value: value,
       validationScore: score,
-      isValid : score === this.state.maxValidationScore ? true : false
+      isValid: score === this.state.maxValidationScore
     })
 
     _.debounce(this.onSave, 300)()
@@ -81,7 +82,7 @@ class PasswordInput extends React.Component {
       props.bsStyle = this.getValidationState()
       validationProgress = this.getValidationProgress()
     } else
-      validationProgress  = null
+      validationProgress = null
 
     let type = this.props.visible ? 'text' : 'password'
     return (
@@ -92,7 +93,6 @@ class PasswordInput extends React.Component {
           type={type} ref='PasswordInput'
           id={this.props.id}
           className={this.props.className}
-          placeholder={this.props.placeholder}
           hasFeedback
           value={this.state.value}
           onChange={this.onChange}
@@ -115,7 +115,8 @@ PasswordInput.propTypes = {
   className: React.PropTypes.string,
   isValid: React.PropTypes.bool,
   maxValidationScore: React.PropTypes.number,
-  visible: React.PropTypes.bool
+  visible: React.PropTypes.bool,
+  noValidation: React.PropTypes.bool
 }
 
 PasswordInput.defaultProps = {
@@ -124,5 +125,3 @@ PasswordInput.defaultProps = {
   maxValidationScore: 5,
   visible: false
 }
-
-export default PasswordInput

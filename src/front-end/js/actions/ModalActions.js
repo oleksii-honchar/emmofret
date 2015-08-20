@@ -1,3 +1,4 @@
+/* global $ */
 import Dispatcher from '../dispatcher.js'
 import ModalConstants from '../constants/ModalConstants.js'
 

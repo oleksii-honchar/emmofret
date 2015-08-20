@@ -1,3 +1,4 @@
+/* global React */
 import ModalStore from '../../stores/ModalStore.js'
 import ModalActions from '../../actions/ModalActions.js'
 import LoginModal from './LoginModal.jsx'
@@ -6,7 +7,7 @@ import SignUpModal from './SignUpModal.jsx'
 import _ from 'lodash'
 
 export default class ModalContainer extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = this.getStoreState()
 

@@ -1,9 +1,10 @@
+/* global RB, React, Icon */
 import _ from 'lodash'
 
 let { Input } = RB
 
 class EmailInput extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = _.clone(props)
     this.onSave = this.onSave.bind(this)
@@ -30,7 +31,7 @@ class EmailInput extends React.Component {
 
     this.setState({
       value: value,
-      isValid : isValid
+      isValid: isValid
     })
 
     _.debounce(this.onSave, 300)()

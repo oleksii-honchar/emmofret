@@ -1,6 +1,5 @@
 var gulp = require('gulp')
 var gstylus = require('gulp-stylus')
-var stylus = require('stylus')
 var sourcemaps = require('gulp-sourcemaps')
 var autoprefixer = require('autoprefixer-stylus')
 var browserSync = require('browser-sync')
@@ -18,8 +17,8 @@ gulp.task('style', function () {
       use: autoprefixer(),
       'include css': true
       //define: {
-      //  url: stylus.resolver()
-      //}
+      // url: stylus.resolver()
+      // }
     }))
     .pipe(debug())
     .on('error', gutil.log)

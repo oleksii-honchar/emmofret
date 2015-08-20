@@ -1,8 +1,9 @@
+/* global RB, React, Icon */
 let { Input } = RB
 import _ from 'lodash'
 
-class FullNameInput extends React.Component {
-  constructor(props) {
+export default class FullNameInput extends React.Component {
+  constructor (props) {
     super(props)
     this.state = _.clone(props)
     this.onSave = this.onSave.bind(this)
@@ -36,7 +37,7 @@ class FullNameInput extends React.Component {
 
     this.setState({
       value: value,
-      isValid : isValid
+      isValid: isValid
     })
 
     _.debounce(this.onSave, 300)()
@@ -97,5 +98,3 @@ FullNameInput.defaultProps = {
   noValidation: false,
   autoFocus: false
 }
-
-export default FullNameInput

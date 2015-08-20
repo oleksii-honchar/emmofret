@@ -1,4 +1,5 @@
-class HelloWorld extends React.Component {
+/* global React */
+export default class HelloWorld extends React.Component {
   render () {
     return (
       <div className='container-fluid'>
@@ -9,5 +10,3 @@ class HelloWorld extends React.Component {
     )
   }
 }
-
-export default HelloWorld

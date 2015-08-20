@@ -1,3 +1,4 @@
+/* global RB, React */
 import ModalActions from '../actions/ModalActions.js'
 import UserActions from '../actions/UserActions.js'
 import UserStore from '../stores/UserStore.js'
@@ -5,8 +6,8 @@ import _ from 'lodash'
 
 let { Nav, NavItem, DropdownButton, MenuItem } = RB
 
-class UserNavbar extends React.Component {
-  constructor(props) {
+export default class UserNavbar extends React.Component {
+  constructor (props) {
     super(props)
     this.state = this.getStoreState()
     this.onChangeStore = this.onChangeStore.bind(this)
@@ -40,7 +41,7 @@ class UserNavbar extends React.Component {
   }
 
   render () {
-    if(_.has(this.state.store,'id')) {
+    if (_.has(this.state.store, 'id')) {
       let fullName = `${this.state.store.firstName} ${this.state.store.lastName}`
       let title = (
         <span className='user-pic'>
@@ -66,5 +67,3 @@ class UserNavbar extends React.Component {
     }
   }
 }
-
-export default UserNavbar
