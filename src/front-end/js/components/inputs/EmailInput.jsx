@@ -54,6 +54,7 @@ class EmailInput extends React.Component {
 
     return (
       <Input
+        name='email'
         addonBefore={icon}
         type='text' ref='EmailInput'
         id={this.props.id}

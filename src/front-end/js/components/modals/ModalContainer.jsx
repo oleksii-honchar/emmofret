@@ -3,44 +3,50 @@ import ModalActions from '../../actions/ModalActions.js'
 import LoginModal from './LoginModal.jsx'
 import SignUpModal from './SignUpModal.jsx'
 
+import _ from 'lodash'
+
 class ModalContainer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = this.getState()
+    this.state = this.getStoreState()
+
+    this.onChangeStore = this.onChangeStore.bind(this)
   }
 
-  getState () {
+  getStoreState () {
     return {
-      data : ModalStore.getState()
+      store: ModalStore.getState()
     }
   }
 
   componentDidMount () {
-    ModalStore.addChangeListener(this.onChange.bind(this))
+    ModalStore.on('change', this.onChangeStore)
   }
 
   componentWillUnmount () {
-    ModalStore.removeChangeListener(this.onChange.bind(this))
+    ModalStore.off('change', this.onChangeStore, this)
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    let currEntry = this.state.data.findEntry( (modal) => modal.get('isOpen') )
-    let nextEntry = nextState.data.findEntry( (modal) => modal.get('isOpen') )
+    let currMdlName = _.result(_.findWhere(this.state.store, { isOpen: true }), 'name')
+    let nextMdlName = _.result(_.findWhere(nextState.store, { isOpen: true }), 'name')
 
-    return !currEntry || !nextEntry || currEntry[0] !== nextEntry[0]
+    return !currMdlName || !nextMdlName || currMdlName !== nextMdlName
   }
 
-  onChange () { this.setState(this.getState()) }
+  onChangeStore () {
+    this.setState(this.getStoreState())
+  }
 
   render () {
-    let entry = this.state.data.findEntry( (modal) => modal.get('isOpen') )
+    let modalName = _.result(_.findWhere(this.state.store, { isOpen: true }), 'name')
     let modalCmp = null
 
-    if (!entry)
+    if (!modalName)
       modalCmp = null
-    else if (entry[0] == 'login')
+    else if (modalName == 'login')
       modalCmp = ( <LoginModal /> )
-    else if (entry[0] == 'sign-up')
+    else if (modalName == 'sign-up')
       modalCmp = ( <SignUpModal /> )
 
     return (

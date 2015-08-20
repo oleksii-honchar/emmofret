@@ -25,18 +25,20 @@ class LoginModal extends React.Component{
     this.state = _.extend(this.state, this.getStoreState()) // -> {store: object}
 
     this.onChangeStore = this.onChangeStore.bind(this)
-    this.login = this.login.bind(this)
+    this.logIn = this.logIn.bind(this)
     this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
     this.onChangeFormState = this.onChangeFormState.bind(this)
     this.submitOnReturn = this.submitOnReturn.bind(this)
   }
 
   componentDidMount () {
-    ModalStore.addChangeListener(this.onChangeStore)
+    ModalStore.on('change', this.onChangeStore)
+    this.mounted = true
   }
 
   componentWillUnmount () {
-    ModalStore.removeChangeListener(this.onChangeStore)
+    ModalStore.off('change', this.onChangeStore, this)
+    this.mounted = false
   }
 
   close () {
@@ -44,40 +46,43 @@ class LoginModal extends React.Component{
   }
 
   checkSubmitBtnState () {
+    if(!this.mounted) return
+
     let isAllValid =  _.every(this.state.form, (prop, key) => {
       if (_.isObject(prop)) {
         return !_.isEmpty(prop.value)
       } else
         return false
     })
-
     this.setState({ isFormCompleted : isAllValid })
   }
 
   getStoreState () {
     return {
-      store: ModalStore.getState().get('login')
+      store: _.findWhere(ModalStore.getState(), { name:'login' })
     }
   }
 
   getClassName () {
     let res = ''
-    if (this.state.store.get('shaking')) {
-      res = `shake shake-constant shake-${this.state.store.get('shakeStyle')}`
+    if (this.state.store.isShaking) {
+      res = `shake shake-constant shake-${this.state.store.shakeStyle}`
     }
     return res
   }
 
-  login () {
+  logIn () {
     let credentials = {
       email : this.state.form.email.value,
       password : this.state.form.password.value
     }
 
-    UserActions.login(credentials)
+    UserActions.logIn(credentials)
   }
 
   onChangeStore () {
+    if(!this.mounted) return
+
     this.setState(this.getStoreState())
   }
 
@@ -93,7 +98,7 @@ class LoginModal extends React.Component{
 
   submitOnReturn (e) {
     if(e.charCode === 13 && this.state.isFormCompleted) {
-      this.login()
+      this.logIn()
     }
   }
 
@@ -112,17 +117,19 @@ class LoginModal extends React.Component{
     }
 
     return (
-      <Modal show={this.state.store.get('isOpen')} onHide={this.close} bsSize='sm'
+      <Modal show={this.state.store.isOpen} onHide={this.close} bsSize='sm'
              dialogClassName={this.getClassName()}>
         <Header closeButton>
           <Title>Login</Title>
         </Header>
         <Body>
-          <EmailInput autoFocus onSave={this.onChangeFormState('email')} {...inputProps}/>
-          <PasswordInput onSave={this.onChangeFormState('password')} {...inputProps}/>
+          <form>
+            <EmailInput autoFocus onSave={this.onChangeFormState('email')} {...inputProps}/>
+            <PasswordInput onSave={this.onChangeFormState('password')} {...inputProps}/>
+          </form>
         </Body>
         <Footer>
-          <Button bsStyle='primary' onClick={this.login} {...btnProps}>Log in</Button>
+          <Button bsStyle='primary' onClick={this.logIn} {...btnProps}>Log in</Button>
         </Footer>
       </Modal>
     )

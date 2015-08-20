@@ -1,78 +1,94 @@
 import Dispatcher from '../dispatcher.js'
 import ModalConstants from '../constants/ModalConstants.js'
 import _ from 'lodash'
-import {EventEmitter} from 'events'
-import Immutable from 'immutable'
+import Backbone from 'backbone'
 
-const CHANGE_EVENT = 'change-modal'
+//import {EventEmitter} from 'events'
+//import Immutable from 'immutable'
 
-var modals = Immutable.fromJS({
-  'login': { isOpen : false },
-  'sign-up': { isOpen : false }
+let schema = {
+  id: 'schemas/modals',
+  title: 'Modal',
+  type: 'object',
+  properties: {
+    name : { type: 'string', required: true },
+    isOpen : { type: 'string', required: true} ,
+    isShaking : { type: 'boolean' },
+    shakeStyle : { type: 'string' }
+  }
+}
+let Model = Backbone.Model.extend({
+  type: 'modal',
+  schema: schema
 })
 
+let Collection = Backbone.Collection.extend({
+  model: Model,
 
-var Store = _.assign({ state: modals }, EventEmitter.prototype, {
-  emitChange () {
-    this.emit(CHANGE_EVENT)
+  initialize: function () {
+    this.dispatchToken = Dispatcher.register(this.dispatchCallback.bind(this))
   },
 
-  addChangeListener (cb) {
-    this.on(CHANGE_EVENT, cb)
+  dispatchCallback: function (payload) {
+    let self = this
+
+    switch(payload.actionType) {
+      case ModalConstants.SHAKE_MODAL:
+        self.shake(payload.data)
+        break
+      case ModalConstants.SHOW_MODAL:
+        self.show(payload.data)
+        break
+      case ModalConstants.HIDE_MODAL:
+        self.hide(payload.data)
+        break
+      default:
+        // no op
+    }
   },
 
-  removeChangeListener (cb) {
-    this.removeListener(CHANGE_EVENT, cb)
-  },
-
-  getState () {
-    return this.state;
+  getState: function () {
+    return this.toJSON()
   },
 
   hide (modalName) {
-    this.state = this.state.setIn([modalName, 'isOpen'], false)
-    this.emitChange()
+    this.findWhere({ name: modalName }).set('isOpen', false)
   },
 
   shake (modalName) {
-    this.state = this.state.setIn([modalName, 'shaking'], true)
-      .setIn([modalName, 'shakeStyle'], 'horizontal')
-    this.emitChange()
+    let modal = this.findWhere({ name: modalName })
+    modal.set({
+      isShaking: true,
+      shakeStyle: 'horizontal'
+    })
 
     setTimeout( function () {
-      this.state = this.state.setIn([modalName, 'shaking'], false)
-      this.emitChange()
+      modal.set('isShaking', false)
     }.bind(this), 300)
   },
 
-  show (modalName) {
-    this.state = this.state.map((opts, name) => {
-      var res
-      if (name === modalName)
-        res = opts.set('isOpen', true)
-      else
-        res = opts.set('isOpen', false)
-
-      return res
+  show: function (modalName) {
+    this.where({ isOpen: true }).forEach((modal) => {
+        modal.set('isOpen', false)
     })
-    this.emitChange()
+
+    this.findWhere({ name: modalName }).set('isOpen', true)
   }
+
 })
 
-Dispatcher.register( (action) => {
-  switch(action.actionType) {
-    case ModalConstants.SHAKE_MODAL:
-      Store.shake(action.data)
-      break
-    case ModalConstants.SHOW_MODAL:
-      Store.show(action.data)
-      break
-    case ModalConstants.HIDE_MODAL:
-      Store.hide(action.data)
-      break
-    default:
-      // no op
+
+let data = [
+  {
+    name: 'login',
+    isOpen : false
+  },
+  {
+    name: 'sign-up',
+    isOpen : false
   }
-})
-window.ModalStore = Store
+]
+
+let Store = new Collection(data)
+
 export default Store

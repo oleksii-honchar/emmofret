@@ -30,6 +30,7 @@
     "autoprefixer-stylus": "0.7.1",
     "babelify": "^6.1.3",
     "backbone": "^1.2.1",
+    "backbone-blueprint": "^0.3.1",
     "bcryptjs": "^2.2.0",
     "bluebird": "^2.9.34",
     "body-parser": "^1.13.2",

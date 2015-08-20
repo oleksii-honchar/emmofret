@@ -3,6 +3,7 @@ import ModalConstants from '../constants/ModalConstants.js'
 
 var ModalActions = {
   show: (modalName) => {
+    $.notifyClose()
     Dispatcher.dispatch({
       actionType: ModalConstants.SHOW_MODAL,
       data: modalName
@@ -10,6 +11,7 @@ var ModalActions = {
   },
 
   hide: (modalName) => {
+    $.notifyClose()
     Dispatcher.dispatch({
       actionType: ModalConstants.HIDE_MODAL,
       data: modalName
@@ -17,6 +19,7 @@ var ModalActions = {
   },
 
   shake: (modalName) => {
+    $.notifyClose()
     Dispatcher.dispatch({
       actionType: ModalConstants.SHAKE_MODAL,
       data: modalName
