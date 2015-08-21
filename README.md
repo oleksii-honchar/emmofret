@@ -1,2 +1,3 @@
 # emmofret
-express.js + mongoose + mocha/chai + flux + react.js + TWBP boilerplate
+## Full stack js boilerplate
+express.js + mongoose + mocha/chai + (flux + react.js + backbone.js) + TWBP 
