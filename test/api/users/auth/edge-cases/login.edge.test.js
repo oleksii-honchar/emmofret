@@ -39,4 +39,23 @@ describe('[EDGE CASES] login', function () {
         next()
       })
   })
+
+  it.skip('return error when try to log in logged user', (next) => {
+    var expectedRes = {
+      error: 'wrong credentials'
+    }
+
+    request.post(testUrl)
+      .send({
+        email: userData.email,
+        password: userData.password
+      })
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+        expect(err).to.be.an('object')
+        expect(res.statusCode).to.be.equal(401)
+        expect(res.body).to.be.deep.equal(expectedRes)
+        next()
+      })
+  })
 })
