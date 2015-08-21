@@ -1,7 +1,6 @@
 import Dispatcher from '../dispatcher.js'
 
 import UserConstants from '../constants/UserConstants.js'
-import ModalStore from '../stores/ModalStore.js'
 
 import _ from 'lodash'
 import Backbone from 'backbone'
@@ -20,10 +19,11 @@ let Collection = Backbone.Collection.extend({
 
   dispatchCallback: function (payload) {
     let self = this
-    if (!this.me)
+    if (!this.me) {
       this.me = this.models[0]
+    }
 
-    switch(payload.actionType) {
+    switch (payload.actionType) {
       case UserConstants.FETCH_CURRENT:
         self.fetchCurrent()
         break

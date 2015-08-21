@@ -1,20 +1,16 @@
 import Dispatcher from '../dispatcher.js'
 import ModalConstants from '../constants/ModalConstants.js'
-import _ from 'lodash'
 import Backbone from 'backbone'
-
-//import {EventEmitter} from 'events'
-//import Immutable from 'immutable'
 
 let schema = {
   id: 'schemas/modals',
   title: 'Modal',
   type: 'object',
   properties: {
-    name : { type: 'string', required: true },
-    isOpen : { type: 'string', required: true} ,
-    isShaking : { type: 'boolean' },
-    shakeStyle : { type: 'string' }
+    name: { type: 'string', required: true },
+    isOpen: { type: 'string', required: true },
+    isShaking: { type: 'boolean' },
+    shakeStyle: { type: 'string' }
   }
 }
 let Model = Backbone.Model.extend({
@@ -32,7 +28,7 @@ let Collection = Backbone.Collection.extend({
   dispatchCallback: function (payload) {
     let self = this
 
-    switch(payload.actionType) {
+    switch (payload.actionType) {
       case ModalConstants.SHAKE_MODAL:
         self.shake(payload.data)
         break
@@ -62,14 +58,14 @@ let Collection = Backbone.Collection.extend({
       shakeStyle: 'horizontal'
     })
 
-    setTimeout( function () {
+    setTimeout(function () {
       modal.set('isShaking', false)
-    }.bind(this), 300)
+    }, 300)
   },
 
   show: function (modalName) {
     this.where({ isOpen: true }).forEach((modal) => {
-        modal.set('isOpen', false)
+      modal.set('isOpen', false)
     })
 
     this.findWhere({ name: modalName }).set('isOpen', true)
@@ -77,15 +73,14 @@ let Collection = Backbone.Collection.extend({
 
 })
 
-
 let data = [
   {
     name: 'login',
-    isOpen : false
+    isOpen: false
   },
   {
     name: 'sign-up',
-    isOpen : false
+    isOpen: false
   }
 ]
 

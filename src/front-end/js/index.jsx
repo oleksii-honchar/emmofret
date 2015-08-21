@@ -1,4 +1,4 @@
-/* global React, Router */
+/* global React, $ */
 require('./vendor-config')
 
 window.React = require('react/addons')

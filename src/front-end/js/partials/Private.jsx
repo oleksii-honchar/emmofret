@@ -1,3 +1,4 @@
+/* global React */
 import Authenticated from '../components/helpers/Authenticated.jsx'
 
 export default Authenticated(class Private extends React.Component {

@@ -11,12 +11,12 @@ import PasswordInput from '../inputs/PasswordInput.jsx'
 let { Modal, Button } = RB
 let { Header, Body, Title, Footer } = Modal
 
-export default class SignUpModal extends React.Component{
+export default class SignUpModal extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      form : {
+      form: {
         fullName: '',
         email: '',
         password: ''
@@ -33,21 +33,22 @@ export default class SignUpModal extends React.Component{
   }
 
   checkSubmitBtnState () {
-    if(!this.mounted) return
+    if (!this.mounted) return
 
-    let isAllValid =  _.every(this.state.form, (prop, key) => {
+    let isAllValid = _.every(this.state.form, (prop, key) => {
       if (_.isObject(prop)) {
         return prop.isValid
-      } else
+      } else {
         return false
+      }
     })
 
-    this.setState({ isFormCompleted : isAllValid })
+    this.setState({ isFormCompleted: isAllValid })
   }
 
   getStoreState () {
     return {
-      store: _.findWhere(ModalStore.getState(), { name:'sign-up' })
+      store: _.findWhere(ModalStore.getState(), { name: 'sign-up' })
     }
   }
 
@@ -76,23 +77,23 @@ export default class SignUpModal extends React.Component{
   }
 
   onChangeStore () {
-    if(!this.mounted) return
+    if (!this.mounted) return
 
     this.setState(this.getStoreState())
   }
 
   signUp () {
     let data = {
-      firstName : this.state.form.fullName.firstName,
-      lastName : this.state.form.fullName.lastName,
-      email : this.state.form.email.value,
-      password : this.state.form.password.value
+      firstName: this.state.form.fullName.firstName,
+      lastName: this.state.form.fullName.lastName,
+      email: this.state.form.email.value,
+      password: this.state.form.password.value
     }
     UserActions.signUp(data)
   }
 
   submitOnReturn (e) {
-    if(e.charCode === 13 && this.state.isFormCompleted) {
+    if (e.charCode === 13 && this.state.isFormCompleted) {
       this.signUp()
     }
   }
@@ -107,7 +108,7 @@ export default class SignUpModal extends React.Component{
     }
 
     let inputProps = {
-      onKeyPress: this.submitOnReturn,
+      onKeyPress: this.submitOnReturn
     }
 
     return (

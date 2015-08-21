@@ -20,7 +20,7 @@ describe('[EDGE-CASES] register', function () {
     delete currUserData.lastName
     var expectedRes = {
       errors: {
-        lastName : ['Path `lastName` is required.']
+        lastName: ['Path `lastName` is required.']
       }
     }
 

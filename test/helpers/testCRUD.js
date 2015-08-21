@@ -17,7 +17,7 @@ var defaults = {
       expect(res.statusCode).to.equal(200)
       expect(body.errors).to.be.not.defined
     },
-    after: (res, next)=> {
+    after: (res, next) => {
       currDoc = res.body
       next()
     }
@@ -213,7 +213,7 @@ function createTestCRUDFunction (baseUrl, options) {
 
         processFn(opt.before[0])
         .then(() => { return processFn(opt.before[1]) })
-        .then((res)=> {
+        .then((res) => {
           var header = _.result(opt, 'header') || {}
 
           if (res) {

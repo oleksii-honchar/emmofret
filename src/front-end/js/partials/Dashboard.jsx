@@ -1,11 +1,12 @@
+/* global React */
 let HelloWorld = require('../components/HelloWorld.jsx')
 
 class Dashboard extends React.Component {
-  render() {
+  render () {
     return (
       <HelloWorld/>
     )
   }
 }
 
-export default  Dashboard
+export default Dashboard

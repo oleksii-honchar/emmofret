@@ -1,3 +1,4 @@
+/* global React */
 class Public extends React.Component {
   render () {
     return (

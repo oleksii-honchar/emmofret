@@ -67,8 +67,9 @@ export default class PasswordInput extends React.Component {
   onSave () {
     let res = { value: this.state.value }
 
-    if (!this.props.noValidation)
+    if (!this.props.noValidation) {
       res.isValid = this.state.isValid
+    }
 
     this.props.onSave(res)
   }
@@ -81,8 +82,9 @@ export default class PasswordInput extends React.Component {
     if (!this.props.noValidation) {
       props.bsStyle = this.getValidationState()
       validationProgress = this.getValidationProgress()
-    } else
+    } else {
       validationProgress = null
+    }
 
     let type = this.props.visible ? 'text' : 'password'
     return (

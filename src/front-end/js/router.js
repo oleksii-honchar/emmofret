@@ -1,3 +1,4 @@
+/* global React */
 let Router = require('react-router')
 
 /* pages */

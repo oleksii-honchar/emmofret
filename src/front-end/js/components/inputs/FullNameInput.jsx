@@ -49,8 +49,9 @@ export default class FullNameInput extends React.Component {
       lastName: this.getName('last')
     }
 
-    if (!this.props.noValidation)
+    if (!this.props.noValidation) {
       res.isValid = this.state.isValid
+    }
 
     this.props.onSave(res)
   }
@@ -59,8 +60,9 @@ export default class FullNameInput extends React.Component {
     let icon = <Icon fw name='user'/>
 
     let props = {}
-    if (!this.props.noValidation)
+    if (!this.props.noValidation) {
       props.bsStyle = this.getValidationState()
+    }
 
     return (
       <Input

@@ -2,7 +2,7 @@
 var request = require('superagent')
 
 describe('[EDGE CASES] login', function () {
-   var currUser
+  var currUser
   var userData = {
     email: faker.internet.email(),
     password: faker.internet.password(),

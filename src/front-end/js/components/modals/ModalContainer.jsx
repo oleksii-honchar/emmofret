@@ -1,6 +1,5 @@
 /* global React */
 import ModalStore from '../../stores/ModalStore.js'
-import ModalActions from '../../actions/ModalActions.js'
 import LoginModal from './LoginModal.jsx'
 import SignUpModal from './SignUpModal.jsx'
 
@@ -43,12 +42,13 @@ export default class ModalContainer extends React.Component {
     let modalName = _.result(_.findWhere(this.state.store, { isOpen: true }), 'name')
     let modalCmp = null
 
-    if (!modalName)
+    if (!modalName) {
       modalCmp = null
-    else if (modalName == 'login')
-      modalCmp = ( <LoginModal /> )
-    else if (modalName == 'sign-up')
-      modalCmp = ( <SignUpModal /> )
+    } else if (modalName === 'login') {
+      modalCmp = (<LoginModal />)
+    } else if (modalName === 'sign-up') {
+      modalCmp = (<SignUpModal />)
+    }
 
     return (
       <div id='modal-container'>

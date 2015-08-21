@@ -11,12 +11,12 @@ import _ from 'lodash'
 let { Modal, Button } = RB
 let { Header, Body, Title, Footer } = Modal
 
-export default class LoginModal extends React.Component{
+export default class LoginModal extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      form : {
+      form: {
         email: '',
         password: ''
       },
@@ -47,20 +47,19 @@ export default class LoginModal extends React.Component{
   }
 
   checkSubmitBtnState () {
-    if(!this.mounted) return
+    if (!this.mounted) return
 
-    let isAllValid =  _.every(this.state.form, (prop, key) => {
+    let isAllValid = _.every(this.state.form, (prop, key) => {
       if (_.isObject(prop)) {
         return !_.isEmpty(prop.value)
-      } else
-        return false
+      } else return false
     })
-    this.setState({ isFormCompleted : isAllValid })
+    this.setState({ isFormCompleted: isAllValid })
   }
 
   getStoreState () {
     return {
-      store: _.findWhere(ModalStore.getState(), { name:'login' })
+      store: _.findWhere(ModalStore.getState(), { name: 'login' })
     }
   }
 
@@ -74,22 +73,22 @@ export default class LoginModal extends React.Component{
 
   logIn () {
     let credentials = {
-      email : this.state.form.email.value,
-      password : this.state.form.password.value
+      email: this.state.form.email.value,
+      password: this.state.form.password.value
     }
 
     UserActions.logIn(credentials)
   }
 
   onChangeStore () {
-    if(!this.mounted) return
+    if (!this.mounted) return
 
     this.setState(this.getStoreState())
   }
 
   onChangeFormState (propName) {
     return (newValue) => {
-      let state = { form : this.state.form }
+      let state = { form: this.state.form }
       state.form[propName] = newValue
       this.setState(state)
 
@@ -98,7 +97,7 @@ export default class LoginModal extends React.Component{
   }
 
   submitOnReturn (e) {
-    if(e.charCode === 13 && this.state.isFormCompleted) {
+    if (e.charCode === 13 && this.state.isFormCompleted) {
       this.logIn()
     }
   }

@@ -2,7 +2,6 @@
 var request = require('superagent')
 
 describe('log in', function () {
-   var currUser
   var userData = {
     email: faker.internet.email(),
     password: faker.internet.password(),
@@ -15,7 +14,6 @@ describe('log in', function () {
   before(helpers.start)
   before((next) => {
     helpers.user.createAndLogin(userData).then((user) => {
-      currUser = user
       next()
     })
   })

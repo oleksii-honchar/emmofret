@@ -40,8 +40,9 @@ class EmailInput extends React.Component {
   onSave () {
     let res = { value: this.state.value }
 
-    if (!this.props.noValidation)
+    if (!this.props.noValidation) {
       res.isValid = this.state.isValid
+    }
 
     this.props.onSave(res)
   }
@@ -50,8 +51,9 @@ class EmailInput extends React.Component {
     let icon = <Icon fw name='envelope-o'/>
 
     let props = {}
-    if (!this.props.noValidation)
+    if (!this.props.noValidation) {
       props.bsStyle = this.getValidationState()
+    }
 
     return (
       <Input

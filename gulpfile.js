@@ -16,7 +16,7 @@ gulp.task('style', function () {
     .pipe(gstylus({
       use: autoprefixer(),
       'include css': true
-      //define: {
+      // define: {
       // url: stylus.resolver()
       // }
     }))

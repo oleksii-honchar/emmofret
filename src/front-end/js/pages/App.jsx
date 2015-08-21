@@ -1,3 +1,4 @@
+/* global React */
 import TopNavbar from '../components/TopNavbar.jsx'
 import ModalContainer from '../components/modals/ModalContainer.jsx'
 import UserStore from '../stores/UserStore.js'
@@ -6,7 +7,7 @@ import { RouteHandler } from 'react-router'
 import router from '../router.js'
 
 class App extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = this.getLoggedInState()
 
@@ -30,12 +31,12 @@ class App extends React.Component {
   onChangeLoggedInState () {
     this.setState(this.getLoggedInState())
 
-    let transitionPath = RouterStore.nextTransitionPath || '/';
+    let transitionPath = RouterStore.nextTransitionPath || '/'
 
-    if(this.state.isLoggedIn){
-      router.transitionTo(transitionPath);
-    }else{
-      router.transitionTo('/');
+    if (this.state.isLoggedIn) {
+      router.transitionTo(transitionPath)
+    } else {
+      router.transitionTo('/')
     }
   }
 
