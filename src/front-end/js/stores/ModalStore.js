@@ -13,10 +13,7 @@ let schema = {
     shakeStyle: { type: 'string' }
   }
 }
-let Model = Backbone.Model.extend({
-  type: 'modal',
-  schema: schema
-})
+let Model = Backbone.Model.extend()
 
 let Collection = Backbone.Collection.extend({
   model: Model,

@@ -1,4 +1,6 @@
 /* global React, $ */
+import 'index.styl'
+
 require('./vendor-config')
 
 window.React = require('react/addons')
