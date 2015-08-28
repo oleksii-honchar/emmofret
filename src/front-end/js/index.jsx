@@ -1,5 +1,6 @@
 /* global React, $ */
-import 'index.styl'
+require('font-awesome/scss/font-awesome.scss')
+import 'index.scss'
 
 require('./vendor-config')
 

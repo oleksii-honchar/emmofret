@@ -4,12 +4,6 @@ var stylus = require('stylus')
 var srcPath = path.join(__dirname, 'src')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-var stylusOpts = {
-  'include css': true,
-  'resolve url': stylus.resolver,
-  paths: ['node_modules','node_modules/font-awesome/css','node_modules/font-awesome']
-}
-
 module.exports = {
   target: 'web',
   cache: true,
@@ -24,9 +18,8 @@ module.exports = {
   },
   resolve: {
     root: srcPath,
-    extensions: ['', '.js', '.jsx', '.styl'],
+    extensions: ['', '.js', '.jsx', '.scss'],
     modulesDirectories: ['node_modules',
-      'node_modules/font-awesome/css',
       'src', 'src/front-end/styles',
       'src/vendor/js/jquery-plugins']
   },
@@ -38,24 +31,23 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /(\.js|\.jsx)?$/, exclude: /node_modules/, loader: 'babel?cacheDirectory' },
-      //{ test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url?limit=10000' },
+      { test: /(\.js|\.jsx)$/, exclude: /node_modules/, loader: 'babel?cacheDirectory' },
       {
-        test: /\.styl$/,
-        loader: ExtractTextPlugin.extract('style', 'css!stylus?' + JSON.stringify(stylusOpts))
+        test: /\.scss/,
+        loader: ExtractTextPlugin.extract('style', 'css!sass')
       },
       {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url?limit=10000&minetype=application/font-woff"
+        test: /\.css/,
+        loader: ExtractTextPlugin.extract('style', 'css!')
       },
       {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file"
+        test: /\.less/,
+        loader: ExtractTextPlugin.extract('style', 'css!less')
       },
-      {
-        test: /\.jpe?g$|\.gif$|\.png$|\.wav$|\.mp3$/,
-        loader: "file"
-      }
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?limit=10000&minetype=application/font-woff" },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file" },
+
+      { test: /\.jpe?g$|\.gif$|\.png$|\.wav$|\.mp3$/, loader: "file" }
     ]
   },
   plugins: [
@@ -63,7 +55,9 @@ module.exports = {
     new webpack.SourceMapDevToolPlugin({
       filename: '[name].js.map'
     }),
-    new ExtractTextPlugin('[name].css', {"omit":1,"extract":true,"remove":true})
+    new ExtractTextPlugin('[name].css', {
+      allChunks: true
+    })
   ],
   debug: true
 }
