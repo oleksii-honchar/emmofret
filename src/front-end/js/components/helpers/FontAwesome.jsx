@@ -1,19 +1,14 @@
 import React from 'react'
 
 export class Icon extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = props
-  }
-
   render () {
-    let className = `fa ${this.state.className} fa-${this.state.name}`
-    className += this.state.inverse ? ' fa-inverse' : ''
-    className += this.state.fw ? ' fa-fw' : ''
-    className += this.state.spin ? ' fa-spin' : ''
-    className += this.state.flip ? ` fa-flip-${this.state.flip}` : ''
-    className += this.state.size ? ` fa-size-${this.state.size}` : ''
-    className += this.state.rotate ? ` fa-rotate-${this.state.rotate}` : ''
+    let className = `fa ${this.props.className} fa-${this.props.name}`
+    className += this.props.inverse ? ' fa-inverse' : ''
+    className += this.props.fw ? ' fa-fw' : ''
+    className += this.props.spin ? ' fa-spin' : ''
+    className += this.props.flip ? ` fa-flip-${this.props.flip}` : ''
+    className += this.props.size ? ` fa-size-${this.props.size}` : ''
+    className += this.props.rotate ? ` fa-rotate-${this.props.rotate}` : ''
 
     return (<i className={className} />)
   }
@@ -28,4 +23,8 @@ Icon.propTypes = {
   flip: React.PropTypes.oneOf(['horizontal', 'vertical']),
   size: React.PropTypes.oneOf(['lg', '2x', '3x', '4x', '5x']),
   rotate: React.PropTypes.oneOf(['45', '90', '135', '180', '225', '270', '315'])
+}
+
+Icon.defaultProps = {
+  className : ''
 }
