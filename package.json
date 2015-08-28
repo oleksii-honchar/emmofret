@@ -8,9 +8,8 @@
     "test": "npm run standard --verbose && npm run mocha",
     "mocha": "node --harmony ./node_modules/mocha/bin/_mocha --ui bdd",
     "standard": "node ./node_modules/standard/bin/cmd.js",
-    "build-style": "node ./node_modules/stylus/bin/stylus -m -r --use url --with \"{paths:['']}\" --include-css -u autoprefixer-stylus -c src/front-end/styles/index.bundle.styl --out build/styles/index.bundle.css",
-    "watch-js": "node ./node_modules/webpack/bin/webpack --watch",
-    "build-js": "node ./node_modules/webpack/bin/webpack"
+    "watch": "node ./node_modules/webpack/bin/webpack --watch",
+    "build": "node ./node_modules/webpack/bin/webpack"
   },
   "keywords": [
     "boilerplate",

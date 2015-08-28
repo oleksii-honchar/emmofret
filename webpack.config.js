@@ -1,6 +1,5 @@
 var webpack = require('webpack')
 var path = require('path')
-var stylus = require('stylus')
 var srcPath = path.join(__dirname, 'src')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 

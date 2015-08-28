@@ -8,7 +8,7 @@ var chai = require('chai')
 var chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'test'
+process.env.NODE_ENV = 'test'
 
 var mongoCfg = require('konphyg')(process.cwd() + '/config')('mongo')
 var serverCfg = require('konphyg')(process.cwd() + '/config')('server')
