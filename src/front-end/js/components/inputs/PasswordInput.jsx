@@ -1,5 +1,5 @@
 /* global RB, React, Icon */
-let { Input, ProgressBar } = RB
+let { Input, ProgressBar, Button } = RB
 import _ from 'lodash'
 
 export default class PasswordInput extends React.Component {
@@ -76,6 +76,14 @@ export default class PasswordInput extends React.Component {
 
   render () {
     let icon = <Icon fw name='lock'/>
+    let eyeBtn = null
+    if (!this.props.visible) {
+      eyeBtn = (
+        <Button>
+          <Icon fw name='eye'/>
+        </Button>
+      )
+    }
 
     let props = {}
     let validationProgress = {}
@@ -92,6 +100,7 @@ export default class PasswordInput extends React.Component {
         <Input
           name='password'
           addonBefore={icon}
+          buttonAfter={eyeBtn}
           type={type} ref='PasswordInput'
           id={this.props.id}
           className={this.props.className}

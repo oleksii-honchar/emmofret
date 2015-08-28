@@ -52,7 +52,8 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('common.bundle', 'common.bundle.js'),
     new webpack.SourceMapDevToolPlugin({
-      filename: '[name].js.map'
+      filename: '[name].js.map',
+      exclude: [/\.css/]
     }),
     new ExtractTextPlugin('[name].css', {
       allChunks: true
