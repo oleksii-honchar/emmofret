@@ -102,6 +102,7 @@ export default class PasswordInput extends React.Component {
           onBlur={this.onSave}
           {...props}
           data-valid={this.state.isValid}
+          placeholder={this.props.placeholder}
           />
         {validationProgress}
       </div>
@@ -118,12 +119,14 @@ PasswordInput.propTypes = {
   isValid: React.PropTypes.bool,
   maxValidationScore: React.PropTypes.number,
   visible: React.PropTypes.bool,
-  noValidation: React.PropTypes.bool
+  noValidation: React.PropTypes.bool,
+  placeholder: React.PropTypes.string
 }
 
 PasswordInput.defaultProps = {
   value: '',
   isValid: false,
   maxValidationScore: 5,
-  visible: false
+  visible: false,
+  placeholder: 'password'
 }
