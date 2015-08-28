@@ -1,4 +1,7 @@
 /* global React, $ */
+require('font-awesome/scss/font-awesome.scss')
+import 'index.scss'
+
 require('./vendor-config')
 
 window.React = require('react/addons')

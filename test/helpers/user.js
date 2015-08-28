@@ -26,6 +26,7 @@ function activate (userData) {
 }
 
 function checkUserDefaults (userData) {
+  userData = userData || {}
   return _.chain(userData).clone().defaults({
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
