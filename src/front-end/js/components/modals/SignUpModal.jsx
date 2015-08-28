@@ -119,7 +119,7 @@ export default class SignUpModal extends React.Component {
         <Body>
           <FullNameInput onSave={this.onChangeFormState('fullName')} {...inputProps}/>
           <EmailInput onSave={this.onChangeFormState('email')} {...inputProps}/>
-          <PasswordInput visible onSave={this.onChangeFormState('password')} {...inputProps}/>
+          <PasswordInput onSave={this.onChangeFormState('password')} {...inputProps}/>
         </Body>
         <Footer>
           <Button bsStyle='primary' onClick={this.signUp} {...btnProps}>Sign up</Button>

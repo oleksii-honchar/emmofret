@@ -1,5 +1,5 @@
 /* global RB, React, Icon */
-let { Input, ProgressBar } = RB
+let { Input, ProgressBar, Button } = RB
 import _ from 'lodash'
 
 export default class PasswordInput extends React.Component {
@@ -8,6 +8,7 @@ export default class PasswordInput extends React.Component {
     this.state = _.clone(props)
     this.onSave = this.onSave.bind(this)
     this.onChange = this.onChange.bind(this)
+    this.switchVisibility = this.switchVisibility.bind(this)
   }
 
   validateValue (value=null) {
@@ -74,8 +75,24 @@ export default class PasswordInput extends React.Component {
     this.props.onSave(res)
   }
 
+  switchVisibility () {
+    this.setState({
+      visible: !this.state.visible
+    })
+  }
+
   render () {
     let icon = <Icon fw name='lock'/>
+    let eyeBtn = null
+
+    if (!this.props.visible) {
+      eyeBtn = (
+        <Button onClick={this.switchVisibility}>
+          <Icon fw name={!this.state.visible ? 'eye' : 'eye-slash'}/>
+        </Button>
+      )
+    }
+
 
     let props = {}
     let validationProgress = {}
@@ -86,12 +103,13 @@ export default class PasswordInput extends React.Component {
       validationProgress = null
     }
 
-    let type = this.props.visible ? 'text' : 'password'
+    let type = this.state.visible ? 'text' : 'password'
     return (
       <div>
         <Input
           name='password'
           addonBefore={icon}
+          buttonAfter={eyeBtn}
           type={type} ref='PasswordInput'
           id={this.props.id}
           className={this.props.className}
