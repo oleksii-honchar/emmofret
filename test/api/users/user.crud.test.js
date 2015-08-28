@@ -4,22 +4,27 @@ describe('users CRUD', function () {
   var currHeader
   var testUrl = helpers.variables.apiEndpoint + '/users'
 
-  var userData = {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    email: faker.internet.email(),
-    password: faker.internet.password()
+  function getUserData () {
+    return {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      email: faker.internet.email(),
+      password: faker.internet.password()
+    }
   }
+
+  var userData1 = getUserData()
+  var userData2 = getUserData()
 
   before(helpers.start)
   after(helpers.stop)
 
   describe('checking', helpers.testCRUD(testUrl, {
     'create-valid': {
-      data: userData,
+      data: userData1,
       after: (res, next) => {
         currUser = res.body
-        currUser.password = userData.password
+        currUser.password = userData1.password
 
         helpers.user.login(currUser).then((res) => {
           currHeader = { Authorization: res.token }
@@ -48,6 +53,9 @@ describe('users CRUD', function () {
         var body = res.body
         expect(body.errors.email[0]).to.equal('email invalid')
       }
+    },
+    'retrieve-set': {
+      data: userData2
     }
   }))
 })
