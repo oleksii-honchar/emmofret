@@ -1,11 +1,15 @@
 import React from 'react'
 
-let HelloWorld = require('../components/HelloWorld.js')
+import HelloWorld from '../components/HelloWorld.js'
+import Counter from '../components/Counter.js'
 
 class Dashboard extends React.Component {
   render () {
     return (
-      <HelloWorld/>
+      <div>
+        <HelloWorld />
+        <Counter />
+      </div>
     )
   }
 }

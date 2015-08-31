@@ -1,6 +1,8 @@
 import { INCREMENT_COUNTER, DECREMENT_COUNTER } from '../constants/CounterConstants.js'
 
-export default function counter(state = 0, action) {
+const initialState = 108
+
+export default function counter(state = initialState, action) {
   switch (action.type) {
     case INCREMENT_COUNTER:
       return state + 1

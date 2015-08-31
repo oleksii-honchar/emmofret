@@ -4,10 +4,6 @@ import createLogger from 'redux-logger'
 import rootReducer from '../reducers'
 //import apiMiddleware from '../middleware/api'
 
-const initialState = {
-  counter: 108
-}
-
 let combinedCreateStore
 if (__DEVTOOLS__) {
   const { devTools } = require('redux-devtools')
@@ -30,5 +26,5 @@ const finalCreateStore = applyMiddleware(
 
 //const combinedReducers = combineReducers(rootReducer)
 
-let AppStore = finalCreateStore(rootReducer, initialState)
+let AppStore = finalCreateStore(rootReducer)
 export default AppStore
