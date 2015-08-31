@@ -9,13 +9,13 @@ export default (Composed) => {
       super()
     }
 
-    static willTransitionTo (transition) {
-      if (!UserStore.isLoggedIn()) {
-        Router.nextTransitionPath = transition.path
-        transition.abort()
-        ModalActions.show('login')
-      }
-    }
+    //static willTransitionTo (transition) {
+    //  if (!UserStore.isLoggedIn()) {
+    //    Router.nextTransitionPath = transition.path
+    //    transition.abort()
+    //    ModalActions.show('login')
+    //  }
+    //}
 
     render () {
       return (

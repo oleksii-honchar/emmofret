@@ -7,9 +7,9 @@ import React from 'react'
 import App from './containers/App.js'
 
 /* partials */
-import Dashboard from './partials/Dashboard.js'
-//let Private = require('./partials/Private.js')
-//let Public = require('./partials/Public.js')
+import Dashboard from './pages/Dashboard.js'
+import Private from './pages/Private.js'
+import Public from './pages/Public.js'
 
 import {Route, Router} from 'react-router'
 
@@ -19,11 +19,11 @@ export default function (history) {
     <Router history={history}>
       <Route component={App} >
         <Route path='/' component={Dashboard}/>
+        <Route path='public' component={Public}/>
+        <Route path='private' component={Private}/>
       </Route>
     </Router>
   )
 
 }
 
-//<Route name='public' handler={Public}/>
-//  <Route name='private' handler={Private}/>

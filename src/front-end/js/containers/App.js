@@ -1,10 +1,8 @@
 import React from 'react'
 import { PropTypes } from 'react'
-//import TopNavbar from '../components/TopNavbar.js'
+import TopNavbar from '../components/TopNavbar.js'
 //import ModalContainer from '../components/modals/ModalContainer.js'
 import UserStore from '../store/UserStore.js'
-//import { RouteHandler } from 'react-router'
-//import router from '../routes.js'
 
 class App extends React.Component {
   constructor (props) {
@@ -43,7 +41,7 @@ class App extends React.Component {
   render () {
     return (
       <div id='app'>
-
+        <TopNavbar/>
         <div className='container-fluid'>
           {this.props.children}
         </div>
@@ -52,7 +50,6 @@ class App extends React.Component {
     )
   }
 }
-//<TopNavbar/>
 //<ModalContainer />
 
 App.propTypes = {
