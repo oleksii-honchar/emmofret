@@ -1,7 +1,7 @@
-/* global RB, React, Icon */
+/* global Icon */
+import React from 'react'
 import _ from 'lodash'
-
-let { Input } = RB
+import { Input }  from 'react-bootstrap'
 
 class EmailInput extends React.Component {
   constructor (props) {
