@@ -37,7 +37,7 @@ module.exports = {
       },
       {
         test: /\.css/,
-        loader: ExtractTextPlugin.extract('style', 'css!')
+        loader: ExtractTextPlugin.extract('style', 'css!cssnext')
       },
       {
         test: /\.less/,
@@ -50,6 +50,12 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development')
+      },
+      '__DEVTOOLS__': true
+    }),
     new webpack.optimize.CommonsChunkPlugin('common.bundle', 'common.bundle.js'),
     new webpack.SourceMapDevToolPlugin({
       filename: '[name].js.map',
@@ -59,5 +65,8 @@ module.exports = {
       allChunks: true
     })
   ],
-  debug: true
+  debug: true,
+  cssnext: {
+    browsers: 'last 2 versions'
+  }
 }

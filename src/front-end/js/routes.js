@@ -24,6 +24,5 @@ export default function (history) {
       </Route>
     </Router>
   )
-
 }
 

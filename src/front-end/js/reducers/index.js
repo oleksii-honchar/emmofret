@@ -1,6 +1,8 @@
-import _ from 'lodash'
+import { combineReducers } from 'redux'
+import counter from './counter'
 
-export function test (state, action) {
-  console.log('test reducer')
-  return _.merge({}, state)
-}
+const rootReducer = combineReducers({
+  counter
+})
+
+export default rootReducer

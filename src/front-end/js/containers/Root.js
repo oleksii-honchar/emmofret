@@ -13,10 +13,23 @@ export default class Root extends React.Component {
   }
 
   render() {
-    return (
+    const rootContent = [
       <Provider store={AppStore} key="provider">
         {routes.bind(null, this.props.history)}
       </Provider>
+    ]
+
+    if (__DEVTOOLS__) {
+      const { DevTools, DebugPanel, LogMonitor } = require('redux-devtools/lib/react')
+      rootContent.push(
+        <DebugPanel key="debug-panel" top right bottom>
+          <DevTools store={AppStore} monitor={LogMonitor} />
+        </DebugPanel>
+      )
+    }
+
+    return (
+      <div>{rootContent}</div>
     )
   }
 }

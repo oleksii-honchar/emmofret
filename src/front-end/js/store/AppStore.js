@@ -1,28 +1,34 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import thunkMdlwr from 'redux-thunk'
-//import apiMiddleware from '../middleware/api'
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
-import * as reducers from '../reducers'
-//import { routerStateReducer as router } from 'redux-react-router'
+import rootReducer from '../reducers'
+//import apiMiddleware from '../middleware/api'
 
-const reducer = combineReducers(reducers)
+const initialState = {
+  counter: 108
+}
 
-const loggerMdlwr = createLogger({
+let combinedCreateStore
+if (__DEVTOOLS__) {
+  const { devTools } = require('redux-devtools')
+  combinedCreateStore = compose(devTools(), createStore)
+} else {
+  combinedCreateStore = compose(createStore)
+}
+
+const logger = createLogger({
   level: 'error',
   collapsed: true,
   //predicate: (getState, action) => action.type !== AUTH_REMOVE_TOKEN
-});
+})
 
-const createStoreWithMiddleware = applyMiddleware(
-  thunkMdlwr,
+const finalCreateStore = applyMiddleware(
+  thunk,
   //apiMiddleware,
-  loggerMdlwr
-)(createStore)
+  logger
+)(combinedCreateStore)
 
-function configureStore(initialState) {
-  return createStoreWithMiddleware(reducer, initialState)
-}
+//const combinedReducers = combineReducers(rootReducer)
 
-let AppStore = configureStore()
-
+let AppStore = finalCreateStore(rootReducer, initialState)
 export default AppStore
