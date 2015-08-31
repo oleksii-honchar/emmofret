@@ -1,10 +1,10 @@
-/* global RB, React */
+import React from 'react'
 import ModalActions from '../actions/ModalActions.js'
 import UserActions from '../actions/UserActions.js'
-import UserStore from '../stores/UserStore.js'
+import UserStore from '../store/UserStore.js'
 import _ from 'lodash'
 
-let { Nav, NavItem, DropdownButton, MenuItem } = RB
+import { Nav, NavItem, DropdownButton, MenuItem } from 'react-bootstrap'
 
 export default class UserNavbar extends React.Component {
   constructor (props) {

@@ -1,10 +1,10 @@
-/* global React */
-import TopNavbar from '../components/TopNavbar.jsx'
-import ModalContainer from '../components/modals/ModalContainer.jsx'
-import UserStore from '../stores/UserStore.js'
-import RouterStore from '../stores/RouterStore.js'
-import { RouteHandler } from 'react-router'
-import router from '../router.js'
+import React from 'react'
+import { PropTypes } from 'react'
+//import TopNavbar from '../components/TopNavbar.js'
+//import ModalContainer from '../components/modals/ModalContainer.js'
+import UserStore from '../store/UserStore.js'
+//import { RouteHandler } from 'react-router'
+//import router from '../routes.js'
 
 class App extends React.Component {
   constructor (props) {
@@ -15,11 +15,11 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    UserStore.on('change', this.onChangeLoggedInState)
+    //UserStore.on('change', this.onChangeLoggedInState)
   }
 
   componentWillUnmount () {
-    UserStore.off('change', this.onChangeLoggedInState, this)
+    //UserStore.off('change', this.onChangeLoggedInState, this)
   }
 
   getLoggedInState () {
@@ -43,14 +43,21 @@ class App extends React.Component {
   render () {
     return (
       <div id='app'>
-        <TopNavbar/>
+
         <div className='container-fluid'>
-          <RouteHandler/>
+          {this.props.children}
         </div>
-        <ModalContainer />
+
       </div>
     )
   }
 }
+//<TopNavbar/>
+//<ModalContainer />
+
+App.propTypes = {
+  children: PropTypes.any
+}
 
 export default App
+

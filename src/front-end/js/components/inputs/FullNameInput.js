@@ -1,5 +1,6 @@
-/* global RB, React, Icon */
-let { Input } = RB
+/* global Icon */
+import React from 'react'
+import { Input } from 'react-bootstrap'
 import _ from 'lodash'
 
 export default class FullNameInput extends React.Component {

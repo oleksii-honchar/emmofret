@@ -1,4 +1,5 @@
-/* global React */
+import React from 'react'
+
 class Public extends React.Component {
   render () {
     return (

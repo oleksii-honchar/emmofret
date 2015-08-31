@@ -1,14 +1,14 @@
-/* global RB, React */
+import React from 'react'
 import ModalActions from '../../actions/ModalActions.js'
 import UserActions from '../../actions/UserActions.js'
-import ModalStore from '../../stores/ModalStore.js'
+import ModalStore from '../../store/ModalStore.js'
 import _ from 'lodash'
 
-import FullNameInput from '../inputs/FullNameInput.jsx'
-import EmailInput from '../inputs/EmailInput.jsx'
-import PasswordInput from '../inputs/PasswordInput.jsx'
+import FullNameInput from '../inputs/FullNameInput.js'
+import EmailInput from '../inputs/EmailInput.js'
+import PasswordInput from '../inputs/PasswordInput.js'
 
-let { Modal, Button } = RB
+import { Modal, Button }  from 'react-bootstrap'
 let { Header, Body, Title, Footer } = Modal
 
 export default class SignUpModal extends React.Component {

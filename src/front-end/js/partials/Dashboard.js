@@ -1,5 +1,6 @@
-/* global React */
-let HelloWorld = require('../components/HelloWorld.jsx')
+import React from 'react'
+
+let HelloWorld = require('../components/HelloWorld.js')
 
 class Dashboard extends React.Component {
   render () {

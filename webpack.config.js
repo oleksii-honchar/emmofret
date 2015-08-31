@@ -7,7 +7,7 @@ module.exports = {
   target: 'web',
   cache: true,
   entry: {
-    'index.bundle': path.join(srcPath, 'front-end/js/index.jsx'),
+    'index.bundle': path.join(srcPath, 'front-end/js/index.js'),
     'common.bundle': [
       'backbone', 'lodash', 'jquery', 'underscore.string', 'keymirror', 'moment', 'superagent',
       'flux', 'backbone-relational',

@@ -1,5 +1,6 @@
-/* global RB, React, Icon */
-let { Input, ProgressBar, Button } = RB
+/* global Icon */
+import React from 'react'
+import { Input, ProgressBar, Button } from 'react-bootstrap'
 import _ from 'lodash'
 
 export default class PasswordInput extends React.Component {

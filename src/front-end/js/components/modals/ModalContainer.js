@@ -1,7 +1,7 @@
-/* global React */
-import ModalStore from '../../stores/ModalStore.js'
-import LoginModal from './LoginModal.jsx'
-import SignUpModal from './SignUpModal.jsx'
+import React from 'react'
+import ModalStore from '../../store/ModalStore.js'
+import LoginModal from './LoginModal.js'
+import SignUpModal from './SignUpModal.js'
 
 import _ from 'lodash'
 

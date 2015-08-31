@@ -1,14 +1,14 @@
-/* global RB, React */
+import React from 'react'
 import UserActions from '../../actions/UserActions.js'
 import ModalActions from '../../actions/ModalActions.js'
-import ModalStore from '../../stores/ModalStore.js'
+import ModalStore from '../../store/ModalStore.js'
 
-import EmailInput from '../inputs/EmailInput.jsx'
-import PasswordInput from '../inputs/PasswordInput.jsx'
+import EmailInput from '../inputs/EmailInput.js'
+import PasswordInput from '../inputs/PasswordInput.js'
 
 import _ from 'lodash'
 
-let { Modal, Button } = RB
+import { Modal, Button } from 'react-bootstrap'
 let { Header, Body, Title, Footer } = Modal
 
 export default class LoginModal extends React.Component {

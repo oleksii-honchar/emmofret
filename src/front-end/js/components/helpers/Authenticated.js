@@ -1,7 +1,7 @@
-/* global React */
+import React from 'react'
 import ModalActions from '../../actions/ModalActions.js'
-import UserStore from '../../stores/UserStore.js'
-import RouterActions from '../../actions/RouterActions.js'
+import UserStore from '../../store/UserStore.js'
+import Router from '../../containers/Router.js'
 
 export default (Composed) => {
   return class Authenticated extends React.Component {
@@ -11,7 +11,7 @@ export default (Composed) => {
 
     static willTransitionTo (transition) {
       if (!UserStore.isLoggedIn()) {
-        RouterActions.storeRouterTransitionPath(transition.path)
+        Router.nextTransitionPath = transition.path
         transition.abort()
         ModalActions.show('login')
       }

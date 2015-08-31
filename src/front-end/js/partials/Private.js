@@ -1,5 +1,5 @@
-/* global React */
-import Authenticated from '../components/helpers/Authenticated.jsx'
+import React from 'react'
+import Authenticated from '../components/helpers/Authenticated.js'
 
 export default Authenticated(class Private extends React.Component {
   render () {

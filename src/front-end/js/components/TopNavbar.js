@@ -1,9 +1,9 @@
-/* global RB, RRB, React */
-import UserNavbar from './UserNavbar.jsx'
+import React from 'react'
+import UserNavbar from './UserNavbar.js'
 import { Link } from 'react-router'
 
-let { Nav, Navbar, CollapsibleNav } = RB
-let { NavItemLink } = RRB
+import { Nav, Navbar, CollapsibleNav } from 'react-bootstrap'
+import { NavItemLink } from 'react-router-bootstrap'
 
 class TopNavbar extends React.Component {
   constructor (props) { super(props) }
