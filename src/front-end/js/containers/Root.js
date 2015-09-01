@@ -7,11 +7,6 @@ import AppStore from '../store/AppStore.js'
 import routes from '../routes'
 
 export default class Root extends React.Component {
-  constructor (props) {
-    super(props)
-
-  }
-
   render() {
     const rootContent = [
       <Provider store={AppStore} key="provider">

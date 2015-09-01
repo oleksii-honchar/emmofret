@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import counter from './counter'
+import application from './AppReducer'
+import modals from './ModalsReducer'
 
 const rootReducer = combineReducers({
-  counter
+  application,
+  modals
 })
 
 export default rootReducer

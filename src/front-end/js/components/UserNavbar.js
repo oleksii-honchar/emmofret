@@ -1,48 +1,60 @@
 import React from 'react'
-import ModalActions from '../actions/ModalActions.js'
-import UserActions from '../actions/UserActions.js'
-import UserStore from '../store/UserStore.js'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as ModalActions from '../actions/ModalActions.js'
+import * as AppActions from '../actions/AppActions.js'
+//import UserStore from '../store/UserStore.js'
 import _ from 'lodash'
 
 import { Nav, NavItem, DropdownButton, MenuItem } from 'react-bootstrap'
 
-export default class UserNavbar extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = this.getStoreState()
-    this.onChangeStore = this.onChangeStore.bind(this)
+function select(state) {
+  return {
+    application: state.application,
+    modals: state.modals
   }
+}
 
-  componentDidMount () {
-    UserStore.on('change', this.onChangeStore)
-    window.UserNavbar = this
-  }
-
-  componentWillUnmount () {
-    UserStore.off('change', this.onChangeStore, this)
-  }
-
-  getStoreState () {
-    return {
-      store: UserStore.getState()
+function actions(dispatch) {
+  return {
+    actions: {
+      modal: bindActionCreators(ModalActions, dispatch),
+      application: bindActionCreators(AppActions, dispatch)
     }
   }
+}
 
-  onChangeStore () {
-    this.setState(this.getStoreState())
-  }
+export default class UserNavbar extends React.Component {
+  //constructor (props) {
+  //  super(props)
+    //this.state = this.getStoreState()
+    //this.onChangeStore = this.onChangeStore.bind(this)
+  //}
 
-  showLogin () {
-    ModalActions.show('login')
-  }
+  //componentDidMount () {
+  //  UserStore.on('change', this.onChangeStore)
+  //}
+  //
+  //componentWillUnmount () {
+  //  UserStore.off('change', this.onChangeStore, this)
+  //}
 
-  showSignUp () {
-    ModalActions.show('sign-up')
-  }
+  //getStoreState () {
+  //  return {
+  //    store: UserStore.getState()
+  //  }
+  //}
+
+  //onChangeStore () {
+  //  this.setState(this.getStoreState())
+  //}
 
   render () {
-    if (_.has(this.state.store, 'id')) {
-      let fullName = `${this.state.store.firstName} ${this.state.store.lastName}`
+    const { application, modals, actions } = this.props
+    const { user } = application
+
+    if (!_.isNull(user)) {
+      let fullName = `${user.firstName} ${user.lastName}`
       let title = (
         <span className='user-pic'>
           <img src='/public/images/avatar-flat-man-1.png'/>
@@ -53,17 +65,19 @@ export default class UserNavbar extends React.Component {
       return (
         <Nav data-class='UserNavbar' navbar right >
           <DropdownButton title={title}>
-            <MenuItem onSelect={UserActions.logOut}>Logout</MenuItem>
+            <MenuItem onSelect={actions.application.logout}>Logout</MenuItem>
           </DropdownButton>
         </Nav>
       )
     } else {
       return (
         <Nav data-class='UserNavbar' navbar right >
-          <NavItem onSelect={this.showLogin}>Log in</NavItem>
-          <NavItem onSelect={this.showSignUp}>Sign up</NavItem>
+          <NavItem onSelect={ ()=> actions.modal.show('login') }>Log in</NavItem>
+          <NavItem onSelect={ ()=> actions.modal.show('sign-up') }>Sign up</NavItem>
         </Nav>
       )
     }
   }
 }
+
+export default connect(select, actions)(UserNavbar)

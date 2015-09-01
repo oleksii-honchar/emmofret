@@ -1,17 +1,34 @@
 import React from 'react'
-import ModalActions from '../../actions/ModalActions.js'
-import UserActions from '../../actions/UserActions.js'
-import ModalStore from '../../store/ModalStore.js'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+
+import * as AppActions from '../../actions/AppActions.js'
+import * as ModalActions from '../../actions/ModalActions.js'
 
 import FullNameInput from '../inputs/FullNameInput.js'
 import EmailInput from '../inputs/EmailInput.js'
 import PasswordInput from '../inputs/PasswordInput.js'
 
 import { Modal, Button }  from 'react-bootstrap'
-let { Header, Body, Title, Footer } = Modal
+const { Header, Body, Title, Footer } = Modal
 
-export default class SignUpModal extends React.Component {
+function select(state) {
+  return {
+    modal: _.where(state.modals, { name: 'sign-up'})
+  }
+}
+
+function actions(dispatch) {
+  return {
+    actions: {
+      hide: bindActionCreators(() => ModalActions.hide('sign-up'), dispatch),
+      signUp: bindActionCreators(AppActions.signUp, dispatch)
+    }
+  }
+}
+
+class SignUpModal extends React.Component {
   constructor (props) {
     super(props)
 
@@ -23,10 +40,9 @@ export default class SignUpModal extends React.Component {
       },
       isFormCompleted: false
     }
-    this.state = _.extend(this.state, this.getStoreState())
 
-    this.onChangeStore = this.onChangeStore.bind(this)
     this.signUp = this.signUp.bind(this)
+    this.close = this.close.bind(this)
     this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
     this.onChangeFormState = this.onChangeFormState.bind(this)
     this.submitOnReturn = this.submitOnReturn.bind(this)
@@ -46,24 +62,16 @@ export default class SignUpModal extends React.Component {
     this.setState({ isFormCompleted: isAllValid })
   }
 
-  getStoreState () {
-    return {
-      store: _.findWhere(ModalStore.getState(), { name: 'sign-up' })
-    }
-  }
-
   componentDidMount () {
-    ModalStore.on('change', this.onChangeStore)
     this.mounted = true
   }
 
   componentWillUnmount () {
-    ModalStore.off('change', this.onChangeStore, this)
     this.mounted = false
   }
 
   close () {
-    ModalActions.hide('sign-up')
+    this.props.actions.hide()
   }
 
   onChangeFormState (propName) {
@@ -76,12 +84,6 @@ export default class SignUpModal extends React.Component {
     }
   }
 
-  onChangeStore () {
-    if (!this.mounted) return
-
-    this.setState(this.getStoreState())
-  }
-
   signUp () {
     let data = {
       firstName: this.state.form.fullName.firstName,
@@ -89,7 +91,7 @@ export default class SignUpModal extends React.Component {
       email: this.state.form.email.value,
       password: this.state.form.password.value
     }
-    UserActions.signUp(data)
+    this.props.actions.signUp(data)
   }
 
   submitOnReturn (e) {
@@ -112,7 +114,7 @@ export default class SignUpModal extends React.Component {
     }
 
     return (
-      <Modal show={this.state.store.isOpen} onHide={this.close} bsSize='sm'>
+      <Modal show onHide={this.close} bsSize='sm'>
         <Header closeButton>
           <Title>Sign up</Title>
         </Header>
@@ -128,3 +130,4 @@ export default class SignUpModal extends React.Component {
     )
   }
 }
+export default connect(select, actions)(SignUpModal)

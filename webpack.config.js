@@ -10,8 +10,8 @@ module.exports = {
     'index.bundle': path.join(srcPath, 'front-end/js/index.js'),
     'common.bundle': [
       'backbone', 'lodash', 'jquery', 'underscore.string', 'keymirror', 'moment', 'superagent',
-      'flux', 'backbone-relational',
-      'react', 'react-router', 'react-bootstrap', 'react-router-bootstrap'
+      'react', 'react-router', 'react-bootstrap', 'react-router-bootstrap',
+      'redux', 'react-redux', 'redux-actions'
     ],
     'vendor.bundle': path.join(srcPath, 'vendor/js/index.js'),
   },
@@ -61,9 +61,7 @@ module.exports = {
       filename: '[name].js.map',
       exclude: [/\.css/]
     }),
-    new ExtractTextPlugin('[name].css', {
-      allChunks: true
-    })
+    new ExtractTextPlugin('[name].css', { allChunks: true })
   ],
   debug: true,
   cssnext: {
