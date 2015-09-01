@@ -1,5 +1,4 @@
 import { INCREMENT_COUNTER, DECREMENT_COUNTER } from '../constants/CounterConstants.js'
-import actionCreator from 'redux-action-utils'
 
 export function increment() {
   return {

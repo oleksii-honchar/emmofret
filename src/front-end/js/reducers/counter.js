@@ -2,7 +2,7 @@ import { INCREMENT_COUNTER, DECREMENT_COUNTER } from '../constants/CounterConsta
 
 const initialState = 108
 
-export default function counter(state = initialState, action) {
+export default function counter(state = initialState, action = null) {
   switch (action.type) {
     case INCREMENT_COUNTER:
       return state + 1
