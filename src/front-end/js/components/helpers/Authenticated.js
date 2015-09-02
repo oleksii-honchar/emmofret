@@ -1,6 +1,6 @@
 import React from 'react'
 import ModalActions from '../../actions/ModalActions.js'
-import UserStore from '../../store/UserStore.js'
+//import UserStore from '../../store/UserStore.js'
 import Router from '../../containers/Router.js'
 
 export default (Composed) => {

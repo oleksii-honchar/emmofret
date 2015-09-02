@@ -39,6 +39,13 @@ function signUp (user) {
   }
 }
 
+function signUpRequest () {
+  return {
+    type: SIGN_UP,
+    payload: user
+  }
+}
+
 
 module.exports = {
   logIn: logInRequest,

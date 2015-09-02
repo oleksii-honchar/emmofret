@@ -9,7 +9,8 @@ module.exports = {
   modal: _.keyMirror({
     SHOW_MODAL: null,
     HIDE_MODAL: null,
-    SHAKE_MODAL: null
+    SHAKE_MODAL_START: null,
+    SHAKE_MODAL_STOP: null
   }),
   zIndex: {
     notify: 1060

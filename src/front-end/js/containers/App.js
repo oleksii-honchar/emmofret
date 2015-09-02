@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { PropTypes } from 'react'
 import TopNavbar from '../components/TopNavbar.js'
 import ModalsContainer from '../components/modals/ModalsContainer.js'
-import UserStore from '../store/UserStore.js'
+//import UserStore from '../store/UserStore.js'
 
 function select(state) {
   return { application: state.application }

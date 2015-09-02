@@ -15,7 +15,7 @@ let { Header, Body, Title, Footer } = Modal
 
 function select(state) {
   return {
-    modal: _.where(state.modals, { name: 'login'})
+    modal: state.modals['login']
   }
 }
 
@@ -47,17 +47,11 @@ class LoginModal extends React.Component {
     this.submitOnReturn = this.submitOnReturn.bind(this)
   }
 
-  componentDidMount () {
-    this.mounted = true
-  }
+  componentDidMount () { this.mounted = true }
 
-  componentWillUnmount () {
-    this.mounted = false
-  }
+  componentWillUnmount () { this.mounted = false }
 
-  close () {
-    this.props.actions.hide()
-  }
+  close () { this.props.actions.hide() }
 
   checkSubmitBtnState () {
     if (!this.mounted) return
@@ -71,7 +65,7 @@ class LoginModal extends React.Component {
   }
 
   getClassName () {
-    const {modal} = this.props
+    const { modal } = this.props
     let res = ''
 
     if (modal.isShaking) {
