@@ -1,3 +1,4 @@
+import notify from '../helpers/notify.js'
 import { handleActions } from 'redux-actions'
 import constants from '../constants.js'
 const { LOG_IN, LOG_OUT, SIGN_UP } = constants.application
@@ -17,16 +18,21 @@ const initialState = data || {
 }
 
 function logIn (state, action) {
+  notify.success('User successfully logged in')
+
   let newState = _.merge({}, state)
   newState.token = action.payload.token
   newState.user = _.omit(action.payload, 'token')
+  window.sessionStorage.application = JSON.stringify(newState)
   return newState
 }
 
 function logOut (state) {
+  notify.success('User successfully logged out')
   let newState = _.merge({}, state)
   newState.token = null
   newState.user = null
+  delete window.sessionStorage.application
   return newState
 }
 

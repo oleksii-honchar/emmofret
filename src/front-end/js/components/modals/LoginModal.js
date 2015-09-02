@@ -53,7 +53,6 @@ class LoginModal extends React.Component {
 
   componentWillUnmount () {
     this.mounted = false
-    console.log('unmounted')
   }
 
   close () {

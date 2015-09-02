@@ -8,7 +8,7 @@ import * as ModalActions from '../actions/ModalActions.js'
 
 const { LOG_IN, LOG_OUT, SIGN_UP } = constants.application
 
-function logIn(user) {
+function logIn (user) {
   return {
     type: LOG_IN,
     payload: user
@@ -26,7 +26,6 @@ function logInRequest (credentials) {
           //return shakeLogin()
         }
 
-        notify.success('User successfully logged in')
         dispatch(ModalActions.hide('login'))
         dispatch(logIn(res.body))
       })
