@@ -10,5 +10,8 @@ module.exports = {
     SHOW_MODAL: null,
     HIDE_MODAL: null,
     SHAKE_MODAL: null
-  })
+  }),
+  zIndex: {
+    notify: 1060
+  }
 }

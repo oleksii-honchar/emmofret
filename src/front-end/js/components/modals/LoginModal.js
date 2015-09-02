@@ -53,6 +53,7 @@ class LoginModal extends React.Component {
 
   componentWillUnmount () {
     this.mounted = false
+    console.log('unmounted')
   }
 
   close () {
@@ -93,6 +94,8 @@ class LoginModal extends React.Component {
 
   onChangeFormState (propName) {
     return (newValue) => {
+      if (!this.mounted) return
+
       let state = { form: this.state.form }
       state.form[propName] = newValue
       this.setState(state)
@@ -123,7 +126,9 @@ class LoginModal extends React.Component {
 
     return (
       <Modal show onHide={this.close} bsSize='sm'
-             dialogClassName={this.getClassName()}>
+             dialogClassName={this.getClassName()} keyboard={false}
+             data-class='LoginModal'
+        >
         <Header closeButton>
           <Title>Login</Title>
         </Header>

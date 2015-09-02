@@ -3,23 +3,23 @@ import _ from 'lodash'
 import constants from '../constants.js'
 const { SHOW_MODAL, HIDE_MODAL, SHAKE_MODAL } = constants.modal
 
-const initialState = [
-  {
+const initialState = {
+  login: {
     name: 'login',
     isOpen: false,
     isShaking: false,
     shakeStyle: null
   },
-  {
+  'sign-up': {
     name: 'sign-up',
     isOpen: false,
     isShaking: false,
     shakeStyle: null
   }
-]
+}
+
 
 function hide (state, action) {
-  $.notifyClose()
   return _.map(state, (modal) => {
     if (modal.name === action.payload) {
       return _.extend({}, modal, { isOpen: false })

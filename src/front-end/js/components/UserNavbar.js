@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as ModalActions from '../actions/ModalActions.js'
 import * as AppActions from '../actions/AppActions.js'
-//import UserStore from '../store/UserStore.js'
 import _ from 'lodash'
 
 import { Nav, NavItem, DropdownButton, MenuItem } from 'react-bootstrap'
@@ -18,37 +17,14 @@ function select(state) {
 function actions(dispatch) {
   return {
     actions: {
-      modal: bindActionCreators(ModalActions, dispatch),
-      application: bindActionCreators(AppActions, dispatch)
+      showLogIn: bindActionCreators(() => ModalActions.show('login'), dispatch),
+      logOut: bindActionCreators(AppActions.logOut, dispatch),
+      showSignUp: bindActionCreators(() => ModalActions.show('sign-up'), dispatch)
     }
   }
 }
 
 export default class UserNavbar extends React.Component {
-  //constructor (props) {
-  //  super(props)
-    //this.state = this.getStoreState()
-    //this.onChangeStore = this.onChangeStore.bind(this)
-  //}
-
-  //componentDidMount () {
-  //  UserStore.on('change', this.onChangeStore)
-  //}
-  //
-  //componentWillUnmount () {
-  //  UserStore.off('change', this.onChangeStore, this)
-  //}
-
-  //getStoreState () {
-  //  return {
-  //    store: UserStore.getState()
-  //  }
-  //}
-
-  //onChangeStore () {
-  //  this.setState(this.getStoreState())
-  //}
-
   render () {
     const { application, modals, actions } = this.props
     const { user } = application
@@ -65,15 +41,15 @@ export default class UserNavbar extends React.Component {
       return (
         <Nav data-class='UserNavbar' navbar right >
           <DropdownButton title={title}>
-            <MenuItem onSelect={actions.application.logout}>Logout</MenuItem>
+            <MenuItem onSelect={actions.logOut}>Logout</MenuItem>
           </DropdownButton>
         </Nav>
       )
     } else {
       return (
         <Nav data-class='UserNavbar' navbar right >
-          <NavItem onSelect={ ()=> actions.modal.show('login') }>Log in</NavItem>
-          <NavItem onSelect={ ()=> actions.modal.show('sign-up') }>Sign up</NavItem>
+          <NavItem onSelect={ actions.showLogIn }>Log in</NavItem>
+          <NavItem onSelect={ actions.showSignUp }>Sign up</NavItem>
         </Nav>
       )
     }

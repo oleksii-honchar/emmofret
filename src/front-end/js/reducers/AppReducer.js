@@ -16,14 +16,18 @@ const initialState = data || {
   user: null
 }
 
-function logIn (state) {
-  console.log('[AppReducer] logIn() pending')
-  return Object.assign({}, state)
+function logIn (state, action) {
+  let newState = _.merge({}, state)
+  newState.token = action.payload.token
+  newState.user = _.omit(action.payload, 'token')
+  return newState
 }
 
 function logOut (state) {
-  console.log('[AppReducer] logOut() pending')
-  return Object.assign({}, state)
+  let newState = _.merge({}, state)
+  newState.token = null
+  newState.user = null
+  return newState
 }
 
 function signUp (state) {
@@ -36,3 +40,69 @@ export default handleActions({
   LOG_OUT: logOut,
   SIGN_UP: signUp
 }, initialState)
+
+//function hideLogin () {
+//  Dispatcher.dispatch({
+//    actionType: ModalConstants.HIDE_MODAL,
+//    data: 'login'
+//  })
+//}
+//
+//function hideSignUp () {
+//  Dispatcher.dispatch({
+//    actionType: ModalConstants.HIDE_MODAL,
+//    data: 'sign-up'
+//  })
+//}
+//
+//function shakeLogin () {
+//  Dispatcher.dispatch({
+//    actionType: ModalConstants.SHAKE_MODAL,
+//    data: 'login'
+//  })
+//}
+
+//function logIn (data) {
+//  request.post('/api/users/log-in')
+//    .set('Content-Type', 'application/json')
+//    .send(_.pick(data, ['email', 'password']))
+//    .end((err, res) => {
+//      if (err) {
+//        if (err.status !== 401) { notify.error(err) }
+//        return shakeLogin()
+//      }
+//
+//      notify.success('User successfully logged in')
+//      hideLogin()
+//
+//      Dispatcher.dispatch({
+//        actionType: UserConstants.LOG_IN,
+//        data: res.body.token
+//      })
+//
+//      Dispatcher.dispatch({ actionType: UserConstants.FETCH_CURRENT })
+//    })
+//}
+//
+//function logOut () {
+//  request.post('/api/users/log-out')
+//    .set('Content-Type', 'application/json')
+//    .end((err, res) => {
+//      if (err) { return notify.error(err) }
+//      notify.success('User successfully logged out')
+//      Dispatcher.dispatch({ actionType: UserConstants.LOG_OUT })
+//    })
+//}
+//
+//function signUp (data) {
+//  request.post('/api/users/register')
+//    .set('Content-Type', 'application/json')
+//    .send(_.pick(data, ['firstName', 'lastName', 'email', 'password']))
+//    .end((err, res) => {
+//      if (err) { return notify.error(res.body) }
+//
+//      notify.success('User successfully registered. Now you can log in.')
+//      hideSignUp()
+//    })
+//}
+

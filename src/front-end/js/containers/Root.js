@@ -17,7 +17,7 @@ export default class Root extends React.Component {
     if (__DEVTOOLS__) {
       const { DevTools, DebugPanel, LogMonitor } = require('redux-devtools/lib/react')
       rootContent.push(
-        <DebugPanel key="debug-panel" top right bottom>
+        <DebugPanel key="debug-panel" top left bottom>
           <DevTools store={AppStore} monitor={LogMonitor} />
         </DebugPanel>
       )

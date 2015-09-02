@@ -48,8 +48,12 @@ class SignUpModal extends React.Component {
     this.submitOnReturn = this.submitOnReturn.bind(this)
   }
 
+  isMounted () {
+    return $('[data-class="SignUpModal"]')
+  }
+
   checkSubmitBtnState () {
-    if (!this.mounted) return
+    if (!this.isMounted()) return
 
     let isAllValid = _.every(this.state.form, (prop, key) => {
       if (_.isObject(prop)) {
@@ -60,14 +64,6 @@ class SignUpModal extends React.Component {
     })
 
     this.setState({ isFormCompleted: isAllValid })
-  }
-
-  componentDidMount () {
-    this.mounted = true
-  }
-
-  componentWillUnmount () {
-    this.mounted = false
   }
 
   close () {
@@ -114,7 +110,7 @@ class SignUpModal extends React.Component {
     }
 
     return (
-      <Modal show onHide={this.close} bsSize='sm'>
+      <Modal show onHide={this.close} bsSize='sm' keyboard={false} data-class='SignUpModal'>
         <Header closeButton>
           <Title>Sign up</Title>
         </Header>

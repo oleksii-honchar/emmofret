@@ -33,30 +33,3 @@ module.exports = {
 //  }
 //}
 
-//var ModalActions = {
-//  show: (modalName) => {
-//    $.notifyClose()
-//    Dispatcher.dispatch({
-//      type: ModalConstants.SHOW_MODAL,
-//      data: modalName
-//    })
-//  },
-//
-//  hide: (modalName) => {
-//    $.notifyClose()
-//    Dispatcher.dispatch({
-//      type: ModalConstants.HIDE_MODAL,
-//      data: modalName
-//    })
-//  },
-//
-//  shake: (modalName) => {
-//    $.notifyClose()
-//    Dispatcher.dispatch({
-//      type: ModalConstants.SHAKE_MODAL,
-//      data: modalName
-//    })
-//  }
-//}
-//
-//export default ModalActions
