@@ -30,7 +30,6 @@ function hide (state, action) {
 }
 
 function shake (state, action) {
-  $.notifyClose()
   console.log('[ModalReducer] shake() pending')
   return Object.assign({}, state)
 }

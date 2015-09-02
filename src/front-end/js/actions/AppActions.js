@@ -23,7 +23,7 @@ function logInRequest (credentials) {
       .end((err, res) => {
         if (err) {
           if (err.status !== 401) { notify.error(err) }
-          //return shakeLogin()
+          return dispatch(ModalActions.shake('login'))
         }
 
         dispatch(ModalActions.hide('login'))
@@ -32,8 +32,16 @@ function logInRequest (credentials) {
   }
 }
 
+function signUp (user) {
+  return {
+    type: SIGN_UP,
+    payload: user
+  }
+}
+
+
 module.exports = {
   logIn: logInRequest,
   logOut: createAction(LOG_OUT),
-  //signUp: createAction(SIGN_UP)
+  signUp: signUpRequest
 }
