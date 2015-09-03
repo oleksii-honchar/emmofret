@@ -18,7 +18,7 @@ function logIn (user) {
   }
 }
 
-function logInRequest (credentials) {
+function makeLogInRequest (credentials) {
   return (dispatch, getState) => {
     request.post('/api/users/log-in')
       .set('Content-Type', 'application/json')
@@ -31,6 +31,11 @@ function logInRequest (credentials) {
 
         dispatch(ModalActions.hide('login'))
         dispatch(logIn(res.body))
+        
+        const nextPath= getState().application.nextTransitionPath
+        if (nextPath) {
+          dispatch(fulfillTransition(nextPath))
+        }
       })
   }
 }
@@ -39,7 +44,7 @@ function logOut () {
   return { type: LOG_OUT }
 }
 
-function logOutRequest () {
+function makeLogOutRequest () {
   return (dispatch) => {
     request.post('/api/users/log-out')
       .set('Content-Type', 'application/json')
@@ -55,7 +60,7 @@ function signUp () {
   return { type: SIGN_UP }
 }
 
-function signUpRequest (data) {
+function makeSignUpRequest (data) {
   return (dispatch) => {
     request.post('/api/users/register')
       .send(_.pick(data, ['firstName', 'lastName', 'email', 'password']))
@@ -71,7 +76,14 @@ function signUpRequest (data) {
   }
 }
 
-function rememberTransition(nextPath) {
+function fulfillTransition (nextPath) {
+  return {
+    type: FULFILL_TRANSITION,
+    payload: nextPath
+  }
+}
+
+function rememberTransition (nextPath) {
   return {
     type: REMEMBER_TRANSITION,
     payload: nextPath
@@ -87,8 +99,9 @@ function requestAuth (nextPath) {
 
 
 module.exports = {
-  logIn: logInRequest,
-  logOut: logOutRequest,
-  signUp: signUpRequest,
-  requestAuth: requestAuth
+  logIn: makeLogInRequest,
+  logOut: makeLogOutRequest,
+  signUp: makeSignUpRequest,
+  requestAuth: requestAuth,
+  fulfillTransition: fulfillTransition
 }

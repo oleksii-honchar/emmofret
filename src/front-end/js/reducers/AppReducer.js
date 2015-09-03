@@ -2,6 +2,7 @@ import notify from '../helpers/notify.js'
 import { handleActions } from 'redux-actions'
 import constants from '../constants.js'
 const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION } = constants.application
+import Router from 'react-router'
 
 let data
 if (_.has(window.sessionStorage, 'application')) {
@@ -15,9 +16,10 @@ if (_.has(window.sessionStorage, 'application')) {
 const initialState = data || {
   isLoggedIn: false,
   token: null,
-  user: null,
-  nextTransitionPath: null
+  user: null
 }
+
+initialState.nextTransitionPath = null
 
 function logIn (state, action) {
   notify.success('User successfully logged in')
@@ -44,6 +46,12 @@ function rememberTransition (state, action) {
   return _.merge({}, state, { nextTransitionPath: action.payload })
 }
 
+function fulfillTransition (state, action) {
+  console.log('fulfillTransition() pending')
+  Router.Navigation.go(state.nextTransitionPath)
+  return _.merge({}, state, { nextTransitionPath: null })
+}
+
 function signUp (state) {
   notify.success('User successfully registered. Now you can log in.')
   return Object.assign({}, state)
@@ -54,4 +62,5 @@ export default handleActions({
   LOG_OUT: logOut,
   SIGN_UP: signUp,
   REMEMBER_TRANSITION: rememberTransition,
+  FULFILL_TRANSITION: fulfillTransition,
 }, initialState)

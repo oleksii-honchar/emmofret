@@ -24,7 +24,7 @@ function actions(dispatch) {
   }
 }
 
-export default class UserNavbar extends React.Component {
+class UserNavbar extends React.Component {
   render () {
     const { application, modals, actions } = this.props
     const { user } = application

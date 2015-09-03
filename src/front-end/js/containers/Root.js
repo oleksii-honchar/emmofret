@@ -4,13 +4,13 @@ import { Provider } from 'react-redux'
 
 import AppStore from '../store/AppStore.js'
 
-import routes from '../routes'
+import Routes from './Routes'
 
 export default class Root extends React.Component {
   render() {
     const rootContent = [
       <Provider store={AppStore} key="provider">
-        {routes.bind(null, this.props.history, AppStore)}
+        { ()=> <Routes {...this.props}/> }
       </Provider>
     ]
 
