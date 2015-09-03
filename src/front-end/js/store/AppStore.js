@@ -11,6 +11,7 @@ if (__DEVTOOLS__) {
 } else {
   combinedCreateStore = compose(createStore)
 }
+//combinedCreateStore = compose(createStore)
 
 const logger = createLogger({
   level: 'error',

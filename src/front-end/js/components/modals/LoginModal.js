@@ -74,7 +74,8 @@ class LoginModal extends React.Component {
     return res
   }
 
-  logIn () {
+  logIn (e) {
+    e.preventDefault()
     const {email, password} = this.state.form
 
     let credentials = {

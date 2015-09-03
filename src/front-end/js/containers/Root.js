@@ -10,7 +10,7 @@ export default class Root extends React.Component {
   render() {
     const rootContent = [
       <Provider store={AppStore} key="provider">
-        { ()=> <Routes {...this.props}/> }
+        { () => <Routes {...this.props}/> }
       </Provider>
     ]
 
