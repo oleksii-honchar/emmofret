@@ -1,7 +1,5 @@
 import React from 'react'
-//let Router = require('react-router')
-
-//import AppStore from './store/AppStore.js'
+import * as AppActions from '../actions/AppActions.js'
 
 /* containers */
 import App from './containers/App.js'
@@ -13,16 +11,24 @@ import Public from './pages/Public.js'
 
 import {Route, Router} from 'react-router'
 
+export default function (history, store) {
+  function requireAuth (nextState, transition) {
+    const state = store.getState()
+    if (!state.application.isLoggedIn)
+      AppActions.requestAuth(nextState.location.pathname)
+      transition.to('/')
+  }
 
-export default function (history) {
   return (
     <Router history={history}>
       <Route component={App} >
         <Route path='/' component={Dashboard}/>
         <Route path='public' component={Public}/>
-        <Route path='private' component={Private} onEnter={Private.willTransitionTo}/>
+        <Route path='private' component={Private} onEnter={requireAuth}/>
       </Route>
     </Router>
   )
 }
+
+
 
