@@ -8,7 +8,8 @@ import * as ModalActions from '../actions/ModalActions.js'
 
 const {
         LOG_IN, LOG_OUT, SIGN_UP,
-        REMEMBER_TRANSITION, FULFILL_TRANSITION
+        REMEMBER_TRANSITION, FULFILL_TRANSITION,
+        REMEMBER_ROUTER
       } = constants.application
 
 function logIn (user) {
@@ -101,6 +102,7 @@ function requestAuth (nextPath) {
 module.exports = {
   logIn: makeLogInRequest,
   logOut: makeLogOutRequest,
+  rememberRouter: createAction(REMEMBER_ROUTER),
   signUp: makeSignUpRequest,
   requestAuth: requestAuth,
   fulfillTransition: fulfillTransition

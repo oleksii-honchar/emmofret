@@ -4,7 +4,7 @@ import constants from '../constants.js'
 const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION } = constants.application
 import Router from 'react-router'
 
-let data
+let data = {}
 if (_.has(window.sessionStorage, 'application')) {
   try {
     data = JSON.parse(window.sessionStorage.application)
@@ -13,13 +13,13 @@ if (_.has(window.sessionStorage, 'application')) {
   }
 }
 
-const initialState = data || {
-  isLoggedIn: false,
+const initialState = _.defaultsDeep(data, {
+  isLoggedIn: _.isString(data.token),
   token: null,
-  user: null
-}
-
-initialState.nextTransitionPath = null
+  user: null,
+  nextTransitionPath : null,
+  router : null
+})
 
 function logIn (state, action) {
   notify.success('User successfully logged in')
@@ -28,7 +28,7 @@ function logIn (state, action) {
   newState.isLoggedIn = true
   newState.token = action.payload.token
   newState.user = _.omit(action.payload, 'token')
-  window.sessionStorage.application = JSON.stringify(newState)
+  window.sessionStorage.application = JSON.stringify(_.pick(newState, ['token', 'user']))
   return newState
 }
 
@@ -47,9 +47,12 @@ function rememberTransition (state, action) {
 }
 
 function fulfillTransition (state, action) {
-  console.log('fulfillTransition() pending')
-  Router.Navigation.go(state.nextTransitionPath)
+  state.router.transitionTo(state.nextTransitionPath)
   return _.merge({}, state, { nextTransitionPath: null })
+}
+
+function rememberRouter (state, action) {
+  return _.merge({}, state, {router: action.payload})
 }
 
 function signUp (state) {
@@ -63,4 +66,5 @@ export default handleActions({
   SIGN_UP: signUp,
   REMEMBER_TRANSITION: rememberTransition,
   FULFILL_TRANSITION: fulfillTransition,
+  REMEMBER_ROUTER: rememberRouter,
 }, initialState)

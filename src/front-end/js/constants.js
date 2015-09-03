@@ -6,7 +6,8 @@ module.exports = {
     LOG_OUT: null,
     SIGN_UP: null,
     REMEMBER_TRANSITION: null,
-    FULFILL_TRANSITION: null
+    FULFILL_TRANSITION: null,
+    REMEMBER_ROUTER: null
   }),
   modal: _.keyMirror({
     SHOW_MODAL: null,
