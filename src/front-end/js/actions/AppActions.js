@@ -32,6 +32,22 @@ function logInRequest (credentials) {
   }
 }
 
+function logOut () {
+  return { type: LOG_OUT }
+}
+
+function logOutRequest () {
+  return (dispatch) => {
+    request.post('/api/users/log-out')
+      .set('Content-Type', 'application/json')
+      .end((err, res) => {
+        if (err) { return notify.error(err) }
+
+        dispatch(logOut())
+      })
+  }
+}
+
 function signUp () {
   return { type: SIGN_UP }
 }
@@ -55,7 +71,7 @@ function signUpRequest (data) {
 
 module.exports = {
   logIn: logInRequest,
-  logOut: createAction(LOG_OUT),
+  logOut: logOutRequest,
   signUp: signUpRequest
 }
 
@@ -69,14 +85,3 @@ module.exports = {
 //    })
 //}
 //
-//function signUp (data) {
-//  request.post('/api/users/register')
-//    .set('Content-Type', 'application/json')
-//    .send(_.pick(data, ['firstName', 'lastName', 'email', 'password']))
-//    .end((err, res) => {
-//      if (err) { return notify.error(res.body) }
-//
-//      notify.success('User successfully registered. Now you can log in.')
-//      hideSignUp()
-//    })
-//}
