@@ -15,7 +15,7 @@ const { Header, Body, Title, Footer } = Modal
 
 function select(state) {
   return {
-    modal: _.where(state.modals, { name: 'sign-up'})
+    modal: state.modals['sign-up']
   }
 }
 
@@ -43,17 +43,20 @@ class SignUpModal extends React.Component {
 
     this.signUp = this.signUp.bind(this)
     this.close = this.close.bind(this)
-    this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
+    this.checkSubmitBtnState = _.debounce(this.checkSubmitBtnState, 200)
+    //this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
     this.onChangeFormState = this.onChangeFormState.bind(this)
     this.submitOnReturn = this.submitOnReturn.bind(this)
   }
 
-  isMounted () {
-    return $('[data-class="SignUpModal"]')
-  }
+  componentDidMount () { this.mounted = true }
+
+  componentWillUnmount () { this.mounted = false }
+
+  close () { this.props.actions.hide() }
 
   checkSubmitBtnState () {
-    if (!this.isMounted()) return
+    if (!this.mounted) return
 
     let isAllValid = _.every(this.state.form, (prop, key) => {
       if (_.isObject(prop)) {
@@ -66,17 +69,15 @@ class SignUpModal extends React.Component {
     this.setState({ isFormCompleted: isAllValid })
   }
 
-  close () {
-    this.props.actions.hide()
-  }
-
   onChangeFormState (propName) {
     return (newValue) => {
+      if (!this.mounted) return
+
       let state = { form: this.state.form }
       state.form[propName] = newValue
       this.setState(state)
 
-      _.debounce(this.checkSubmitBtnState, 200)()
+      this.checkSubmitBtnState()
     }
   }
 
