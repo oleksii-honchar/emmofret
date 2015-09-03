@@ -20,7 +20,7 @@ export default function (history) {
       <Route component={App} >
         <Route path='/' component={Dashboard}/>
         <Route path='public' component={Public}/>
-        <Route path='private' component={Private}/>
+        <Route path='private' component={Private} onEnter={Private.willTransitionTo}/>
       </Route>
     </Router>
   )

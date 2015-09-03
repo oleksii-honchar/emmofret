@@ -1,10 +1,11 @@
 import React from 'react'
-import Authenticated from '../components/helpers/Authenticated.js'
+import { authenticated } from '../decorators'
 
-export default Authenticated(class Private extends React.Component {
+@authenticated()
+export default class Private extends React.Component {
   render () {
     return (
       <p>private content pending</p>
     )
   }
-})
+}

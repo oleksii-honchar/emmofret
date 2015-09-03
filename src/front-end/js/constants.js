@@ -4,7 +4,9 @@ module.exports = {
   application: _.keyMirror({
     LOG_IN: null,
     LOG_OUT: null,
-    SIGN_UP: null
+    SIGN_UP: null,
+    REMEMBER_TRANSITION: null,
+    FULFILL_TRANSITION: null
   }),
   modal: _.keyMirror({
     SHOW_MODAL: null,

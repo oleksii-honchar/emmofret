@@ -6,7 +6,10 @@ import constants from '../constants.js'
 
 import * as ModalActions from '../actions/ModalActions.js'
 
-const { LOG_IN, LOG_OUT, SIGN_UP } = constants.application
+const {
+        LOG_IN, LOG_OUT, SIGN_UP,
+        REMEMBER_TRANSITION, FULFILL_TRANSITION
+      } = constants.application
 
 function logIn (user) {
   return {
@@ -68,20 +71,24 @@ function signUpRequest (data) {
   }
 }
 
+function rememberTransition(nextPath) {
+  return {
+    type: REMEMBER_TRANSITION,
+    payload: nextPath
+  }
+}
+
+function requestAuth (nextPath) {
+  return (dispatch) => {
+    dispatch(rememberTransition(nextPath))
+    dispatch(ModalActions.show('login'))
+  }
+}
+
 
 module.exports = {
   logIn: logInRequest,
   logOut: logOutRequest,
-  signUp: signUpRequest
+  signUp: signUpRequest,
+  requestAuth: requestAuth
 }
-
-//function logOut () {
-//  request.post('/api/users/log-out')
-//    .set('Content-Type', 'application/json')
-//    .end((err, res) => {
-//      if (err) { return notify.error(err) }
-//      notify.success('User successfully logged out')
-//      Dispatcher.dispatch({ actionType: UserConstants.LOG_OUT })
-//    })
-//}
-//
