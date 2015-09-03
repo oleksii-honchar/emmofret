@@ -32,17 +32,23 @@ function logInRequest (credentials) {
   }
 }
 
-function signUp (user) {
-  return {
-    type: SIGN_UP,
-    payload: user
-  }
+function signUp () {
+  return { type: SIGN_UP }
 }
 
-function signUpRequest () {
-  return {
-    type: SIGN_UP,
-    payload: user
+function signUpRequest (data) {
+  return (dispatch) => {
+    request.post('/api/users/register')
+      .send(_.pick(data, ['firstName', 'lastName', 'email', 'password']))
+      .end((err, res) => {
+        if (err) {
+          notify.error(res.body)
+          return dispatch(ModalActions.shake('sign-up'))
+        }
+
+        dispatch(ModalActions.hide('sign-up'))
+        dispatch(signUp())
+      })
   }
 }
 
@@ -52,3 +58,25 @@ module.exports = {
   logOut: createAction(LOG_OUT),
   signUp: signUpRequest
 }
+
+//function logOut () {
+//  request.post('/api/users/log-out')
+//    .set('Content-Type', 'application/json')
+//    .end((err, res) => {
+//      if (err) { return notify.error(err) }
+//      notify.success('User successfully logged out')
+//      Dispatcher.dispatch({ actionType: UserConstants.LOG_OUT })
+//    })
+//}
+//
+//function signUp (data) {
+//  request.post('/api/users/register')
+//    .set('Content-Type', 'application/json')
+//    .send(_.pick(data, ['firstName', 'lastName', 'email', 'password']))
+//    .end((err, res) => {
+//      if (err) { return notify.error(res.body) }
+//
+//      notify.success('User successfully registered. Now you can log in.')
+//      hideSignUp()
+//    })
+//}

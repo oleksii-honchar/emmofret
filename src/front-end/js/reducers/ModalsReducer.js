@@ -17,20 +17,6 @@ const initialState = {
     shakeStyle: null
   }
 }
-//const initialState = {
-//  login: {
-//    name: 'login',
-//    isOpen: false,
-//    isShaking: false,
-//    shakeStyle: null
-//  },
-//  'sign-up': {
-//    name: 'sign-up',
-//    isOpen: false,
-//    isShaking: false,
-//    shakeStyle: null
-//  }
-//}
 
 function hide (state, action) {
   const modal = _.extend({}, state[action.payload], { isOpen: false })

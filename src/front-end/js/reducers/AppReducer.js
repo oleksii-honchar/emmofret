@@ -37,7 +37,7 @@ function logOut (state) {
 }
 
 function signUp (state) {
-  console.log('[AppReducer] signUp() pending')
+  notify.success('User successfully registered. Now you can log in.')
   return Object.assign({}, state)
 }
 

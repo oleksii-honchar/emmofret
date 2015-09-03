@@ -44,7 +44,6 @@ class SignUpModal extends React.Component {
     this.signUp = this.signUp.bind(this)
     this.close = this.close.bind(this)
     this.checkSubmitBtnState = _.debounce(this.checkSubmitBtnState, 200)
-    //this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
     this.onChangeFormState = this.onChangeFormState.bind(this)
     this.submitOnReturn = this.submitOnReturn.bind(this)
   }
@@ -68,6 +67,17 @@ class SignUpModal extends React.Component {
 
     this.setState({ isFormCompleted: isAllValid })
   }
+
+  getClassName () {
+    const { modal } = this.props
+    let res = ''
+
+    if (modal.isShaking) {
+      res = `shake shake-constant shake-${modal.shakeStyle}`
+    }
+    return res
+  }
+
 
   onChangeFormState (propName) {
     return (newValue) => {
@@ -111,7 +121,8 @@ class SignUpModal extends React.Component {
     }
 
     return (
-      <Modal show onHide={this.close} bsSize='sm' keyboard={false} data-class='SignUpModal'>
+      <Modal show onHide={this.close} bsSize='sm' keyboard={false}
+             data-class='SignUpModal' dialogClassName={this.getClassName()}>
         <Header closeButton>
           <Title>Sign up</Title>
         </Header>

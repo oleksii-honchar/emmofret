@@ -43,7 +43,6 @@ class LoginModal extends React.Component {
     this.logIn = this.logIn.bind(this)
     this.close = this.close.bind(this)
     this.checkSubmitBtnState = _.debounce(this.checkSubmitBtnState, 200)
-    //this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
     this.onChangeFormState = this.onChangeFormState.bind(this)
     this.submitOnReturn = this.submitOnReturn.bind(this)
   }
