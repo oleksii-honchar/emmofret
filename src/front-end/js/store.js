@@ -1,17 +1,17 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
-import rootReducer from '../reducers'
+import rootReducer from './reducers'
 //import apiMiddleware from '../middleware/api'
 
 let combinedCreateStore
-if (__DEVTOOLS__) {
-  const { devTools } = require('redux-devtools')
-  combinedCreateStore = compose(devTools(), createStore)
-} else {
-  combinedCreateStore = compose(createStore)
-}
-//combinedCreateStore = compose(createStore)
+//if (__DEVTOOLS__) {
+//  const { devTools } = require('redux-devtools')
+//  combinedCreateStore = compose(devTools(), createStore)
+//} else {
+//  combinedCreateStore = compose(createStore)
+//}
+combinedCreateStore = compose(createStore)
 
 const logger = createLogger({
   level: 'error',
@@ -25,7 +25,6 @@ const finalCreateStore = applyMiddleware(
   logger
 )(combinedCreateStore)
 
-//const combinedReducers = combineReducers(rootReducer)
-
 let AppStore = finalCreateStore(rootReducer)
+window.AppStore = AppStore
 export default AppStore
