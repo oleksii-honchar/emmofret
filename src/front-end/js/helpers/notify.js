@@ -1,5 +1,6 @@
 /* global $ */
-import zIndexConstants from '../constants/zIndexConstands.js'
+import constants from '../constants.js'
+let zIndexConstants = constants.zIndex
 import _ from 'lodash'
 
 $.notifyDefaults({

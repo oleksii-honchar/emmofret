@@ -7,11 +7,11 @@ module.exports = {
   target: 'web',
   cache: true,
   entry: {
-    'index.bundle': path.join(srcPath, 'front-end/js/index.jsx'),
+    'index.bundle': path.join(srcPath, 'front-end/js/index.js'),
     'common.bundle': [
       'backbone', 'lodash', 'jquery', 'underscore.string', 'keymirror', 'moment', 'superagent',
-      'flux', 'backbone-relational',
-      'react', 'react-router', 'react-bootstrap', 'react-router-bootstrap'
+      'react', 'react-router', 'react-bootstrap', 'react-router-bootstrap',
+      'redux', 'react-redux', 'redux-actions'
     ],
     'vendor.bundle': path.join(srcPath, 'vendor/js/index.js'),
   },
@@ -37,7 +37,7 @@ module.exports = {
       },
       {
         test: /\.css/,
-        loader: ExtractTextPlugin.extract('style', 'css!')
+        loader: ExtractTextPlugin.extract('style', 'css!cssnext')
       },
       {
         test: /\.less/,
@@ -50,14 +50,21 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development')
+      },
+      '__DEVTOOLS__': true
+    }),
     new webpack.optimize.CommonsChunkPlugin('common.bundle', 'common.bundle.js'),
     new webpack.SourceMapDevToolPlugin({
       filename: '[name].js.map',
       exclude: [/\.css/]
     }),
-    new ExtractTextPlugin('[name].css', {
-      allChunks: true
-    })
+    new ExtractTextPlugin('[name].css', { allChunks: true })
   ],
-  debug: true
+  debug: true,
+  cssnext: {
+    browsers: 'last 2 versions'
+  }
 }

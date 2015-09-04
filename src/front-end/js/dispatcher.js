@@ -1,7 +1,12 @@
-import { Dispatcher } from 'flux'
 import _ from 'lodash'
 
-const dispatcher = new Dispatcher()
+const dispatcher = new function () {
+  return {
+    register: () => {},
+    waitFor: () => {},
+    dispatch: () => {}
+  }
+}
 
 export function register (cb) {
   return dispatcher.register(cb)
@@ -16,7 +21,6 @@ export function dispatch (opts) {
     let data = JSON.stringify(opts.data)
     console.log(`**[${opts.actionType}] ${ _.isUndefined(data) ? '' : data }`)
   }
-  dispatcher.dispatch(opts)
 }
 
 export default {

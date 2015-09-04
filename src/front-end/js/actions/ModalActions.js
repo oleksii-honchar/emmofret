@@ -1,31 +1,20 @@
-/* global $ */
-import Dispatcher from '../dispatcher.js'
-import ModalConstants from '../constants/ModalConstants.js'
+import { createAction } from 'redux-actions'
+import constants from '../constants.js'
+const { SHOW_MODAL, HIDE_MODAL, SHAKE_MODAL_START, SHAKE_MODAL_STOP } = constants.modal
 
-var ModalActions = {
-  show: (modalName) => {
-    $.notifyClose()
-    Dispatcher.dispatch({
-      actionType: ModalConstants.SHOW_MODAL,
-      data: modalName
-    })
-  },
+function shake (name) {
+  const startShake = createAction(SHAKE_MODAL_START)
+  const stopShake = createAction(SHAKE_MODAL_STOP)
 
-  hide: (modalName) => {
-    $.notifyClose()
-    Dispatcher.dispatch({
-      actionType: ModalConstants.HIDE_MODAL,
-      data: modalName
-    })
-  },
-
-  shake: (modalName) => {
-    $.notifyClose()
-    Dispatcher.dispatch({
-      actionType: ModalConstants.SHAKE_MODAL,
-      data: modalName
-    })
+  return dispatch => {
+    dispatch(startShake(name))
+    setTimeout( () => { dispatch(stopShake(name)) }, 300)
   }
 }
 
-export default ModalActions
+module.exports = {
+  show: createAction(SHOW_MODAL),
+  hide: createAction(HIDE_MODAL),
+  shake: shake
+}
+

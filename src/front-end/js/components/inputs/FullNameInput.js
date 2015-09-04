@@ -1,9 +1,9 @@
-/* global RB, React, Icon */
+/* global Icon */
+import React from 'react'
+import { Input } from 'react-bootstrap'
 import _ from 'lodash'
 
-let { Input } = RB
-
-class EmailInput extends React.Component {
+export default class FullNameInput extends React.Component {
   constructor (props) {
     super(props)
     this.state = _.clone(props)
@@ -13,10 +13,17 @@ class EmailInput extends React.Component {
 
   validateValue (value=null) {
     value = _.isNull(value) ? this.state.value : value
-    let reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i
-    let isValid = reg.test(value)
 
-    return !_.isEmpty(value) && isValid
+    let words = _.words(value)
+
+    return words.length === 2 && !_.isEmpty(value)
+  }
+
+  /*
+   * @params {string} name - 'first' | 'last' -> _[name]()
+   */
+  getName (name) {
+    return _.chain(this.state.value).words()[name]().value()
   }
 
   getValidationState () {
@@ -38,7 +45,10 @@ class EmailInput extends React.Component {
   }
 
   onSave () {
-    let res = { value: this.state.value }
+    let res = {
+      firstName: this.getName('first'),
+      lastName: this.getName('last')
+    }
 
     if (!this.props.noValidation) {
       res.isValid = this.state.isValid
@@ -48,7 +58,7 @@ class EmailInput extends React.Component {
   }
 
   render () {
-    let icon = <Icon fw name='envelope-o'/>
+    let icon = <Icon fw name='user'/>
 
     let props = {}
     if (!this.props.noValidation) {
@@ -57,9 +67,8 @@ class EmailInput extends React.Component {
 
     return (
       <Input
-        name='email'
         addonBefore={icon}
-        type='text' ref='EmailInput'
+        type='text' ref='FullNameInput'
         id={this.props.id}
         className={this.props.className}
         placeholder={this.props.placeholder}
@@ -75,7 +84,7 @@ class EmailInput extends React.Component {
   }
 }
 
-EmailInput.propTypes = {
+FullNameInput.propTypes = {
   onSave: React.PropTypes.func.isRequired,
   onKeyPress: React.PropTypes.func,
   value: React.PropTypes.string,
@@ -86,11 +95,9 @@ EmailInput.propTypes = {
   autoFocus: React.PropTypes.bool
 }
 
-EmailInput.defaultProps = {
+FullNameInput.defaultProps = {
   value: '',
-  placeholder: 'your@email.com',
+  placeholder: 'John Dow',
   noValidation: false,
   autoFocus: false
 }
-
-export default EmailInput

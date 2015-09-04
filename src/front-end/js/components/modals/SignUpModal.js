@@ -1,17 +1,34 @@
-/* global RB, React */
-import ModalActions from '../../actions/ModalActions.js'
-import UserActions from '../../actions/UserActions.js'
-import ModalStore from '../../stores/ModalStore.js'
+import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 
-import FullNameInput from '../inputs/FullNameInput.jsx'
-import EmailInput from '../inputs/EmailInput.jsx'
-import PasswordInput from '../inputs/PasswordInput.jsx'
+import * as AppActions from '../../actions/AppActions.js'
+import * as ModalActions from '../../actions/ModalActions.js'
 
-let { Modal, Button } = RB
-let { Header, Body, Title, Footer } = Modal
+import FullNameInput from '../inputs/FullNameInput.js'
+import EmailInput from '../inputs/EmailInput.js'
+import PasswordInput from '../inputs/PasswordInput.js'
 
-export default class SignUpModal extends React.Component {
+import { Modal, Button }  from 'react-bootstrap'
+const { Header, Body, Title, Footer } = Modal
+
+function select(state) {
+  return {
+    modal: state.modals['sign-up']
+  }
+}
+
+function actions(dispatch) {
+  return {
+    actions: {
+      hide: bindActionCreators(() => ModalActions.hide('sign-up'), dispatch),
+      signUp: bindActionCreators(AppActions.signUp, dispatch)
+    }
+  }
+}
+
+class SignUpModal extends React.Component {
   constructor (props) {
     super(props)
 
@@ -23,14 +40,19 @@ export default class SignUpModal extends React.Component {
       },
       isFormCompleted: false
     }
-    this.state = _.extend(this.state, this.getStoreState())
 
-    this.onChangeStore = this.onChangeStore.bind(this)
     this.signUp = this.signUp.bind(this)
-    this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
+    this.close = this.close.bind(this)
+    this.checkSubmitBtnState = _.debounce(this.checkSubmitBtnState, 200)
     this.onChangeFormState = this.onChangeFormState.bind(this)
     this.submitOnReturn = this.submitOnReturn.bind(this)
   }
+
+  componentDidMount () { this.mounted = true }
+
+  componentWillUnmount () { this.mounted = false }
+
+  close () { this.props.actions.hide() }
 
   checkSubmitBtnState () {
     if (!this.mounted) return
@@ -46,40 +68,27 @@ export default class SignUpModal extends React.Component {
     this.setState({ isFormCompleted: isAllValid })
   }
 
-  getStoreState () {
-    return {
-      store: _.findWhere(ModalStore.getState(), { name: 'sign-up' })
+  getClassName () {
+    const { modal } = this.props
+    let res = ''
+
+    if (modal.isShaking) {
+      res = `shake shake-constant shake-${modal.shakeStyle}`
     }
+    return res
   }
 
-  componentDidMount () {
-    ModalStore.on('change', this.onChangeStore)
-    this.mounted = true
-  }
-
-  componentWillUnmount () {
-    ModalStore.off('change', this.onChangeStore, this)
-    this.mounted = false
-  }
-
-  close () {
-    ModalActions.hide('sign-up')
-  }
 
   onChangeFormState (propName) {
     return (newValue) => {
+      if (!this.mounted) return
+
       let state = { form: this.state.form }
       state.form[propName] = newValue
       this.setState(state)
 
-      _.debounce(this.checkSubmitBtnState, 200)()
+      this.checkSubmitBtnState()
     }
-  }
-
-  onChangeStore () {
-    if (!this.mounted) return
-
-    this.setState(this.getStoreState())
   }
 
   signUp () {
@@ -89,7 +98,7 @@ export default class SignUpModal extends React.Component {
       email: this.state.form.email.value,
       password: this.state.form.password.value
     }
-    UserActions.signUp(data)
+    this.props.actions.signUp(data)
   }
 
   submitOnReturn (e) {
@@ -112,7 +121,8 @@ export default class SignUpModal extends React.Component {
     }
 
     return (
-      <Modal show={this.state.store.isOpen} onHide={this.close} bsSize='sm'>
+      <Modal show onHide={this.close} bsSize='sm' keyboard={false}
+             data-class='SignUpModal' dialogClassName={this.getClassName()}>
         <Header closeButton>
           <Title>Sign up</Title>
         </Header>
@@ -128,3 +138,4 @@ export default class SignUpModal extends React.Component {
     )
   }
 }
+export default connect(select, actions)(SignUpModal)

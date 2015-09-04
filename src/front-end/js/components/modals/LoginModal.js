@@ -1,17 +1,36 @@
-/* global RB, React */
-import UserActions from '../../actions/UserActions.js'
-import ModalActions from '../../actions/ModalActions.js'
-import ModalStore from '../../stores/ModalStore.js'
+import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import EmailInput from '../inputs/EmailInput.jsx'
-import PasswordInput from '../inputs/PasswordInput.jsx'
+import * as AppActions from '../../actions/AppActions.js'
+import * as ModalActions from '../../actions/ModalActions.js'
+
+import EmailInput from '../inputs/EmailInput.js'
+import PasswordInput from '../inputs/PasswordInput.js'
 
 import _ from 'lodash'
 
-let { Modal, Button } = RB
+import { Modal, Button } from 'react-bootstrap'
 let { Header, Body, Title, Footer } = Modal
 
-export default class LoginModal extends React.Component {
+function select(state) {
+  return {
+    nextTransitionPath: state.application.nextTransitionPath,
+    modal: state.modals['login']
+  }
+}
+
+function actions(dispatch) {
+  return {
+    actions: {
+      hide: bindActionCreators( () => ModalActions.hide('login'), dispatch),
+      logIn: bindActionCreators(AppActions.logIn, dispatch),
+      discardNextTransition: bindActionCreators(AppActions.discardNextTransition, dispatch)
+    }
+  }
+}
+
+class LoginModal extends React.Component {
   constructor (props) {
     super(props)
 
@@ -23,27 +42,22 @@ export default class LoginModal extends React.Component {
       isFormCompleted: false
     }
 
-    this.state = _.extend(this.state, this.getStoreState()) // -> {store: object}
-
-    this.onChangeStore = this.onChangeStore.bind(this)
     this.logIn = this.logIn.bind(this)
-    this.checkSubmitBtnState = this.checkSubmitBtnState.bind(this)
+    this.close = this.close.bind(this)
+    this.checkSubmitBtnState = _.debounce(this.checkSubmitBtnState, 200)
     this.onChangeFormState = this.onChangeFormState.bind(this)
     this.submitOnReturn = this.submitOnReturn.bind(this)
   }
 
-  componentDidMount () {
-    ModalStore.on('change', this.onChangeStore)
-    this.mounted = true
-  }
+  componentDidMount () { this.mounted = true }
 
-  componentWillUnmount () {
-    ModalStore.off('change', this.onChangeStore, this)
-    this.mounted = false
-  }
+  componentWillUnmount () { this.mounted = false }
 
   close () {
-    ModalActions.hide('login')
+    if (this.props.nextTransitionPath) {
+      this.props.actions.discardNextTransition()
+    }
+    this.props.actions.hide()
   }
 
   checkSubmitBtnState () {
@@ -57,42 +71,37 @@ export default class LoginModal extends React.Component {
     this.setState({ isFormCompleted: isAllValid })
   }
 
-  getStoreState () {
-    return {
-      store: _.findWhere(ModalStore.getState(), { name: 'login' })
-    }
-  }
-
   getClassName () {
+    const { modal } = this.props
     let res = ''
-    if (this.state.store.isShaking) {
-      res = `shake shake-constant shake-${this.state.store.shakeStyle}`
+
+    if (modal.isShaking) {
+      res = `shake shake-constant shake-${modal.shakeStyle}`
     }
     return res
   }
 
-  logIn () {
+  logIn (e) {
+    e.preventDefault()
+    const {email, password} = this.state.form
+
     let credentials = {
-      email: this.state.form.email.value,
-      password: this.state.form.password.value
+      email: email.value,
+      password: password.value
     }
 
-    UserActions.logIn(credentials)
-  }
-
-  onChangeStore () {
-    if (!this.mounted) return
-
-    this.setState(this.getStoreState())
+    this.props.actions.logIn(credentials)
   }
 
   onChangeFormState (propName) {
     return (newValue) => {
+      if (!this.mounted) return
+
       let state = { form: this.state.form }
       state.form[propName] = newValue
       this.setState(state)
 
-      _.debounce(this.checkSubmitBtnState, 200)()
+      this.checkSubmitBtnState()
     }
   }
 
@@ -117,8 +126,10 @@ export default class LoginModal extends React.Component {
     }
 
     return (
-      <Modal show={this.state.store.isOpen} onHide={this.close} bsSize='sm'
-             dialogClassName={this.getClassName()}>
+      <Modal show onHide={this.close} bsSize='sm'
+             dialogClassName={this.getClassName()} keyboard={false}
+             data-class='LoginModal'
+        >
         <Header closeButton>
           <Title>Login</Title>
         </Header>
@@ -135,3 +146,5 @@ export default class LoginModal extends React.Component {
     )
   }
 }
+
+export default connect(select, actions)(LoginModal)
