@@ -9,7 +9,7 @@ import * as ModalActions from '../actions/ModalActions.js'
 const {
         LOG_IN, LOG_OUT, SIGN_UP,
         REMEMBER_TRANSITION, FULFILL_TRANSITION,
-        REMEMBER_ROUTER
+        REMEMBER_ROUTER, TRANSITION_TO_HOME
       } = constants.application
 
 function logIn (user) {
@@ -105,5 +105,6 @@ module.exports = {
   rememberRouter: createAction(REMEMBER_ROUTER),
   signUp: makeSignUpRequest,
   requestAuth: requestAuth,
-  fulfillTransition: fulfillTransition
+  fulfillTransition: fulfillTransition,
+  transitionToHome: createAction(TRANSITION_TO_HOME)
 }

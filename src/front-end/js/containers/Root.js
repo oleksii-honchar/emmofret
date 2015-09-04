@@ -9,8 +9,8 @@ import Routes from './Routes'
 export default class Root extends React.Component {
   render() {
     const rootContent = [
-      <Provider store={AppStore} key="provider">
-        { () => <Routes {...this.props}/> }
+      <Provider store={AppStore} key='provider'>
+        { () => <Routes {...this.props} /> }
       </Provider>
     ]
 

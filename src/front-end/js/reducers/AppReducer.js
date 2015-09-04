@@ -60,11 +60,23 @@ function signUp (state) {
   return Object.assign({}, state)
 }
 
+function transitionToHome (state, action) {
+  if (!state.router) {
+    action.payload.to('/')
+  } else {
+    //action.payload.abort()
+    action.payload.to('/')
+    //state.router.transitionTo('/')
+  }
+  return _.merge({}, state)
+}
+
 export default handleActions({
   LOG_IN: logIn,
   LOG_OUT: logOut,
   SIGN_UP: signUp,
   REMEMBER_TRANSITION: rememberTransition,
   FULFILL_TRANSITION: fulfillTransition,
+  TRANSITION_TO_HOME: transitionToHome,
   REMEMBER_ROUTER: rememberRouter,
 }, initialState)

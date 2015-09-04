@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { PropTypes } from 'react'
 import Router from 'react-router'
 import TopNavbar from '../components/TopNavbar.js'
 import ModalsContainer from '../components/modals/ModalsContainer.js'
 import { rememberRouter } from '../actions/AppActions.js'
+import { bindActionCreators } from 'redux'
 
 function select(state) {
   return { application: state.application }
@@ -14,7 +14,7 @@ function select(state) {
 function actions(dispatch) {
   return {
     actions: {
-      rememberRouter: bindActionCreators( rememberRouter, dispatch)
+      rememberRouter: bindActionCreators(rememberRouter, dispatch),
     }
   }
 }
