@@ -51,6 +51,10 @@ function fulfillTransition (state, action) {
   return _.merge({}, state, { nextTransitionPath: null })
 }
 
+function discardNextTransition (state, action) {
+  return _.merge({}, state, { nextTransitionPath: null })
+}
+
 function rememberRouter (state, action) {
   return _.merge({}, state, {router: action.payload})
 }
@@ -60,23 +64,12 @@ function signUp (state) {
   return Object.assign({}, state)
 }
 
-function transitionToHome (state, action) {
-  if (!state.router) {
-    action.payload.to('/')
-  } else {
-    //action.payload.abort()
-    action.payload.to('/')
-    //state.router.transitionTo('/')
-  }
-  return _.merge({}, state)
-}
-
 export default handleActions({
   LOG_IN: logIn,
   LOG_OUT: logOut,
   SIGN_UP: signUp,
   REMEMBER_TRANSITION: rememberTransition,
   FULFILL_TRANSITION: fulfillTransition,
-  TRANSITION_TO_HOME: transitionToHome,
+  DISCARD_NEXT_TRANSITION: discardNextTransition,
   REMEMBER_ROUTER: rememberRouter,
 }, initialState)

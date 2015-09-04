@@ -15,6 +15,7 @@ let { Header, Body, Title, Footer } = Modal
 
 function select(state) {
   return {
+    nextTransitionPath: state.application.nextTransitionPath,
     modal: state.modals['login']
   }
 }
@@ -23,7 +24,8 @@ function actions(dispatch) {
   return {
     actions: {
       hide: bindActionCreators( () => ModalActions.hide('login'), dispatch),
-      logIn: bindActionCreators(AppActions.logIn, dispatch)
+      logIn: bindActionCreators(AppActions.logIn, dispatch),
+      discardNextTransition: bindActionCreators(AppActions.discardNextTransition, dispatch)
     }
   }
 }
@@ -51,7 +53,12 @@ class LoginModal extends React.Component {
 
   componentWillUnmount () { this.mounted = false }
 
-  close () { this.props.actions.hide() }
+  close () {
+    if (this.props.nextTransitionPath) {
+      this.props.actions.discardNextTransition()
+    }
+    this.props.actions.hide()
+  }
 
   checkSubmitBtnState () {
     if (!this.mounted) return

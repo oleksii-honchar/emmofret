@@ -23,21 +23,42 @@ function select(state) {
 function actions(dispatch) {
   return {
     actions: {
-      transitionToHome: bindActionCreators(AppActions.transitionToHome, dispatch),
-      requestAuth: bindActionCreators(AppActions.requestAuth, dispatch),
+      requestAuth: bindActionCreators(AppActions.requestAuth, dispatch)
     }
   }
 }
 
 class Routes extends React.Component{
-  static requireAuth () {
-    const self = this
-    console.log(108)
+  constructor (props) {
+    super(props)
+    this.state = {
+      inTransitionToHome : false
+    }
+  }
+
+  static propTypes = {
+    history: PropTypes.object.isRequired
+  }
+
+  atHome () {
+    var self = this
+    return () => {
+      self.state.inTransitionToHome = false
+    }
+  }
+
+  requireAuth () {
+    var self = this
     return (nextState, transition) => {
       const { isLoggedIn, nextTransitionPath } = self.props.application
-      if (!isLoggedIn && !nextTransitionPath) {
-        self.props.actions.transitionToHome(transition)
+      if (!isLoggedIn && !self.state.inTransitionToHome) {
+        self.state.inTransitionToHome = true
         self.props.actions.requestAuth(nextState.location.pathname)
+        transition.to('/')
+      } else if (!isLoggedIn) {
+        transition.to('/')
+      } else {
+        self.state.inTransitionToHome = false
       }
     }
   }
@@ -46,17 +67,13 @@ class Routes extends React.Component{
     return (
       <Router history={this.props.history}>
         <Route component={App} >
-          <Route path='/' component={Dashboard}/>
+          <Route path='/' component={Dashboard} onEnter={this.atHome()}/>
           <Route path='public' component={Public}/>
-          <Route path='private' component={Private} onEnter={Private.Private.onEnter()}/>
+          <Route path='private' component={Private} onEnter={this.requireAuth()}/>
         </Route>
       </Router>
     )
   }
-}
-
-Routes.propTypes = {
-  history: PropTypes.object.isRequired
 }
 
 export default connect(select, actions)(Routes)

@@ -7,7 +7,7 @@ module.exports = {
     SIGN_UP: null,
     REMEMBER_TRANSITION: null,
     FULFILL_TRANSITION: null,
-    TRANSITION_TO_HOME: null,
+    DISCARD_NEXT_TRANSITION: null,
     REMEMBER_ROUTER: null
   }),
   modal: _.keyMirror({

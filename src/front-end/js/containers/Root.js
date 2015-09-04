@@ -7,6 +7,10 @@ import AppStore from '../store.js'
 import Routes from './Routes'
 
 export default class Root extends React.Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired
+  }
+
   render() {
     const rootContent = [
       <Provider store={AppStore} key='provider'>
@@ -27,8 +31,4 @@ export default class Root extends React.Component {
       <div>{rootContent}</div>
     )
   }
-}
-
-Root.propTypes = {
-  history: PropTypes.object.isRequired
 }
