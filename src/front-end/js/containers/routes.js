@@ -1,5 +1,5 @@
 import React from 'react'
-import { requestAuth } from '../actions/AppActions.js'
+import * as AppActions from '../actions/AppActions.js'
 import { connect } from 'react-redux'
 import { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
@@ -23,18 +23,21 @@ function select(state) {
 function actions(dispatch) {
   return {
     actions: {
-      requestAuth: bindActionCreators(requestAuth, dispatch),
+      transitionToHome: bindActionCreators(AppActions.transitionToHome, dispatch),
+      requestAuth: bindActionCreators(AppActions.requestAuth, dispatch),
     }
   }
 }
 
 class Routes extends React.Component{
-  requireAuth () {
+  static requireAuth () {
     const self = this
+    console.log(108)
     return (nextState, transition) => {
-      if (!self.props.application.isLoggedIn) {
+      const { isLoggedIn, nextTransitionPath } = self.props.application
+      if (!isLoggedIn && !nextTransitionPath) {
+        self.props.actions.transitionToHome(transition)
         self.props.actions.requestAuth(nextState.location.pathname)
-        transition.to('/')
       }
     }
   }
@@ -45,7 +48,7 @@ class Routes extends React.Component{
         <Route component={App} >
           <Route path='/' component={Dashboard}/>
           <Route path='public' component={Public}/>
-          <Route path='private' component={Private} onEnter={this.requireAuth()}/>
+          <Route path='private' component={Private} onEnter={Private.Private.onEnter()}/>
         </Route>
       </Router>
     )
