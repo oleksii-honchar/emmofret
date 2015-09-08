@@ -1,18 +1,10 @@
 import React from 'react'
+import {Router} from 'react-router'
 import * as AppActions from '../actions/AppActions.js'
 import { connect } from 'react-redux'
 import { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
-
-/* containers */
-import App from '../containers/App.js'
-
-/* partials */
-import Dashboard from '../pages/Dashboard.js'
-import Private from '../pages/Private.js'
-import Public from '../pages/Public.js'
-
-import {Route, Router} from 'react-router'
+import routes from '../routes'
 
 function select(state) {
   return {
@@ -66,11 +58,7 @@ class Routes extends React.Component{
   render () {
     return (
       <Router history={this.props.history}>
-        <Route component={App} >
-          <Route path='/' component={Dashboard} onEnter={this.atHome()}/>
-          <Route path='public' component={Public}/>
-          <Route path='private' component={Private} onEnter={this.requireAuth()}/>
-        </Route>
+        {routes}
       </Router>
     )
   }

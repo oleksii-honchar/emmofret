@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route, Router} from 'react-router'
+import {Route} from 'react-router'
 
 /* containers */
 import App from './containers/App.js'
