@@ -1,19 +1,25 @@
-/* global $ */
 import constants from '../constants.js'
 let zIndexConstants = constants.zIndex
 import _ from 'lodash'
+import $ from 'jquery'
 
-$.notifyDefaults({
-  z_index: zIndexConstants.notify,
-  animate: {
-    enter: 'animated flipInX',
-    exit: 'animated flipOutX'
-  },
-  placement: {
-    from: 'top',
-    align: 'center'
+if ($.notifyDefaults) {
+  $.notifyDefaults({
+    z_index: zIndexConstants.notify,
+    animate: {
+      enter: 'animated flipInX',
+      exit: 'animated flipOutX'
+    },
+    placement: {
+      from: 'top',
+      align: 'center'
+    }
+  })
+} else {
+  $.notify = (msg) => {
+    console.dir(JSON.stringify(msg.message))
   }
-})
+}
 
 export function error (body) {
   let msg = ''

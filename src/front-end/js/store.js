@@ -4,6 +4,8 @@ import createLogger from 'redux-logger'
 import rootReducer from './reducers'
 //import apiMiddleware from '../middleware/api'
 
+let window = window || global
+
 let combinedCreateStore
 //if (__DEVTOOLS__) {
 //  const { devTools } = require('redux-devtools')

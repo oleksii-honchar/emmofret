@@ -1,10 +1,13 @@
 import notify from '../helpers/notify.js'
+import _ from 'lodash'
 import { handleActions } from 'redux-actions'
 import constants from '../constants.js'
 const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION } = constants.application
 import Router from 'react-router'
 
 let data = {}
+let window = window || global
+
 if (_.has(window.sessionStorage, 'application')) {
   try {
     data = JSON.parse(window.sessionStorage.application)
