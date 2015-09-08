@@ -1,5 +1,6 @@
 import React from 'react'
 import {Route} from 'react-router'
+import RouterContainer from './containers/RouterContainer'
 
 /* containers */
 import App from './containers/App.js'
@@ -13,7 +14,7 @@ export default (
   <Route component={App} >
     <Route path='/' component={Dashboard}/>
     <Route path='public' component={Public}/>
-    <Route path='private' component={Private}/>
+    <Route path='private' component={Private} onEnter={RouterContainer.requireAuth()}/>
   </Route>
 )
 //export default (

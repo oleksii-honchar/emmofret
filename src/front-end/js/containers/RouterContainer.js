@@ -4,23 +4,22 @@ import * as AppActions from '../actions/AppActions.js'
 import { connect } from 'react-redux'
 import { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
-import routes from '../routes'
 
-function select(state) {
-  return {
-    application: state.application
-  }
-}
+//function select(state) {
+//  return {
+//    application: state.application
+//  }
+//}
+//
+//function actions(dispatch) {
+//  return {
+//    actions: {
+//      requestAuth: bindActionCreators(AppActions.requestAuth, dispatch)
+//    }
+//  }
+//}
 
-function actions(dispatch) {
-  return {
-    actions: {
-      requestAuth: bindActionCreators(AppActions.requestAuth, dispatch)
-    }
-  }
-}
-
-class Routes extends React.Component{
+export default class RouterContainer extends React.Component{
   constructor (props) {
     super(props)
     this.state = {
@@ -28,18 +27,14 @@ class Routes extends React.Component{
     }
   }
 
-  static propTypes = {
-    history: PropTypes.object.isRequired
-  }
-
-  atHome () {
+  static atHome () {
     var self = this
     return () => {
       self.state.inTransitionToHome = false
     }
   }
 
-  requireAuth () {
+  static requireAuth () {
     var self = this
     return (nextState, transition) => {
       const { isLoggedIn, nextTransitionPath } = self.props.application
@@ -57,11 +52,10 @@ class Routes extends React.Component{
 
   render () {
     return (
-      <Router history={this.props.history}>
-        {routes}
+      <Router {...this.props} atHome={RouterContainer.atHome} requireAuth={RouterContainer.requireAuth}>
       </Router>
     )
   }
 }
 
-export default connect(select, actions)(Routes)
+//export default connect(select, actions)(RouterContainer)

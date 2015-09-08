@@ -10,14 +10,13 @@ import React from 'react'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
 import Location from 'react-router/lib/Location';
 
-let history = new BrowserHistory()
+import store from './store.js'
+import initRouter from './router.js'
 
+const history = new BrowserHistory()
 const search = document.location.search;
 const query = search && queryString.parse(search);
 const location = new Location(document.location.pathname, query);
-
-import store from './store.js'
-import initRouter from './router.js'
 
 $( () => {
   initRouter(location, history, store)

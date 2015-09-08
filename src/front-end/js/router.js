@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Router from 'react-router'
 import { Provider } from 'react-redux'
 
+import RouterContainer from './containers/RouterContainer'
 import routes from './routes'
 
 export default (location, history, store) => {
@@ -18,7 +19,7 @@ export default (location, history, store) => {
 
       const content = (
         <Provider store={store} key="provider">
-          {() => <Router {...initialState} children={routes}/>}
+          {() => <RouterContainer {...initialState} children={routes}/>}
         </Provider>
       )
       resolve({content})
