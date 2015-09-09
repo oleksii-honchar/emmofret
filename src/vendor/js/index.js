@@ -1,6 +1,11 @@
-window.$ = window.jQuery = require('jquery')
+import _ from 'lodash'
+
+import $ from 'jquery'
+let window = window || global
+window.$ = window.jQuery = $
+
+import 'bootstrap-notify'
 require('./jquery-plugins/labelauty.js')
-require('bootstrap-notify')
 
 $(() => {
   $(':checkbox').labelauty()

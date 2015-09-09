@@ -1,11 +1,10 @@
+import _ from 'lodash'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import createLogger from 'redux-logger'
 import rootReducer from './reducers'
-//import apiMiddleware from '../middleware/api'
 
 let combinedCreateStore
-//if (__DEVTOOLS__) {
+//if (_.result(process.env, 'NODE_ENV') == 'development') {
 //  const { devTools } = require('redux-devtools')
 //  combinedCreateStore = compose(devTools(), createStore)
 //} else {
@@ -13,18 +12,23 @@ let combinedCreateStore
 //}
 combinedCreateStore = compose(createStore)
 
-const logger = createLogger({
-  level: 'error',
-  collapsed: true,
-  //predicate: (getState, action) => action.type !== AUTH_REMOVE_TOKEN
-})
+let finalCreateStore = null
+if (_.result(process.env, 'NODE_ENV') == 'development') {
+  const createLogger = require('redux-logger')
+  const logger = createLogger({
+    level: 'error',
+    collapsed: true
+  })
 
-const finalCreateStore = applyMiddleware(
-  thunk,
-  //apiMiddleware,
-  logger
-)(combinedCreateStore)
+  finalCreateStore = applyMiddleware(
+    thunk,
+    logger
+  )(combinedCreateStore)
+} else {
+  finalCreateStore = applyMiddleware(
+    thunk
+  )(combinedCreateStore)
+}
 
 let AppStore = finalCreateStore(rootReducer)
-window.AppStore = AppStore
 export default AppStore

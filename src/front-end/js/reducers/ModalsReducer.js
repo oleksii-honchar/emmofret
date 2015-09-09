@@ -1,6 +1,8 @@
 import { handleActions } from 'redux-actions'
 import _ from 'lodash'
 import constants from '../constants.js'
+import $ from 'jquery'
+
 const { SHOW_MODAL, HIDE_MODAL, SHAKE_MODAL_START, SHAKE_MODAL_STOP } = constants.modal
 
 const initialState = {

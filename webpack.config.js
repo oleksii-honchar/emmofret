@@ -9,9 +9,9 @@ module.exports = {
   entry: {
     'index.bundle': path.join(srcPath, 'front-end/js/index.js'),
     'common.bundle': [
-      'backbone', 'lodash', 'jquery', 'underscore.string', 'keymirror', 'moment', 'superagent',
+      'lodash', 'jquery', 'underscore.string', 'keymirror', 'moment', 'superagent',
       'react', 'react-router', 'react-bootstrap', 'react-router-bootstrap',
-      'redux', 'react-redux', 'redux-actions'
+      'redux', 'react-redux', 'redux-actions', 'js-cookie'
     ],
     'vendor.bundle': path.join(srcPath, 'vendor/js/index.js'),
   },
@@ -54,7 +54,6 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('development')
       },
-      '__DEVTOOLS__': true
     }),
     new webpack.optimize.CommonsChunkPlugin('common.bundle', 'common.bundle.js'),
     new webpack.SourceMapDevToolPlugin({

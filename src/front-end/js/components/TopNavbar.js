@@ -5,6 +5,10 @@ import { Link } from 'react-router'
 import { Nav, NavItem, Navbar, CollapsibleNav } from 'react-bootstrap'
 import { NavItemLink } from 'react-router-bootstrap'
 
+NavItemLink.contextTypes = Object.assign(NavItemLink.contextTypes, {
+  router: React.PropTypes.object
+})
+
 class TopNavbar extends React.Component {
   render () {
     return (
@@ -16,12 +20,12 @@ class TopNavbar extends React.Component {
         </div>
         <CollapsibleNav eventKey={0}>
           <Nav navbar>
-            <NavItem eventKey={1} href='/#/public'>
+            <NavItemLink to='public'>
               <span className='text-success'>Public</span>
-            </NavItem>
-            <NavItem eventKey={2} href='/#/private'>
+            </NavItemLink>
+            <NavItemLink to='private'>
               <span className='text-warning'>Private</span>
-            </NavItem>
+            </NavItemLink>
           </Nav>
           <UserNavbar />
         </CollapsibleNav>

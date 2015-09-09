@@ -1,10 +1,16 @@
-import notify from '../helpers/notify.js'
-import { handleActions } from 'redux-actions'
-import constants from '../constants.js'
-const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION } = constants.application
 import Router from 'react-router'
+import { handleActions } from 'redux-actions'
+import notify from '../helpers/notify.js'
+import _ from 'lodash'
+import cookie from 'js-cookie'
+
+import constants from '../constants.js'
+
+const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION } = constants.application
 
 let data = {}
+let window = window || global
+
 if (_.has(window.sessionStorage, 'application')) {
   try {
     data = JSON.parse(window.sessionStorage.application)
@@ -28,7 +34,10 @@ function logIn (state, action) {
   newState.isLoggedIn = true
   newState.token = action.payload.token
   newState.user = _.omit(action.payload, 'token')
+
   window.sessionStorage.application = JSON.stringify(_.pick(newState, ['token', 'user']))
+  cookie.set('token', newState.token, { expire: 3 })
+
   return newState
 }
 
@@ -39,6 +48,7 @@ function logOut (state) {
   newState.token = null
   newState.user = null
   delete window.sessionStorage.application
+  cookie.remove('token')
   return newState
 }
 
