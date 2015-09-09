@@ -54,7 +54,6 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('development')
       },
-      '__DEVTOOLS__': true
     }),
     new webpack.optimize.CommonsChunkPlugin('common.bundle', 'common.bundle.js'),
     new webpack.SourceMapDevToolPlugin({

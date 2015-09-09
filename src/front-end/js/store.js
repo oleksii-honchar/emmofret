@@ -1,22 +1,10 @@
+import _ from 'lodash'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 
-let isServerSide = typeof window === 'undefined'
-
-let logger = null
-if (!isServerSide) {
-  let createLogger = require('redux-logger')
-  logger = createLogger({
-    level: 'error',
-    collapsed: true
-  })
-}
-
-let window = window || global
-
 let combinedCreateStore
-//if (__DEVTOOLS__) {
+//if (_.result(process.env, 'NODE_ENV') == 'development') {
 //  const { devTools } = require('redux-devtools')
 //  combinedCreateStore = compose(devTools(), createStore)
 //} else {
@@ -25,7 +13,13 @@ let combinedCreateStore
 combinedCreateStore = compose(createStore)
 
 let finalCreateStore = null
-if (!isServerSide) {
+if (_.result(process.env, 'NODE_ENV') == 'development') {
+  const createLogger = require('redux-logger')
+  const logger = createLogger({
+    level: 'error',
+    collapsed: true
+  })
+
   finalCreateStore = applyMiddleware(
     thunk,
     logger
@@ -37,5 +31,4 @@ if (!isServerSide) {
 }
 
 let AppStore = finalCreateStore(rootReducer)
-window.AppStore = AppStore
 export default AppStore
