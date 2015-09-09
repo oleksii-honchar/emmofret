@@ -14,9 +14,9 @@ import store from './store.js'
 import initRouter from './router.js'
 
 const history = new BrowserHistory()
-const search = document.location.search;
-const query = search && queryString.parse(search);
-const location = new Location(document.location.pathname, query);
+const search = document.location.search
+const query = search && queryString.parse(search)
+const location = new Location(document.location.pathname, query)
 
 $( () => {
   initRouter(location, history, store)
