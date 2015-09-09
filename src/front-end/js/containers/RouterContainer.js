@@ -5,11 +5,6 @@ import { connect } from 'react-redux'
 import { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 
-//function select(state) {
-//  return {
-//    application: state.application
-//  }
-//}
 //
 //function actions(dispatch) {
 //  return {
@@ -19,43 +14,39 @@ import { bindActionCreators } from 'redux'
 //  }
 //}
 
+let state = {
+  inTransitionToHome : false
+}
+
 export default class RouterContainer extends React.Component{
-  constructor (props) {
-    super(props)
-    this.state = {
-      inTransitionToHome : false
-    }
-  }
-
-  static atHome () {
-    var self = this
+  static atHome (store) {
+    var appStore = store
     return () => {
-      self.state.inTransitionToHome = false
+      state.inTransitionToHome = false
     }
   }
 
-  static requireAuth () {
-    var self = this
+  static requireAuth (store) {
+    var appStore = store
+
     return (nextState, transition) => {
-      const { isLoggedIn, nextTransitionPath } = self.props.application
-      if (!isLoggedIn && !self.state.inTransitionToHome) {
-        self.state.inTransitionToHome = true
-        self.props.actions.requestAuth(nextState.location.pathname)
+      const { isLoggedIn, nextTransitionPath } = appStore.getState().application
+      if (!isLoggedIn && !state.inTransitionToHome) {
+        state.inTransitionToHome = true
+        appStore.dispatch(AppActions.requestAuth())
         transition.to('/')
       } else if (!isLoggedIn) {
         transition.to('/')
       } else {
-        self.state.inTransitionToHome = false
+        state.inTransitionToHome = false
       }
     }
   }
 
   render () {
     return (
-      <Router {...this.props} atHome={RouterContainer.atHome} requireAuth={RouterContainer.requireAuth}>
+      <Router {...this.props}>
       </Router>
     )
   }
 }
-
-//export default connect(select, actions)(RouterContainer)
