@@ -1,8 +1,17 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import createLogger from 'redux-logger'
 import rootReducer from './reducers'
-//import apiMiddleware from '../middleware/api'
+
+let isServerSide = typeof window === 'undefined'
+
+let logger = null
+if (!isServerSide) {
+  let createLogger = require('redux-logger')
+  logger = createLogger({
+    level: 'error',
+    collapsed: true
+  })
+}
 
 let window = window || global
 
@@ -15,17 +24,17 @@ let combinedCreateStore
 //}
 combinedCreateStore = compose(createStore)
 
-const logger = createLogger({
-  level: 'error',
-  collapsed: true,
-  //predicate: (getState, action) => action.type !== AUTH_REMOVE_TOKEN
-})
-
-const finalCreateStore = applyMiddleware(
-  thunk,
-  //apiMiddleware,
-  logger
-)(combinedCreateStore)
+let finalCreateStore = null
+if (!isServerSide) {
+  finalCreateStore = applyMiddleware(
+    thunk,
+    logger
+  )(combinedCreateStore)
+} else {
+  finalCreateStore = applyMiddleware(
+    thunk
+  )(combinedCreateStore)
+}
 
 let AppStore = finalCreateStore(rootReducer)
 window.AppStore = AppStore

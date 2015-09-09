@@ -49,6 +49,7 @@
     "hbs": "^3.1.0",
     "hbs-utils": "^0.0.3",
     "jquery": "2.1.4",
+    "js-cookie": "^2.0.3",
     "jsonwebtoken": "^5.0.4",
     "keymirror": "^0.1.1",
     "konphyg": "^1.4.0",

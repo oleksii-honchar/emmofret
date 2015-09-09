@@ -11,7 +11,7 @@ module.exports = {
     'common.bundle': [
       'lodash', 'jquery', 'underscore.string', 'keymirror', 'moment', 'superagent',
       'react', 'react-router', 'react-bootstrap', 'react-router-bootstrap',
-      'redux', 'react-redux', 'redux-actions'
+      'redux', 'react-redux', 'redux-actions', 'js-cookie'
     ],
     'vendor.bundle': path.join(srcPath, 'vendor/js/index.js'),
   },
