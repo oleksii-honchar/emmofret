@@ -1,5 +1,8 @@
 {{#extend "layout" }}
     {{#content "script"}}
+        <script type="application/javascript">
+            window.__INITIAL_STATE__ = {{{initialState}}};
+        </script>
         <script src="/public/common.bundle.js"></script>
         <script src="/public/vendor.bundle.js"></script>
         <script src="/public/index.bundle.js"></script>

@@ -3,6 +3,8 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 
+let isDevelopment = process.env.NODE_ENV === 'development'
+
 let combinedCreateStore
 //if (_.result(process.env, 'NODE_ENV') == 'development') {
 //  const { devTools } = require('redux-devtools')
@@ -13,7 +15,7 @@ let combinedCreateStore
 combinedCreateStore = compose(createStore)
 
 let finalCreateStore = null
-if (_.result(process.env, 'NODE_ENV') == 'development') {
+if (isDevelopment) {
   const createLogger = require('redux-logger')
   const logger = createLogger({
     level: 'error',
@@ -31,4 +33,12 @@ if (_.result(process.env, 'NODE_ENV') == 'development') {
 }
 
 let AppStore = finalCreateStore(rootReducer)
+
+if (isDevelopment) {
+  try {
+    window.AppStore = AppStore
+  }
+  catch (e) {}
+}
+
 export default AppStore

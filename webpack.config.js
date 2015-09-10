@@ -51,9 +51,11 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('development')
-      },
+      process: JSON.stringify({
+        env: {
+          NODE_ENV: process.env.NODE_ENV
+        }
+      })
     }),
     new webpack.optimize.CommonsChunkPlugin('common.bundle', 'common.bundle.js'),
     new webpack.SourceMapDevToolPlugin({
