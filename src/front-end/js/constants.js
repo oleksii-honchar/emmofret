@@ -8,7 +8,8 @@ module.exports = {
     REMEMBER_TRANSITION: null,
     FULFILL_TRANSITION: null,
     DISCARD_NEXT_TRANSITION: null,
-    REMEMBER_ROUTER: null
+    REMEMBER_ROUTER: null,
+    FETCH_STATE: null
   }),
   modal: _.keyMirror({
     SHOW_MODAL: null,

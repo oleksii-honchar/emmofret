@@ -15,15 +15,15 @@ class TopNavbar extends React.Component {
       <Navbar fixedtop fluid toggleNavKey={0}>
         <div className='navbar-header'>
           <span className='navbar-brand'>
-            <Link to='/'>My brand name</Link>
+            <Link to='/app/dashboard'>My brand name</Link>
           </span>
         </div>
         <CollapsibleNav eventKey={0}>
           <Nav navbar>
-            <NavItemLink to='public'>
+            <NavItemLink to='/app/public'>
               <span className='text-success'>Public</span>
             </NavItemLink>
-            <NavItemLink to='private'>
+            <NavItemLink to='/app/private'>
               <span className='text-warning'>Private</span>
             </NavItemLink>
           </Nav>

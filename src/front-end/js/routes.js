@@ -12,10 +12,10 @@ import Public from './pages/Public.js'
 
 export default (store) => {
   return (
-    <Route component={App} >
-      <Route path='/' component={Dashboard} onEnter={RouterContainer.atHome(store)}/>
-      <Route path='public' component={Public}/>
-      <Route path='private' component={Private} onEnter={RouterContainer.requireAuth(store)}/>
+    <Route path='/app' component={App} >
+      <Route name='/' path='dashboard' component={Dashboard} onEnter={RouterContainer.atHome(store)}/>
+      <Route path='/public' component={Public}/>
+      <Route path='/private' component={Private} onEnter={RouterContainer.requireAuth(store)}/>
     </Route>
   )
 }

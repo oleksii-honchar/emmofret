@@ -53,6 +53,10 @@ function signUp (state) {
   return Object.assign({}, state)
 }
 
+function fetchState (state) {
+  console.dir(state)
+}
+
 export default () => {
   let data = {}
   try {
@@ -78,5 +82,6 @@ export default () => {
     FULFILL_TRANSITION: fulfillTransition,
     DISCARD_NEXT_TRANSITION: discardNextTransition,
     REMEMBER_ROUTER: rememberRouter,
+    FETCH_STATE: fetchState,
   }, initialState)
 }

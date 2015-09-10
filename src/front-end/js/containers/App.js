@@ -4,7 +4,7 @@ import { PropTypes } from 'react'
 import Router from 'react-router'
 import TopNavbar from '../components/TopNavbar.js'
 import ModalsContainer from '../components/modals/ModalsContainer.js'
-import { rememberRouter } from '../actions/AppActions.js'
+import { rememberRouter, fetchState } from '../actions/AppActions.js'
 import { bindActionCreators } from 'redux'
 
 function select(state) {
@@ -36,6 +36,8 @@ class App extends React.Component {
     )
   }
 }
+
+App.needs = [fetchState]
 
 App.propTypes = {
   children: PropTypes.any
