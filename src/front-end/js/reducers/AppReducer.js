@@ -8,16 +8,8 @@ import constants from '../constants.js'
 
 const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION } = constants.application
 
-let data = {}
-let window = window || global
-
-if (_.has(window.sessionStorage, 'application')) {
-  try {
-    data = JSON.parse(window.sessionStorage.application)
-  } catch (e) {
-    delete window.sessionStorage.application
-  }
-}
+let window = window || {}
+let data = {} || _.result(window, '__INITIAL_STATE__.application')
 
 const initialState = _.defaultsDeep(data, {
   isLoggedIn: _.isString(data.token),
@@ -35,7 +27,6 @@ function logIn (state, action) {
   newState.token = action.payload.token
   newState.user = _.omit(action.payload, 'token')
 
-  window.sessionStorage.application = JSON.stringify(_.pick(newState, ['token', 'user']))
   cookie.set('token', newState.token, { expire: 3 })
 
   return newState
@@ -47,7 +38,6 @@ function logOut (state) {
   newState.isLoggedIn = false
   newState.token = null
   newState.user = null
-  delete window.sessionStorage.application
   cookie.remove('token')
   return newState
 }
