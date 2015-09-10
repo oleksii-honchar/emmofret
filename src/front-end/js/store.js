@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import rootReducer from './reducers'
+import createRootReducer from './reducers'
 
 let isDevelopment = process.env.NODE_ENV === 'development'
 
@@ -32,13 +32,17 @@ if (isDevelopment) {
   )(combinedCreateStore)
 }
 
-let AppStore = finalCreateStore(rootReducer)
 
-if (isDevelopment) {
-  try {
-    window.AppStore = AppStore
+export default () => {
+  const rootReducer = createRootReducer()
+  let AppStore = finalCreateStore(rootReducer)
+
+  if (isDevelopment) {
+    try {
+      window.AppStore = AppStore
+    }
+    catch (e) {}
   }
-  catch (e) {}
-}
 
-export default AppStore
+  return AppStore
+}

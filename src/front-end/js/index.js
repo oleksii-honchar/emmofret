@@ -10,7 +10,7 @@ import React from 'react'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
 import Location from 'react-router/lib/Location';
 
-import store from './store.js'
+import initStore from './store.js'
 import initRouter from './router.js'
 
 const history = new BrowserHistory()
@@ -19,6 +19,7 @@ const query = search && queryString.parse(search)
 const location = new Location(document.location.pathname, query)
 
 $( () => {
+  const store = initStore()
   initRouter(location, history, store)
     .then( ({content}) => {
       React.render(content, document.body)

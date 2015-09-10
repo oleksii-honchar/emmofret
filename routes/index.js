@@ -5,9 +5,9 @@ var apiRouter = express.Router()
 var pkg = require(process.cwd() + '/package.json')
 var serverCfg = require('konphyg')(process.cwd() + '/config')('server')
 
-require('./auth/jwt')(apiRouter)
-require('./users')(apiRouter)
+module.exports = (app) => {
+  require('./auth/jwt')(app) // we need jwt check for all routes
 
-router.use(serverCfg.api.mountPoint, apiRouter)
-
-module.exports = router
+  require('./users')(apiRouter)
+  app.use(serverCfg.api.mountPoint, apiRouter)
+}
