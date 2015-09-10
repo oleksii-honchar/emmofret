@@ -11,7 +11,6 @@ var _ = require('lodash')
 if (_.include(['development', 'test'], process.env.NODE_ENV)) {
   require('longjohn')
 }
-
 log.info('Starting app in [' + process.env.NODE_ENV + '] mode')
 
 var serverCfg = require('konphyg')(process.cwd() + '/config')('server')
