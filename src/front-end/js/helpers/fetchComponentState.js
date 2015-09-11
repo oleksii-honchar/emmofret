@@ -1,10 +1,10 @@
 export default (dispatch, components, params) => {
-  const needs = components.reduce( (prev, current) => {
-    return (current.needs || [])
-      .concat((current.WrappedComponent ? current.WrappedComponent.needs : []) || [])
+  const beforeActions = components.reduce( (prev, current) => {
+    return (current.beforeActions || [])
+      .concat((current.WrappedComponent ? current.WrappedComponent.beforeActions : []) || [])
       .concat(prev)
   }, [])
 
-  const promises = needs.map(need => dispatch(need(params)))
+  const promises = beforeActions.map(action => dispatch(action(params)))
   return Promise.all(promises)
 }

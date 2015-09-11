@@ -14,7 +14,7 @@ let combinedCreateStore
 combinedCreateStore = compose(createStore)
 
 let finalCreateStore = null
-if (__DEVELOPMENT__) {
+if (__CLIENT__ && __DEVELOPMENT__) {
   const createLogger = require('redux-logger')
   const logger = createLogger({
     level: 'error',

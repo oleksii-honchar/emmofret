@@ -1,7 +1,19 @@
 import _ from 'lodash'
 
-module.exports = {
-  application: _.keyMirror({
+function keyMirror (obj) {
+  _.each(obj, (v, key) => {
+    if (_.isObject(v)) {
+      keyMirror(v)
+    } else {
+      obj[key] = _.isNull(v) ? key : v
+    }
+  })
+
+  return obj
+}
+
+module.exports = keyMirror({
+  application: {
     LOG_IN: null,
     LOG_OUT: null,
     SIGN_UP: null,
@@ -9,15 +21,19 @@ module.exports = {
     FULFILL_TRANSITION: null,
     DISCARD_NEXT_TRANSITION: null,
     REMEMBER_ROUTER: null,
-    FETCH_STATE: null
-  }),
-  modal: _.keyMirror({
+    FETCH_APP_STATE: {
+      REQUEST: 'FETCH_APP_STATE_REQUEST',
+      SUCCESS: 'FETCH_APP_STATE_SUCCESS',
+      ERROR: 'FETCH_APP_STATE_ERROR'
+    }
+  },
+  modal: {
     SHOW_MODAL: null,
     HIDE_MODAL: null,
     SHAKE_MODAL_START: null,
     SHAKE_MODAL_STOP: null
-  }),
+  },
   zIndex: {
     notify: 1060
   }
-}
+})

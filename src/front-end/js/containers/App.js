@@ -19,7 +19,18 @@ function actions(dispatch) {
   }
 }
 
-class App extends React.Component {
+@connect(select, actions)
+export default class App extends React.Component {
+  static propTypes = {
+    children: PropTypes.any
+  }
+
+  static contextTypes = {
+    router: PropTypes.any
+  }
+
+  static beforeActions = [ fetchState ]
+
   componentDidMount () {
     this.props.actions.rememberRouter(this.context.router)
   }
@@ -36,16 +47,3 @@ class App extends React.Component {
     )
   }
 }
-
-App.needs = [fetchState]
-
-App.propTypes = {
-  children: PropTypes.any
-}
-
-App.contextTypes = {
-  router: PropTypes.any
-}
-
-export default connect(select, actions)(App)
-

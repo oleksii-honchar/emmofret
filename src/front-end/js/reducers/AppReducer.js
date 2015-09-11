@@ -6,7 +6,9 @@ import cookie from 'js-cookie'
 
 import constants from '../constants.js'
 
-const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION } = constants.application
+const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION,
+        FETCH_APP_STATE
+      } = constants.application
 
 function logIn (state, action) {
   notify.success('User successfully logged in')
@@ -53,8 +55,22 @@ function signUp (state) {
   return Object.assign({}, state)
 }
 
-function fetchState (state) {
-  console.dir(state)
+function fetchStateRequest (state, action) {
+  return Object.assign({}, state)
+}
+
+function fetchStateSuccess (state, action) {
+  let newState = _.merge({}, state)
+  newState.isLoggedIn = true
+  newState.token = action.payload.token
+  newState.user = _.omit(action.payload, 'token')
+
+  return newState
+}
+
+function fetchStateError (state, action) {
+  notify.error(action.payload)
+  return state
 }
 
 export default () => {
@@ -82,6 +98,8 @@ export default () => {
     FULFILL_TRANSITION: fulfillTransition,
     DISCARD_NEXT_TRANSITION: discardNextTransition,
     REMEMBER_ROUTER: rememberRouter,
-    FETCH_STATE: fetchState,
+    [FETCH_APP_STATE.REQUEST]: fetchStateRequest,
+    [FETCH_APP_STATE.SUCCESS]: fetchStateSuccess,
+    [FETCH_APP_STATE.ERROR]: fetchStateError,
   }, initialState)
 }

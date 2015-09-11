@@ -10,7 +10,7 @@ import * as ModalActions from '../actions/ModalActions.js'
 const {
         LOG_IN, LOG_OUT, SIGN_UP,
         REMEMBER_TRANSITION, FULFILL_TRANSITION,
-        REMEMBER_ROUTER, TRANSITION_TO_HOME, DISCARD_NEXT_TRANSITION, FETCH_STATE
+        REMEMBER_ROUTER, TRANSITION_TO_HOME, DISCARD_NEXT_TRANSITION, FETCH_APP_STATE
       } = constants.application
 
 function logIn (user) {
@@ -100,13 +100,35 @@ function requestAuth (nextPath) {
 }
 
 function fetchState () {
-  return (dispatch, getState) => {
-    return {
-      type: FETCH_STATE,
-      payload: fetch('http://emmofret.home.dev/api/users/current', {
-        headers: { 'Authorization': getState().application.token }
-      })
+  function checkStatus(response) {
+    if (response.status >= 200 && response.status < 300) {
+      return response
+    } else {
+      var error = new Error(response.statusText)
+      error.response = response
+      throw error
     }
+  }
+
+  return (dispatch, getState) => {
+    dispatch({ type: FETCH_APP_STATE.REQUEST })
+
+    fetch('http://emmofret.home.dev/api/users/current', {
+      headers: { 'Authorization': getState().application.token }
+    })
+      .then(checkStatus)
+      .then( (repsonse) => {
+        dispatch({
+          type: FETCH_APP_STATE.SUCCESS,
+          payload: repsonse.json()
+        })
+      })
+      .catch( (err) => {
+        return {
+          type: FETCH_APP_STATE.ERROR,
+          error: err
+        }
+      })
   }
 }
 
