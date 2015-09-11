@@ -100,37 +100,43 @@ function requestAuth (nextPath) {
 }
 
 function fetchState () {
-  function checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
-      return response
-    } else {
-      var error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-  }
-
-  return (dispatch, getState) => {
-    dispatch({ type: FETCH_APP_STATE.REQUEST })
-
-    fetch('http://emmofret.home.dev/api/users/current', {
-      headers: { 'Authorization': getState().application.token }
-    })
-      .then(checkStatus)
-      .then( (repsonse) => {
-        dispatch({
-          type: FETCH_APP_STATE.SUCCESS,
-          payload: repsonse.json()
-        })
-      })
-      .catch( (err) => {
-        return {
-          type: FETCH_APP_STATE.ERROR,
-          error: err
-        }
-      })
+  return {
+    type: FETCH_APP_STATE,
+    payload: '/api/users/current'
   }
 }
+//function fetchState () {
+//  function checkStatus(response) {
+//    if (response.status >= 200 && response.status < 300) {
+//      return response
+//    } else {
+//      var error = new Error(response.statusText)
+//      error.response = response
+//      throw error
+//    }
+//  }
+//
+//  return (dispatch, getState) => {
+//    dispatch({ type: FETCH_APP_STATE.REQUEST })
+//
+//    return fetch('http://emmofret.home.dev/api/users/current', {
+//      headers: { 'Authorization': getState().application.token }
+//    })
+//      .then(checkStatus)
+//      .then( (repsonse) => {
+//        dispatch({
+//          type: FETCH_APP_STATE.SUCCESS,
+//          payload: repsonse.json()
+//        })
+//      })
+//      .catch( (err) => {
+//        return {
+//          type: FETCH_APP_STATE.ERROR,
+//          error: err
+//        }
+//      })
+//  }
+//}
 
 module.exports = {
   logIn: makeLogInRequest,

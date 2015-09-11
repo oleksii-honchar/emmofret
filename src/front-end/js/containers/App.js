@@ -29,7 +29,10 @@ export default class App extends React.Component {
     router: PropTypes.any
   }
 
-  static beforeActions = [ fetchState ]
+  static fetchState (store, params, query) {
+    return Promise.all([store.dispatch(fetchState(params, query))])
+  }
+
 
   componentDidMount () {
     this.props.actions.rememberRouter(this.context.router)

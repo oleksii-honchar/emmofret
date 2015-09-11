@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunkMdlwr from 'redux-thunk'
 import promiseMdlwr from 'redux-promise'
+import apiMdlwr from './middleware/apiMdlwr.js'
 import createRootReducer from './reducers'
 
 let combinedCreateStore
@@ -22,12 +23,14 @@ if (__CLIENT__ && __DEVELOPMENT__) {
   })
 
   finalCreateStore = applyMiddleware(
+    apiMdlwr,
     thunkMdlwr,
     promiseMdlwr,
     logger
   )(combinedCreateStore)
 } else {
   finalCreateStore = applyMiddleware(
+    apiMdlwr,
     thunkMdlwr,
     promiseMdlwr
   )(combinedCreateStore)
