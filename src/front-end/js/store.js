@@ -4,8 +4,6 @@ import thunkMdlwr from 'redux-thunk'
 import promiseMdlwr from 'redux-promise'
 import createRootReducer from './reducers'
 
-let isDevelopment = process.env.NODE_ENV === 'development'
-
 let combinedCreateStore
 //if (_.result(process.env, 'NODE_ENV') == 'development') {
 //  const { devTools } = require('redux-devtools')
@@ -16,7 +14,7 @@ let combinedCreateStore
 combinedCreateStore = compose(createStore)
 
 let finalCreateStore = null
-if (isDevelopment) {
+if (__DEVELOPMENT__) {
   const createLogger = require('redux-logger')
   const logger = createLogger({
     level: 'error',
@@ -40,11 +38,8 @@ export default () => {
   const rootReducer = createRootReducer()
   let AppStore = finalCreateStore(rootReducer)
 
-  if (isDevelopment) {
-    try {
-      window.AppStore = AppStore
-    }
-    catch (e) {}
+  if (__CLIENT__ && __DEVELOPMENT__) {
+    window.AppStore = AppStore
   }
 
   return AppStore

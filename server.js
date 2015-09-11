@@ -1,6 +1,10 @@
 require('babel/register')
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
+global.__CLIENT__ = false
+global.__SERVER__ = true
+global.__DEVELOPMENT__ = process.env.NODE_ENV === 'development'
+
 var initMongo = require('./lib/initializers/mongo')
 var initExpress = require('./lib/initializers/express')
 var http = require('http')
@@ -11,6 +15,7 @@ var _ = require('lodash')
 if (_.include(['development', 'test'], process.env.NODE_ENV)) {
   require('longjohn')
 }
+
 log.info('Starting app in [' + process.env.NODE_ENV + '] mode')
 
 var serverCfg = require('konphyg')(process.cwd() + '/config')('server')

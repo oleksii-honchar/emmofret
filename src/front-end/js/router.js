@@ -18,22 +18,19 @@ export default (location, history, store) => {
         routerState.history = history
       }
 
-      try {
-        if (window) {
-          console.log('before fetch')
-          fetchCmpState(store.dispatch, routerState.components, routerState.params)
-            .then( (res) => {
-              const content = (
-                <Provider store={store} key="provider">
-                  {() => <RouterContainer {...routerState} children={routes}/>}
-                </Provider>
-              )
-              console.log('after fetch')
-              resolve({content})
-            })
-        }
-      }
-      catch (e) {
+      if (__CLIENT__) {
+        console.log('before fetch')
+        fetchCmpState(store.dispatch, routerState.components, routerState.params)
+          .then((res) => {
+            const content = (
+              <Provider store={store} key="provider">
+                {() => <RouterContainer {...routerState} children={routes}/>}
+              </Provider>
+            )
+            console.log('after fetch')
+            resolve({content})
+          })
+      } else {
         const content = (
           <Provider store={store} key="provider">
             {() => <RouterContainer {...routerState} children={routes}/>}
@@ -42,7 +39,6 @@ export default (location, history, store) => {
 
         resolve({content})
       }
-
     })
   })
 }
