@@ -52,7 +52,6 @@
     "jquery": "2.1.4",
     "js-cookie": "^2.0.3",
     "jsonwebtoken": "^5.0.4",
-    "keymirror": "^0.1.1",
     "konphyg": "^1.4.0",
     "lodash": "^3.9.3",
     "method-override": "^2.3.4",
@@ -90,7 +89,7 @@
     "superagent": "^1.2.0",
     "underscore.string": "^3.0.3",
     "url-loader": "^0.5.6",
-    "webpack": "^1.12.0"
+    "webpack": "^1.12.1"
   },
   "devDependencies": {
     "babel": "^5.8.23",
