@@ -1,9 +1,13 @@
 require('babel/register')
+var serverCfg = require('konphyg')(process.cwd() + '/config')('server')
+
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 global.__CLIENT__ = false
 global.__SERVER__ = true
 global.__DEVELOPMENT__ = process.env.NODE_ENV === 'development'
+global.__API_BASE_URL__ = 'http://' + serverCfg.host + ':' + serverCfg.port + serverCfg.api.mountPoint
+
 
 var initMongo = require('./lib/initializers/mongo')
 var initExpress = require('./lib/initializers/express')
@@ -18,7 +22,6 @@ if (_.include(['development', 'test'], process.env.NODE_ENV)) {
 
 log.info('Starting app in [' + process.env.NODE_ENV + '] mode')
 
-var serverCfg = require('konphyg')(process.cwd() + '/config')('server')
 var port = serverCfg.port || 3000
 var server
 var onServerListenHook = null

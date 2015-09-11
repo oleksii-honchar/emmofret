@@ -1,7 +1,11 @@
 var webpack = require('webpack')
 var path = require('path')
 var srcPath = path.join(__dirname, 'src')
-var ExtractTextPlugin = require("extract-text-webpack-plugin")
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var config = require('konphyg')(process.cwd() + '/config')
+var serverCfg = config('server')
+var apiBaseUrl = 'http://' + serverCfg.host + ':' + serverCfg.port + serverCfg.api.mountPoint
+
 
 module.exports = {
   target: 'web',
@@ -53,7 +57,8 @@ module.exports = {
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,
-      __DEVELOPMENT__: process.env.NODE_ENV === 'development'
+      __DEVELOPMENT__: process.env.NODE_ENV === 'development',
+      __API_BASE_URL__: JSON.stringify(apiBaseUrl)
     }),
     new webpack.optimize.CommonsChunkPlugin('common.bundle', 'common.bundle.js'),
     new webpack.SourceMapDevToolPlugin({

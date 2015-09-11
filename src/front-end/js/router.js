@@ -21,7 +21,10 @@ function createTransitionHook (store) {
       .map(getFetchStateFns)
       .map(fetchState => fetchState(store, params, query || {}))
 
-    Promise.all(promises).then( () => { callback() }, callback)
+    Promise.all(promises).then(
+      () => callback(),
+      callback
+    )
   }
 }
 
@@ -36,27 +39,6 @@ export default (location, history, store) => {
       if (history) {
         routerState.history = history
       }
-
-      //if (__CLIENT__) {
-      //  fetchCmpState(store.dispatch, routerState.components, routerState.params)
-      //    .then(() => {
-      //      console.log('prefetch completed')
-      //      const content = (
-      //        <Provider store={store} key="provider">
-      //          {() => <RouterContainer {...routerState} children={routes}/>}
-      //        </Provider>
-      //      )
-      //      resolve({content})
-      //    })
-      //} else {
-      //  const content = (
-      //    <Provider store={store} key="provider">
-      //      {() => <RouterContainer {...routerState} children={routes}/>}
-      //    </Provider>
-      //  )
-      //
-      //  resolve({content})
-      //}
 
       const content = (
         <Provider store={store} key="provider">

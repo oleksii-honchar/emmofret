@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
@@ -16,14 +18,15 @@ export default store => next => action => {
 
   next({ type: REQUEST, ...props })
 
-  return fetch('http://emmofret.home.dev' + payload, {
+  return fetch(__API_BASE_URL__ + payload, {
     headers: { 'Authorization': store.getState().application.token }
   })
     .then(checkStatus)
-    .then( (response) => {
+    .then( (response) => response.json() )
+    .then( (json) => {
       next({
         type: SUCCESS,
-        payload: response.json(),
+        payload: json,
         ...props
       })
     })

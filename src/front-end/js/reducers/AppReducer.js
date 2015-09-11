@@ -64,7 +64,6 @@ function fetchStateSuccess (state, action) {
   newState.isLoggedIn = true
   newState.token = action.payload.token
   newState.user = _.omit(action.payload, 'token')
-
   return newState
 }
 
