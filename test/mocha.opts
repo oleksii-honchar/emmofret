@@ -3,7 +3,6 @@
 --slow 2000
 --timeout 5000
 --recursive
---check-leaks
 --no-exit
 --trace
 --harmony

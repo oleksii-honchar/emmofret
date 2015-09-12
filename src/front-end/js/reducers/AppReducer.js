@@ -6,7 +6,9 @@ import cookie from 'js-cookie'
 
 import constants from '../constants.js'
 
-const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION } = constants.application
+const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION,
+        FETCH_APP_STATE
+      } = constants.application
 
 function logIn (state, action) {
   notify.success('User successfully logged in')
@@ -28,6 +30,7 @@ function logOut (state) {
   newState.token = null
   newState.user = null
   cookie.remove('token')
+  state.router.transitionTo('/app/dashboard')
   return newState
 }
 
@@ -53,13 +56,37 @@ function signUp (state) {
   return Object.assign({}, state)
 }
 
+function fetchStateRequest (state, action) {
+  return Object.assign({}, state)
+}
+
+function fetchStateSuccess (state, action) {
+  let newState = _.merge({}, state)
+  newState.isLoggedIn = true
+  newState.token = action.payload.token
+  newState.user = _.omit(action.payload, 'token')
+  return newState
+}
+
+function fetchStateError (state, action) {
+  notify.error(action.payload)
+  return state
+}
+
+export function isFetched (store) {
+  const state = store.application
+  if (state.isLoggedIn) {
+    return _.keys(state.user).length > 0 && state.user.firstName
+  } else {
+    return true
+  }
+}
 export default () => {
   let data = {}
-  try {
+  if (__CLIENT__) {
     data = _.result(window, 'INITIAL_STATE.application')
-  }
-  catch (e) {
-    data = JSON.parse(process.env.INITIAL_STATE).application
+  } else {
+    data = JSON.parse(INITIAL_STATE).application
   }
 
   const initialState = _.defaultsDeep(data, {
@@ -78,5 +105,8 @@ export default () => {
     FULFILL_TRANSITION: fulfillTransition,
     DISCARD_NEXT_TRANSITION: discardNextTransition,
     REMEMBER_ROUTER: rememberRouter,
+    [FETCH_APP_STATE.REQUEST]: fetchStateRequest,
+    [FETCH_APP_STATE.SUCCESS]: fetchStateSuccess,
+    [FETCH_APP_STATE.ERROR]: fetchStateError,
   }, initialState)
 }

@@ -23,9 +23,7 @@ module.exports = function (router) {
         var userProfile = {
           id: user.id.toString(),
           created: user.created,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName
+          email: user.email
         }
         return jwt.sign(userProfile, secretsCfg.jwt.key, secretsCfg.jwt.options)
       }

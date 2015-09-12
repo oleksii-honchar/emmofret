@@ -1,6 +1,6 @@
 {
   "optional": ["runtime"],
-  "stage": 1,
+  "stage": 0,
   "loose": "all",
   "plugins": ["typecheck"]
 }

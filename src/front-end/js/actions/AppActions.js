@@ -3,13 +3,14 @@ import request from 'superagent'
 import _ from 'lodash'
 import { createAction } from 'redux-actions'
 import constants from '../constants.js'
+import 'isomorphic-fetch'
 
 import * as ModalActions from '../actions/ModalActions.js'
 
 const {
         LOG_IN, LOG_OUT, SIGN_UP,
         REMEMBER_TRANSITION, FULFILL_TRANSITION,
-        REMEMBER_ROUTER, TRANSITION_TO_HOME, DISCARD_NEXT_TRANSITION
+        REMEMBER_ROUTER, TRANSITION_TO_HOME, DISCARD_NEXT_TRANSITION, FETCH_APP_STATE
       } = constants.application
 
 function logIn (user) {
@@ -98,13 +99,20 @@ function requestAuth (nextPath) {
   }
 }
 
+function fetchState () {
+  return {
+    type: FETCH_APP_STATE,
+    payload: '/users/current'
+  }
+}
 
-module.exports = {
+export default {
   logIn: makeLogInRequest,
   logOut: makeLogOutRequest,
   rememberRouter: createAction(REMEMBER_ROUTER),
   signUp: makeSignUpRequest,
   requestAuth: requestAuth,
   fulfillTransition: fulfillTransition,
-  discardNextTransition: createAction(DISCARD_NEXT_TRANSITION)
+  discardNextTransition: createAction(DISCARD_NEXT_TRANSITION),
+  fetchState: fetchState
 }
