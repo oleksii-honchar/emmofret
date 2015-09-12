@@ -1,28 +1,26 @@
 import React from 'react'
-import {Router} from 'react-router'
-import * as AppActions from '../actions/AppActions.js'
+import { Router } from 'react-router'
 import { connect } from 'react-redux'
+import * as AppActions from '../actions/AppActions.js'
 import { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 
-//
-//function actions(dispatch) {
-//  return {
-//    actions: {
-//      requestAuth: bindActionCreators(AppActions.requestAuth, dispatch)
-//    }
-//  }
-//}
-
-let state = {
+let staticState = {
   inTransitionToHome : false
 }
 
+function select(state) {
+  return Object.assign({}, {
+    isLoggedIn: state.application.isLoggedIn
+  })
+}
+
+@connect(select)
 export default class RouterContainer extends React.Component{
   static atHome (store) {
     var appStore = store
     return () => {
-      state.inTransitionToHome = false
+      staticState.inTransitionToHome = false
     }
   }
 
@@ -31,16 +29,31 @@ export default class RouterContainer extends React.Component{
 
     return (nextState, transition) => {
       const { isLoggedIn, nextTransitionPath } = appStore.getState().application
-      if (!isLoggedIn && !state.inTransitionToHome) {
-        state.inTransitionToHome = true
-        appStore.dispatch(AppActions.requestAuth())
-        transition.to('/')
+
+      if (!isLoggedIn && !staticState.inTransitionToHome) {
+        staticState.inTransitionToHome = true
+        if (__CLIENT__) {
+          appStore.dispatch(AppActions.requestAuth())
+          transition.to('/app/dashboard')
+        } else {
+          RESPONSE.redirect('/app/dashboard')
+        }
       } else if (!isLoggedIn) {
-        transition.to('/')
+        if (__CLIENT__) {
+          transition.to('/app/dashboard')
+        } else {
+          RESPONSE.redirect('/app/dashboard')
+        }
       } else {
-        state.inTransitionToHome = false
+        staticState.inTransitionToHome = false
       }
     }
+  }
+
+  willComponentUpdate(nextState, nextProps) {
+    //if (!nextProps.isLoggedIn) {
+    //  this.context.router.go('/app')
+    //}
   }
 
   render () {

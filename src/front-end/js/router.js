@@ -4,7 +4,6 @@ import { Provider } from 'react-redux'
 
 import RouterContainer from './containers/RouterContainer'
 import createRoutes from './routes'
-import fetchCmpState from './helpers/fetchComponentState'
 
 const getFetchStateFns = (component = {}) => {
   return component.WrappedComponent ?

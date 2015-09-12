@@ -1,6 +1,7 @@
 import React from 'react'
-import {Route} from 'react-router'
-import RouterContainer from './containers/RouterContainer'
+import { Route, Redirect } from 'react-router'
+import connectedRC from './containers/RouterContainer'
+const RouterContainer = connectedRC.WrappedComponent
 
 /* containers */
 import App from './containers/App.js'
@@ -12,10 +13,11 @@ import Public from './pages/Public.js'
 
 export default (store) => {
   return (
-    <Route path='/app' component={App} >
-      <Route name='/' path='dashboard' component={Dashboard} onEnter={RouterContainer.atHome(store)}/>
+    <Route path='/app' component={App} onEnter={RouterContainer.atHome(store)}>
+      <Route path='/dashboard' component={Dashboard}/>
       <Route path='/public' component={Public}/>
       <Route path='/private' component={Private} onEnter={RouterContainer.requireAuth(store)}/>
+      <Redirect from='/app' to='/dashboard'/>
     </Route>
   )
 }
