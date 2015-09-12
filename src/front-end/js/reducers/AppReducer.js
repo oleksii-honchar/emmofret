@@ -75,7 +75,7 @@ function fetchStateError (state, action) {
 export function isFetched (store) {
   const state = store.application
   if (state.isLoggedIn) {
-    return _.keys(state.user).length > 0
+    return _.keys(state.user).length > 0 && state.user.firstName
   } else {
     return true
   }
