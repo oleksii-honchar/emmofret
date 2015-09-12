@@ -30,6 +30,7 @@ function logOut (state) {
   newState.token = null
   newState.user = null
   cookie.remove('token')
+  state.router.transitionTo('/app/dashboard')
   return newState
 }
 

@@ -11,7 +11,8 @@ let staticState = {
 
 function select(state) {
   return Object.assign({}, {
-    isLoggedIn: state.application.isLoggedIn
+    isLoggedIn: state.application.isLoggedIn,
+    router: state.application.router
   })
 }
 
@@ -33,7 +34,7 @@ export default class RouterContainer extends React.Component{
       if (!isLoggedIn && !staticState.inTransitionToHome) {
         staticState.inTransitionToHome = true
         if (__CLIENT__) {
-          appStore.dispatch(AppActions.requestAuth())
+          appStore.dispatch(AppActions.requestAuth(nextState.location.pathname))
           transition.to('/app/dashboard')
         } else {
           RESPONSE.redirect('/app/dashboard')
@@ -48,12 +49,6 @@ export default class RouterContainer extends React.Component{
         staticState.inTransitionToHome = false
       }
     }
-  }
-
-  willComponentUpdate(nextState, nextProps) {
-    //if (!nextProps.isLoggedIn) {
-    //  this.context.router.go('/app')
-    //}
   }
 
   render () {
