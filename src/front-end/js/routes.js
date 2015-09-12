@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router'
-import connectedRC from './containers/RouterContainer'
-const RouterContainer = connectedRC.WrappedComponent
+import RouterContainer from './containers/RouterContainer'
 
 /* containers */
 import App from './containers/App.js'

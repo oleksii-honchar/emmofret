@@ -1,6 +1,5 @@
 import React from 'react'
 import { Router } from 'react-router'
-import { connect } from 'react-redux'
 import * as AppActions from '../actions/AppActions.js'
 import { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
@@ -9,14 +8,6 @@ let staticState = {
   inTransitionToHome : false
 }
 
-function select(state) {
-  return Object.assign({}, {
-    isLoggedIn: state.application.isLoggedIn,
-    router: state.application.router
-  })
-}
-
-@connect(select)
 export default class RouterContainer extends React.Component{
   static atHome (store) {
     var appStore = store
