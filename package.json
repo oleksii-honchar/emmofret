@@ -83,6 +83,7 @@
     "redux-thunk": "^0.1.0",
     "request": "^2.40.0",
     "require-tree": "^1.0.1",
+    "reselect": "^1.0.0",
     "sass-loader": "^2.0.1",
     "serve-favicon": "^2.3.0",
     "style-loader": "^0.12.3",

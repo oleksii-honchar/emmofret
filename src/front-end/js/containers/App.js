@@ -4,7 +4,8 @@ import { PropTypes } from 'react'
 import Router from 'react-router'
 import TopNavbar from '../components/TopNavbar.js'
 import ModalsContainer from '../components/modals/ModalsContainer.js'
-import { rememberRouter, fetchState } from '../actions/AppActions.js'
+import * as AppActions from '../actions/AppActions.js'
+import { isFetched } from '../reducers/AppReducer.js'
 import { bindActionCreators } from 'redux'
 
 function select(state) {
@@ -14,7 +15,7 @@ function select(state) {
 function actions(dispatch) {
   return {
     actions: {
-      rememberRouter: bindActionCreators(rememberRouter, dispatch),
+      rememberRouter: bindActionCreators(AppActions.rememberRouter, dispatch),
     }
   }
 }
@@ -30,9 +31,12 @@ export default class App extends React.Component {
   }
 
   static fetchState (store, params, query) {
-    return Promise.all([store.dispatch(fetchState(params, query))])
+    if (isFetched(store.getState())) {
+      return Promise.resolve()
+    } else {
+      return Promise.all([store.dispatch(AppActions.fetchState(params, query))])
+    }
   }
-
 
   componentDidMount () {
     this.props.actions.rememberRouter(this.context.router)

@@ -72,13 +72,20 @@ function fetchStateError (state, action) {
   return state
 }
 
+export function isFetched (store) {
+  const state = store.application
+  if (state.isLoggedIn) {
+    return _.keys(state.user).length > 0
+  } else {
+    return true
+  }
+}
 export default () => {
   let data = {}
-  try {
+  if (__CLIENT__) {
     data = _.result(window, 'INITIAL_STATE.application')
-  }
-  catch (e) {
-    data = JSON.parse(process.env.INITIAL_STATE).application
+  } else {
+    data = JSON.parse(INITIAL_STATE).application
   }
 
   const initialState = _.defaultsDeep(data, {

@@ -106,7 +106,7 @@ function fetchState () {
   }
 }
 
-module.exports = {
+export default {
   logIn: makeLogInRequest,
   logOut: makeLogOutRequest,
   rememberRouter: createAction(REMEMBER_ROUTER),
