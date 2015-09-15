@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as ModalActions from '../actions/ModalActions.js'
 import * as AppActions from '../actions/AppActions.js'
 import _ from 'lodash'
 
 import { Nav, NavItem, DropdownButton, MenuItem } from 'react-bootstrap'
+import { NavItemLink } from 'react-router-bootstrap'
 
 function select(state) {
   return {
@@ -17,9 +17,7 @@ function select(state) {
 function actions(dispatch) {
   return {
     actions: {
-      showLogIn: bindActionCreators(() => ModalActions.show('login'), dispatch),
       logOut: bindActionCreators(AppActions.logOut, dispatch),
-      showSignUp: bindActionCreators(() => ModalActions.show('sign-up'), dispatch)
     }
   }
 }
@@ -48,8 +46,8 @@ class UserNavbar extends React.Component {
     } else {
       return (
         <Nav data-class='UserNavbar' navbar right >
-          <NavItem onSelect={ actions.showLogIn }>Log in</NavItem>
-          <NavItem onSelect={ actions.showSignUp }>Sign up</NavItem>
+          <NavItemLink to='/app/login'>Log in</NavItemLink>
+          <NavItemLink to='/app/sign-up'>Sign up</NavItemLink>
         </Nav>
       )
     }

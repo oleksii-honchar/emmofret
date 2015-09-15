@@ -9,10 +9,12 @@ import App from './containers/App.js'
 import Dashboard from './pages/Dashboard.js'
 import Private from './pages/Private.js'
 import Public from './pages/Public.js'
+import Login from './pages/Login.js'
 
 export default (store) => {
   return (
     <Route path='/app' component={App} onEnter={RouterContainer.atHome(store)}>
+      <Route path='/login' component={Login}/>
       <Route path='/dashboard' component={Dashboard}/>
       <Route path='/public' component={Public}/>
       <Route path='/private' component={Private} onEnter={RouterContainer.requireAuth(store)}/>

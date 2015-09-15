@@ -4,6 +4,7 @@ import _ from 'lodash'
 import { createAction } from 'redux-actions'
 import constants from '../constants.js'
 import 'isomorphic-fetch'
+import shake from '../helpers/shake'
 
 import * as ModalActions from '../actions/ModalActions.js'
 
@@ -20,24 +21,23 @@ function logIn (user) {
   }
 }
 
-function makeLogInRequest (credentials) {
+function makeLogInRequest (payload) {
   return (dispatch, getState) => {
+    const credentials = _.pick(_.result(payload, 'credentials'), ['email', 'password'])
+
     request.post('/api/users/log-in')
       .set('Content-Type', 'application/json')
-      .send(_.pick(credentials, ['email', 'password']))
+      .send(credentials)
       .end((err, res) => {
         if (err) {
           if (err.status !== 401) { notify.error(err) }
-          return dispatch(ModalActions.shake('login'))
+          return shake(payload.shake)
         }
 
-        dispatch(ModalActions.hide('login'))
         dispatch(logIn(res.body))
         
-        const nextPath= getState().application.nextTransitionPath
-        if (nextPath) {
-          dispatch(fulfillTransition(nextPath))
-        }
+        const nextPath= getState().application.nextTransitionPath || '/app/dashboard'
+        dispatch(fulfillTransition(nextPath))
       })
   }
 }
@@ -72,7 +72,7 @@ function makeSignUpRequest (data) {
           return dispatch(ModalActions.shake('sign-up'))
         }
 
-        dispatch(ModalActions.hide('sign-up'))
+        //dispatch(ModalActions.hide('sign-up'))
         dispatch(signUp())
       })
   }

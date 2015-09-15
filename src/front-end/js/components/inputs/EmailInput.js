@@ -1,13 +1,13 @@
-/* global Icon */
 import React from 'react'
 import _ from 'lodash'
 import { Input }  from 'react-bootstrap'
+import { Icon } from '../helpers/FontAwesome.js'
 
 class EmailInput extends React.Component {
   constructor (props) {
     super(props)
     this.state = _.clone(props)
-    this.onSave = this.onSave.bind(this)
+    this.onSave = _.debounce(this.onSave.bind(this), 300)
     this.onChange = this.onChange.bind(this)
   }
 
@@ -34,7 +34,7 @@ class EmailInput extends React.Component {
       isValid: isValid
     })
 
-    _.debounce(this.onSave, 300)()
+    this.onSave()
   }
 
   onSave () {

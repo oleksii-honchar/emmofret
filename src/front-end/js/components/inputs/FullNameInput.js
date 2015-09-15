@@ -1,6 +1,6 @@
-/* global Icon */
 import React from 'react'
 import { Input } from 'react-bootstrap'
+import { Icon } from '../helpers/FontAwesome.js'
 import _ from 'lodash'
 
 export default class FullNameInput extends React.Component {

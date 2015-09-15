@@ -1,9 +1,6 @@
 import 'font-awesome/scss/font-awesome.scss'
 import 'index.scss'
 
-import { Icon } from './components/helpers/FontAwesome.js'
-window.Icon = Icon
-
 import React from 'react'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
 import Location from 'react-router/lib/Location';
