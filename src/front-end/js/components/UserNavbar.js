@@ -47,7 +47,7 @@ class UserNavbar extends React.Component {
       return (
         <Nav data-class='UserNavbar' navbar right >
           <NavItemLink to='/app/login'>Log in</NavItemLink>
-          <NavItemLink to='/app/sign-up'>Sign up</NavItemLink>
+          <NavItemLink to='/app/registration'>Sign up</NavItemLink>
         </Nav>
       )
     }

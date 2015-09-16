@@ -30,7 +30,7 @@ export function error (body) {
   } else if (_.has(body, 'errors')) {
     if (_.isObject(body.errors)) {
       _.each(body.errors, (val, key) => {
-        msg += `<span class="label label-warning">${key}</span> ${val.join('\n')}`
+        msg += `<span class="label label-warning">${key}</span> ${val.join('\n')}<br/>`
       })
     } else if (_.isArray(body.errors)) {
       msg = body.errors.join('\n')

@@ -66,18 +66,20 @@ function signUp () {
   return { type: SIGN_UP }
 }
 
-function makeSignUpRequest (data) {
+function makeSignUpRequest (payload) {
+  const user = _.pick(_.result(payload, 'user'), ['firstName', 'lastName', 'email', 'password'])
+
   return (dispatch) => {
     request.post('/api/users/register')
-      .send(_.pick(data, ['firstName', 'lastName', 'email', 'password']))
+      .send(user)
       .end((err, res) => {
         if (err) {
           notify.error(res.body)
-          return dispatch(ModalActions.shake('sign-up'))
+          return shake(payload.shake)
         }
 
-        //dispatch(ModalActions.hide('sign-up'))
         dispatch(signUp())
+        dispatch(gotoIndex())
       })
   }
 }
