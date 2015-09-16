@@ -3,6 +3,8 @@ import { Input, ProgressBar, Button } from 'react-bootstrap'
 import { Icon } from '../helpers/FontAwesome.js'
 import _ from 'lodash'
 
+// TODO fix autofill onchange event miss
+
 export default class PasswordInput extends React.Component {
   static defaultProps = {
     value: '',
@@ -28,8 +30,9 @@ export default class PasswordInput extends React.Component {
   constructor (props) {
     super(props)
     this.state = _.clone(props)
-    this.onSave = _.debounce(this.onSave.bind(this), 300)
+    this.onSave = this.onSave.bind(this)
     this.onChange = this.onChange.bind(this)
+    this.onKeyPress = this.onKeyPress.bind(this)
     this.switchVisibility = this.switchVisibility.bind(this)
   }
 
@@ -87,6 +90,11 @@ export default class PasswordInput extends React.Component {
     this.onSave()
   }
 
+  onKeyPress (e) {
+    this.onChange(e)
+    this.props.onKeyPress(e)
+  }
+
   onSave () {
     let res = { value: this.state.value }
 
@@ -126,6 +134,7 @@ export default class PasswordInput extends React.Component {
     }
 
     let type = this.state.visible ? 'text' : 'password'
+    //let type = this.state.visible ? 'text' : 'text'
     return (
       <div>
         <Input
@@ -138,7 +147,7 @@ export default class PasswordInput extends React.Component {
           hasFeedback
           value={this.state.value}
           onChange={this.onChange}
-          onKeyPress={this.props.onKeyPress}
+          onKeyPress={this.onKeyPress}
           onBlur={this.onSave}
           {...props}
           data-valid={this.state.isValid}
@@ -149,24 +158,3 @@ export default class PasswordInput extends React.Component {
     )
   }
 }
-
-//PasswordInput.propTypes = {
-//  onSave: React.PropTypes.func.isRequired,
-//  onKeyPress: React.PropTypes.func,
-//  value: React.PropTypes.string,
-//  id: React.PropTypes.string,
-//  className: React.PropTypes.string,
-//  isValid: React.PropTypes.bool,
-//  maxValidationScore: React.PropTypes.number,
-//  visible: React.PropTypes.bool,
-//  noValidation: React.PropTypes.bool,
-//  placeholder: React.PropTypes.string
-//}
-
-//PasswordInput.defaultProps = {
-//  value: '',
-//  isValid: false,
-//  maxValidationScore: 5,
-//  visible: false,
-//  placeholder: 'password'
-//}

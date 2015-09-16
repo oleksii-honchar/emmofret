@@ -81,6 +81,12 @@ export function isFetched (store) {
     return true
   }
 }
+
+function gotoIndex (state, action) {
+  state.router.transitionTo('/app/dashboard')
+  return state
+}
+
 export default () => {
   let data = {}
   if (__CLIENT__) {
@@ -98,6 +104,7 @@ export default () => {
   })
 
   return handleActions({
+    GOTO_INDEX: gotoIndex,
     LOG_IN: logIn,
     LOG_OUT: logOut,
     SIGN_UP: signUp,

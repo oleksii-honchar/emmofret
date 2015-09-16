@@ -9,7 +9,7 @@ import shake from '../helpers/shake'
 import * as ModalActions from '../actions/ModalActions.js'
 
 const {
-        LOG_IN, LOG_OUT, SIGN_UP,
+        GOTO_INDEX, LOG_IN, LOG_OUT, SIGN_UP,
         REMEMBER_TRANSITION, FULFILL_TRANSITION,
         REMEMBER_ROUTER, TRANSITION_TO_HOME, DISCARD_NEXT_TRANSITION, FETCH_APP_STATE
       } = constants.application
@@ -36,8 +36,12 @@ function makeLogInRequest (payload) {
 
         dispatch(logIn(res.body))
         
-        const nextPath= getState().application.nextTransitionPath || '/app/dashboard'
-        dispatch(fulfillTransition(nextPath))
+        const nextPath= getState().application.nextTransitionPath
+        if (nextPath) {
+          dispatch(fulfillTransition())
+        } else {
+          dispatch(gotoIndex())
+        }
       })
   }
 }
@@ -106,6 +110,8 @@ function fetchState () {
   }
 }
 
+function gotoIndex () { return { type: GOTO_INDEX } }
+
 export default {
   logIn: makeLogInRequest,
   logOut: makeLogOutRequest,
@@ -114,5 +120,6 @@ export default {
   requestAuth: requestAuth,
   fulfillTransition: fulfillTransition,
   discardNextTransition: createAction(DISCARD_NEXT_TRANSITION),
-  fetchState: fetchState
+  fetchState: fetchState,
+  gotoIndex: gotoIndex,
 }

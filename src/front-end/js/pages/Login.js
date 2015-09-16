@@ -55,8 +55,7 @@ export default class Login extends React.Component {
     this.setState({ isFormCompleted: isAllValid })
   }
 
-  logIn (e) {
-    e.preventDefault()
+  logIn () {
     const {email, password} = this.state.form
 
     const payload = {
@@ -114,7 +113,7 @@ export default class Login extends React.Component {
           <Body>
             <form>
               <EmailInput autoFocus onSave={this.onChangeFormState('email')} {...inputProps}/>
-              <PasswordInput onSave={this.onChangeFormState('password')} {...inputProps}/>
+              <PasswordInput  onSave={this.onChangeFormState('password')} {...inputProps}/>
             </form>
           </Body>
           <Footer>

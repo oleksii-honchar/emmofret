@@ -8,6 +8,7 @@ export default class FullNameInput extends React.Component {
     super(props)
     this.state = _.clone(props)
     this.onSave = this.onSave.bind(this)
+    this.onKeyPress = this.onKeyPress.bind(this)
     this.onChange = this.onChange.bind(this)
   }
 
@@ -41,7 +42,12 @@ export default class FullNameInput extends React.Component {
       isValid: isValid
     })
 
-    _.debounce(this.onSave, 300)()
+    this.onSave()
+  }
+
+  onKeyPress (e) {
+    this.onChange(e)
+    this.props.onKeyPress(e)
   }
 
   onSave () {
@@ -76,7 +82,7 @@ export default class FullNameInput extends React.Component {
         value={this.state.value}
         onChange={this.onChange}
         onBlur={this.onSave}
-        onKeyPress={this.props.onKeyPress}
+        onKeyPress={this.onKeyPress}
         autoFocus={this.props.autoFocus}
         {...props}
         />

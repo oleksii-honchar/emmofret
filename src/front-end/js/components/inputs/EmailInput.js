@@ -7,7 +7,8 @@ class EmailInput extends React.Component {
   constructor (props) {
     super(props)
     this.state = _.clone(props)
-    this.onSave = _.debounce(this.onSave.bind(this), 300)
+    this.onSave = this.onSave.bind(this)
+    this.onKeyPress = this.onKeyPress.bind(this)
     this.onChange = this.onChange.bind(this)
   }
 
@@ -35,6 +36,11 @@ class EmailInput extends React.Component {
     })
 
     this.onSave()
+  }
+
+  onKeyPress (e) {
+    this.onChange(e)
+    this.props.onKeyPress(e)
   }
 
   onSave () {
@@ -67,7 +73,7 @@ class EmailInput extends React.Component {
         value={this.state.value}
         onChange={this.onChange}
         onBlur={this.onSave}
-        onKeyPress={this.props.onKeyPress}
+        onKeyPress={this.onKeyPress}
         autoFocus={this.props.autoFocus}
         {...props}
         />
