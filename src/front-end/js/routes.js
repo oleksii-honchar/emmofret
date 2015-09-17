@@ -12,9 +12,7 @@ import Public from './pages/Public.js'
 import Registration from './pages/Registration.js'
 import Login from './pages/Login.js'
 
-function onEnter () {
-  $.notifyClose()
-}
+function onEnter () { $.notifyClose() }
 
 export default (store) => {
   return (

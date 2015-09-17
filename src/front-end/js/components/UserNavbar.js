@@ -22,7 +22,8 @@ function actions(dispatch) {
   }
 }
 
-class UserNavbar extends React.Component {
+@connect(select, actions)
+export default class UserNavbar extends React.Component {
   render () {
     const { application, modals, actions } = this.props
     const { user } = application
@@ -54,4 +55,3 @@ class UserNavbar extends React.Component {
   }
 }
 
-export default connect(select, actions)(UserNavbar)
