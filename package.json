@@ -67,7 +67,7 @@
     "node-uuid": "^1.4.3",
     "normalizr": "^1.0.0",
     "object-to-string": "^1.0.0",
-    "qs": "^4.0.0",
+    "qs": "^5.1.0",
     "react": "0.13.3",
     "react-bootstrap": "^0.24.3",
     "react-chosen": "^0.3.7",

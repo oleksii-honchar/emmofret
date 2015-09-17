@@ -14,6 +14,7 @@ const getFetchStateFns = (component = {}) => {
 function createTransitionHook (store) {
   return (nextState, transition, callback) => {
     const { params, location: { query } } = nextState
+
     const promises = nextState.branch
       .map(route => route.component)
       .filter((component) => getFetchStateFns(component))

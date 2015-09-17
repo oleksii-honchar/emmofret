@@ -14,6 +14,8 @@ function keyMirror (obj) {
 
 module.exports = keyMirror({
   application: {
+    GOTO_INDEX: null,
+    GOTO_LOGIN: null,
     LOG_IN: null,
     LOG_OUT: null,
     SIGN_UP: null,
@@ -29,9 +31,7 @@ module.exports = keyMirror({
   },
   modal: {
     SHOW_MODAL: null,
-    HIDE_MODAL: null,
-    SHAKE_MODAL_START: null,
-    SHAKE_MODAL_STOP: null
+    HIDE_MODAL: null
   },
   zIndex: {
     notify: 1060

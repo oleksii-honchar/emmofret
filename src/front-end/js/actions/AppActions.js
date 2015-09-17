@@ -4,11 +4,12 @@ import _ from 'lodash'
 import { createAction } from 'redux-actions'
 import constants from '../constants.js'
 import 'isomorphic-fetch'
+import shake from '../helpers/shake'
 
 import * as ModalActions from '../actions/ModalActions.js'
 
 const {
-        LOG_IN, LOG_OUT, SIGN_UP,
+        GOTO_INDEX, GOTO_LOGIN, LOG_IN, LOG_OUT, SIGN_UP,
         REMEMBER_TRANSITION, FULFILL_TRANSITION,
         REMEMBER_ROUTER, TRANSITION_TO_HOME, DISCARD_NEXT_TRANSITION, FETCH_APP_STATE
       } = constants.application
@@ -20,23 +21,26 @@ function logIn (user) {
   }
 }
 
-function makeLogInRequest (credentials) {
+function makeLogInRequest (payload) {
   return (dispatch, getState) => {
+    const credentials = _.pick(_.result(payload, 'credentials'), ['email', 'password'])
+
     request.post('/api/users/log-in')
       .set('Content-Type', 'application/json')
-      .send(_.pick(credentials, ['email', 'password']))
+      .send(credentials)
       .end((err, res) => {
         if (err) {
           if (err.status !== 401) { notify.error(err) }
-          return dispatch(ModalActions.shake('login'))
+          return shake(payload.shake)
         }
 
-        dispatch(ModalActions.hide('login'))
         dispatch(logIn(res.body))
         
         const nextPath= getState().application.nextTransitionPath
         if (nextPath) {
-          dispatch(fulfillTransition(nextPath))
+          dispatch(fulfillTransition())
+        } else {
+          dispatch(gotoIndex())
         }
       })
   }
@@ -62,18 +66,20 @@ function signUp () {
   return { type: SIGN_UP }
 }
 
-function makeSignUpRequest (data) {
+function makeSignUpRequest (payload) {
+  const user = _.pick(_.result(payload, 'user'), ['firstName', 'lastName', 'email', 'password'])
+
   return (dispatch) => {
     request.post('/api/users/register')
-      .send(_.pick(data, ['firstName', 'lastName', 'email', 'password']))
+      .send(user)
       .end((err, res) => {
         if (err) {
           notify.error(res.body)
-          return dispatch(ModalActions.shake('sign-up'))
+          return shake(payload.shake)
         }
 
-        dispatch(ModalActions.hide('sign-up'))
         dispatch(signUp())
+        dispatch(gotoIndex())
       })
   }
 }
@@ -95,7 +101,7 @@ function rememberTransition (nextPath) {
 function requestAuth (nextPath) {
   return (dispatch) => {
     dispatch(rememberTransition(nextPath))
-    dispatch(ModalActions.show('login'))
+    dispatch(gotoLogin())
   }
 }
 
@@ -106,13 +112,30 @@ function fetchState () {
   }
 }
 
+function gotoIndex (transition=null) {
+  return {
+    type: GOTO_INDEX,
+    payload: transition
+  }
+}
+
+function gotoLogin (transition=null) {
+  return {
+    type: GOTO_LOGIN,
+    payload: transition
+  }
+}
+
 export default {
   logIn: makeLogInRequest,
   logOut: makeLogOutRequest,
   rememberRouter: createAction(REMEMBER_ROUTER),
   signUp: makeSignUpRequest,
   requestAuth: requestAuth,
+  rememberTransition: rememberTransition,
   fulfillTransition: fulfillTransition,
   discardNextTransition: createAction(DISCARD_NEXT_TRANSITION),
-  fetchState: fetchState
+  fetchState: fetchState,
+  gotoIndex: gotoIndex,
+  gotoLogin: gotoLogin,
 }
