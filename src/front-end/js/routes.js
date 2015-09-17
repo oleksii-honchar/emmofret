@@ -14,7 +14,7 @@ import Login from './pages/Login.js'
 
 export default (store) => {
   return (
-    <Route path='/app' component={App} onEnter={RouterContainer.atHome(store)}>
+    <Route path='/app' component={App}>
       <Route path='/login' component={Login}/>
       <Route path='/registration' component={Registration}/>
       <Route path='/dashboard' component={Dashboard}/>

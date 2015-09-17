@@ -15,6 +15,7 @@ function keyMirror (obj) {
 module.exports = keyMirror({
   application: {
     GOTO_INDEX: null,
+    GOTO_LOGIN: null,
     LOG_IN: null,
     LOG_OUT: null,
     SIGN_UP: null,

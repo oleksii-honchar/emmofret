@@ -6,7 +6,7 @@ import cookie from 'js-cookie'
 
 import constants from '../constants.js'
 
-const { LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION,
+const { GOTO_INDEX, GOTO_LOGIN, LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION,
         FETCH_APP_STATE
       } = constants.application
 
@@ -83,7 +83,28 @@ export function isFetched (store) {
 }
 
 function gotoIndex (state, action) {
-  state.router.transitionTo('/app/dashboard')
+  const transition = action.payload
+  const path = '/app/dashboard'
+
+  if (transition) {
+    transition.to(path)
+  } else {
+    state.router.transitionTo(path)
+  }
+
+  return state
+}
+
+function gotoLogin (state, action) {
+  const transition = action.payload
+  const path = '/app/login'
+
+  if (transition) {
+    transition.to(path)
+  } else {
+    state.router.transitionTo(path)
+  }
+
   return state
 }
 
@@ -105,6 +126,7 @@ export default () => {
 
   return handleActions({
     GOTO_INDEX: gotoIndex,
+    GOTO_LOGIN: gotoLogin,
     LOG_IN: logIn,
     LOG_OUT: logOut,
     SIGN_UP: signUp,
