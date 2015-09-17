@@ -1,17 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import LoginModal from './LoginModal.js'
-import SignUpModal from './SignUpModal.js'
-
+import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+import { hide } from '../../actions/ModalActions.js'
+
+
+import Test1Modal from './Test1Modal.js'
+import Test2Modal from './Test2Modal.js'
 
 function select (state) {
-  return {
-    modals: _.clone(state.modals)
-  }
+  return { modals: Object.assign({}, state.modals) }
 }
 
-class ModalsContainer extends React.Component {
+@connect(select)
+export default class ModalsContainer extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
     return !_.isEqual(this.props, nextProps)
   }
@@ -22,12 +24,19 @@ class ModalsContainer extends React.Component {
     let modalName = _.result(modal, 'name')
     let modalCmp = null
 
+    const props = {
+      modal: modal,
+      actions: {
+        hide: bindActionCreators( () => hide(modalName), this.props.dispatch)
+      }
+    }
+
     if (!modalName) {
       modalCmp = null
-    } else if (modalName === 'login') {
-      modalCmp = (<LoginModal />)
-    } else if (modalName === 'sign-up') {
-      modalCmp = (<SignUpModal />)
+    } else if (modalName === 'test1') {
+      modalCmp = (<Test1Modal {...props} />)
+    } else if (modalName === 'test2') {
+      modalCmp = (<Test2Modal {...props}/>)
     }
 
     return (
@@ -37,5 +46,3 @@ class ModalsContainer extends React.Component {
     )
   }
 }
-
-export default connect(select)(ModalsContainer)

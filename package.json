@@ -5,11 +5,13 @@
   "main": "server.js",
   "scripts": {
     "start": "node --harmony server.js",
+    "start-prod": "NODE_ENV=production node --harmony server.js",
     "test": "npm run standard --verbose && npm run mocha",
     "mocha": "node --harmony ./node_modules/mocha/bin/_mocha --ui bdd",
     "standard": "node ./node_modules/standard/bin/cmd.js",
     "watch": "NODE_ENV=development node ./node_modules/webpack/bin/webpack --watch",
-    "build": "node ./node_modules/webpack/bin/webpack"
+    "build": "node ./node_modules/webpack/bin/webpack",
+    "build-prod": "NODE_ENV=production node ./node_modules/webpack/bin/webpack"
   },
   "keywords": [
     "boilerplate",

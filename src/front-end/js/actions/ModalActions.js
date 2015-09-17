@@ -6,4 +6,3 @@ module.exports = {
   show: createAction(SHOW_MODAL),
   hide: createAction(HIDE_MODAL),
 }
-
