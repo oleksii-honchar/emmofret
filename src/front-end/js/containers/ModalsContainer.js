@@ -2,11 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
-import { hide } from '../../actions/ModalActions.js'
+import { hide } from '../actions/ModalActions.js'
 
-
-import Test1Modal from './Test1Modal.js'
-import Test2Modal from './Test2Modal.js'
+import Test1Modal from '../components/modals/Test1Modal.js'
+import Test2Modal from '../components/modals/Test2Modal.js'
 
 function select (state) {
   return { modals: Object.assign({}, state.modals) }

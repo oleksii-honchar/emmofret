@@ -2,7 +2,7 @@ import React from 'react'
 import UserNavbar from './UserNavbar.js'
 import { Link } from 'react-router'
 
-import { Nav, NavItem, Navbar, CollapsibleNav } from 'react-bootstrap'
+import { Nav, Navbar, CollapsibleNav } from 'react-bootstrap'
 import { NavItemLink } from 'react-router-bootstrap'
 
 NavItemLink.contextTypes = Object.assign(NavItemLink.contextTypes, {

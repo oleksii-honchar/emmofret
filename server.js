@@ -9,7 +9,6 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV === 'development'
 global.__API_BASE_URL__ = 'http://' + serverCfg.host + ':' + serverCfg.port + serverCfg.api.mountPoint
 global.INITIAL_STATE = {}
 
-
 var initMongo = require('./lib/initializers/mongo')
 var initExpress = require('./lib/initializers/express')
 var http = require('http')

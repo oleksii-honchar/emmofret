@@ -26,5 +26,5 @@ Icon.propTypes = {
 }
 
 Icon.defaultProps = {
-  className : ''
+  className: ''
 }

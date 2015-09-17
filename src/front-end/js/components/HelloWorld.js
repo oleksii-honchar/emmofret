@@ -8,7 +8,7 @@ import { Button } from 'react-bootstrap'
 function actions (dispatch) {
   return {
     actions: {
-      show : bindActionCreators(show, dispatch)
+      show: bindActionCreators(show, dispatch)
     }
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
-import { Input }  from 'react-bootstrap'
+import { Input } from 'react-bootstrap'
 import { Icon } from '../helpers/FontAwesome.js'
 
 class EmailInput extends React.Component {

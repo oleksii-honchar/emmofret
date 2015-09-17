@@ -4,5 +4,5 @@ const { SHOW_MODAL, HIDE_MODAL } = constants.modal
 
 module.exports = {
   show: createAction(SHOW_MODAL),
-  hide: createAction(HIDE_MODAL),
+  hide: createAction(HIDE_MODAL)
 }

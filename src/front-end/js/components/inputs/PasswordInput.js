@@ -123,7 +123,6 @@ export default class PasswordInput extends React.Component {
       )
     }
 
-
     let props = {}
     let validationProgress = {}
     if (!this.props.noValidation) {
@@ -134,7 +133,6 @@ export default class PasswordInput extends React.Component {
     }
 
     let type = this.state.visible ? 'text' : 'password'
-    //let type = this.state.visible ? 'text' : 'text'
     return (
       <div>
         <Input

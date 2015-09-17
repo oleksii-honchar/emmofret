@@ -6,12 +6,10 @@ import constants from '../constants.js'
 import 'isomorphic-fetch'
 import shake from '../helpers/shake'
 
-import * as ModalActions from '../actions/ModalActions.js'
-
 const {
         GOTO_INDEX, GOTO_LOGIN, LOG_IN, LOG_OUT, SIGN_UP,
         REMEMBER_TRANSITION, FULFILL_TRANSITION,
-        REMEMBER_ROUTER, TRANSITION_TO_HOME, DISCARD_NEXT_TRANSITION, FETCH_APP_STATE
+        REMEMBER_ROUTER, DISCARD_NEXT_TRANSITION, FETCH_APP_STATE
       } = constants.application
 
 function logIn (user) {
@@ -35,8 +33,8 @@ function makeLogInRequest (payload) {
         }
 
         dispatch(logIn(res.body))
-        
-        const nextPath= getState().application.nextTransitionPath
+
+        const nextPath = getState().application.nextTransitionPath
         if (nextPath) {
           dispatch(fulfillTransition())
         } else {
@@ -137,5 +135,5 @@ export default {
   discardNextTransition: createAction(DISCARD_NEXT_TRANSITION),
   fetchState: fetchState,
   gotoIndex: gotoIndex,
-  gotoLogin: gotoLogin,
+  gotoLogin: gotoLogin
 }

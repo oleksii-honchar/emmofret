@@ -4,28 +4,34 @@ import { bindActionCreators } from 'redux'
 import * as AppActions from '../actions/AppActions.js'
 import _ from 'lodash'
 
-import { Nav, NavItem, DropdownButton, MenuItem } from 'react-bootstrap'
+import { Nav, DropdownButton, MenuItem } from 'react-bootstrap'
 import { NavItemLink } from 'react-router-bootstrap'
 
-function select(state) {
+function select (state) {
   return {
     application: state.application,
     modals: state.modals
   }
 }
 
-function actions(dispatch) {
+function actions (dispatch) {
   return {
     actions: {
-      logOut: bindActionCreators(AppActions.logOut, dispatch),
+      logOut: bindActionCreators(AppActions.logOut, dispatch)
     }
   }
 }
 
 @connect(select, actions)
 export default class UserNavbar extends React.Component {
+  static propTypes = {
+    application: React.PropTypes.object.isRequired,
+    modals: React.PropTypes.object.isRequired,
+    actions: React.PropTypes.object.isRequired
+  }
+
   render () {
-    const { application, modals, actions } = this.props
+    const { application, actions } = this.props
     const { user } = application
 
     if (!_.isNull(user)) {
