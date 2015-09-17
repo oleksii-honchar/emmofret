@@ -1,20 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { PropTypes } from 'react'
-import Router from 'react-router'
 import ModalsContainer from './ModalsContainer.js'
 import * as AppActions from '../actions/AppActions.js'
 import { isFetched } from '../reducers/AppReducer.js'
 import { bindActionCreators } from 'redux'
 
-function select(state) {
+function select (state) {
   return { application: state.application }
 }
 
-function actions(dispatch) {
+function actions (dispatch) {
   return {
     actions: {
-      rememberRouter: bindActionCreators(AppActions.rememberRouter, dispatch),
+      rememberRouter: bindActionCreators(AppActions.rememberRouter, dispatch)
     }
   }
 }
@@ -22,7 +21,8 @@ function actions(dispatch) {
 @connect(select, actions)
 export default class App extends React.Component {
   static propTypes = {
-    children: PropTypes.any
+    children: PropTypes.any,
+    actions: PropTypes.object
   }
 
   static contextTypes = {

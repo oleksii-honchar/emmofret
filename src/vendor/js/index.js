@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 import $ from 'jquery'
 let window = window || global
 window.$ = window.jQuery = $

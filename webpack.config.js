@@ -6,7 +6,6 @@ var config = require('konphyg')(process.cwd() + '/config')
 var serverCfg = config('server')
 var apiBaseUrl = 'http://' + serverCfg.host + ':' + serverCfg.port + serverCfg.api.mountPoint
 
-
 module.exports = {
   target: 'web',
   cache: true,
@@ -17,7 +16,7 @@ module.exports = {
       'react', 'react-router', 'react-bootstrap', 'react-router-bootstrap',
       'redux', 'react-redux', 'redux-actions', 'js-cookie', 'lodash', 'keymirror'
     ],
-    'vendor.bundle': path.join(srcPath, 'vendor/js/index.js'),
+    'vendor.bundle': path.join(srcPath, 'vendor/js/index.js')
   },
   resolve: {
     root: srcPath,
@@ -47,10 +46,10 @@ module.exports = {
         test: /\.less/,
         loader: ExtractTextPlugin.extract('style', 'css!less')
       },
-      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?limit=10000&minetype=application/font-woff" },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file" },
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url?limit=10000&minetype=application/font-woff' },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file' },
 
-      { test: /\.jpe?g$|\.gif$|\.png$|\.wav$|\.mp3$/, loader: "file" }
+      { test: /\.jpe?g$|\.gif$|\.png$|\.wav$|\.mp3$/, loader: 'file' }
     ]
   },
   plugins: [

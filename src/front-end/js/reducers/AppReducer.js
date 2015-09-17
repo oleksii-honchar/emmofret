@@ -1,4 +1,4 @@
-import Router from 'react-router'
+/* global __CLIENT__, __DEVELOPMENT__, INITIAL_STATE */
 import { handleActions } from 'redux-actions'
 import notify from '../helpers/notify.js'
 import _ from 'lodash'
@@ -7,7 +7,7 @@ import cookie from 'js-cookie'
 import constants from '../constants.js'
 
 const { GOTO_INDEX, GOTO_LOGIN, LOG_IN, LOG_OUT, SIGN_UP, REMEMBER_TRANSITION,
-        FETCH_APP_STATE
+        FETCH_APP_STATE, FULFILL_TRANSITION, DISCARD_NEXT_TRANSITION, REMEMBER_ROUTER
       } = constants.application
 
 function logIn (state, action) {
@@ -123,22 +123,22 @@ export default () => {
     isLoggedIn: _.isString(data.token),
     token: null,
     user: null,
-    nextTransitionPath : null,
-    router : null
+    nextTransitionPath: null,
+    router: null
   })
 
   return handleActions({
-    GOTO_INDEX: gotoIndex,
-    GOTO_LOGIN: gotoLogin,
-    LOG_IN: logIn,
-    LOG_OUT: logOut,
-    SIGN_UP: signUp,
-    REMEMBER_TRANSITION: rememberTransition,
-    FULFILL_TRANSITION: fulfillTransition,
-    DISCARD_NEXT_TRANSITION: discardNextTransition,
-    REMEMBER_ROUTER: rememberRouter,
+    [GOTO_INDEX]: gotoIndex,
+    [GOTO_LOGIN]: gotoLogin,
+    [LOG_IN]: logIn,
+    [LOG_OUT]: logOut,
+    [SIGN_UP]: signUp,
+    [REMEMBER_TRANSITION]: rememberTransition,
+    [FULFILL_TRANSITION]: fulfillTransition,
+    [DISCARD_NEXT_TRANSITION]: discardNextTransition,
+    [REMEMBER_ROUTER]: rememberRouter,
     [FETCH_APP_STATE.REQUEST]: fetchStateRequest,
     [FETCH_APP_STATE.SUCCESS]: fetchStateSuccess,
-    [FETCH_APP_STATE.ERROR]: fetchStateError,
+    [FETCH_APP_STATE.ERROR]: fetchStateError
   }, initialState)
 }

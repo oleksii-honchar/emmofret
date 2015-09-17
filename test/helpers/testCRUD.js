@@ -1,4 +1,4 @@
-/* global it, expect, helpers */
+/* global it, expect */
 var $require = require(process.cwd() + '/lib/require')
 var _ = require('lodash')
 var qs = require('querystring')
@@ -152,6 +152,7 @@ var defaults = {
         .set('Accept', 'application/json')
         .set(_.result(currOptions['patch-valid'], 'header'))
         .end(function (err, res) {
+          if (err) { return next(err) }
           currDoc1 = res.body
           next()
         })

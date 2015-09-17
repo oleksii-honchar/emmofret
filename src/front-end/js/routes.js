@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router'
 import RouterContainer from './containers/RouterContainer'
+import $ from 'jquery'
 
 /* containers */
 import App from './containers/App.js'

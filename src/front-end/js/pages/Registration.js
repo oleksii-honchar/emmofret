@@ -9,10 +9,10 @@ import FullNameInput from '../components/inputs/FullNameInput.js'
 import EmailInput from '../components/inputs/EmailInput.js'
 import PasswordInput from '../components/inputs/PasswordInput.js'
 
-import { Modal, Button }  from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
 const { Header, Body, Title, Footer, Dialog } = Modal
 
-function actions(dispatch) {
+function actions (dispatch) {
   return {
     actions: {
       signUp: bindActionCreators(AppActions.signUp, dispatch)
@@ -22,6 +22,10 @@ function actions(dispatch) {
 
 @connect(null, actions)
 export default class SignUpModal extends React.Component {
+  static propTypes = {
+    actions: React.PropTypes.object
+  }
+
   constructor (props) {
     super(props)
 
@@ -100,7 +104,7 @@ export default class SignUpModal extends React.Component {
 
     return (
       <div className='modal-static'>
-        <Dialog onHide={ ()=>{} } bsSize='sm'
+        <Dialog onHide={ () => {} } bsSize='sm'
                data-class='Registration'>
           <Header>
             <Title>Sign up</Title>

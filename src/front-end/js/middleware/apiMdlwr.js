@@ -1,6 +1,7 @@
+/* global fetch, __API_BASE_URL__ */
 import _ from 'lodash'
 
-function checkStatus(response) {
+function checkStatus (response) {
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
@@ -22,15 +23,15 @@ export default store => next => action => {
     headers: { 'Authorization': store.getState().application.token }
   })
     .then(checkStatus)
-    .then( (response) => response.json() )
-    .then( (json) => {
+    .then((response) => response.json())
+    .then((json) => {
       next({
         type: SUCCESS,
         payload: json,
         ...props
       })
     })
-    .catch( (err) => {
+    .catch((err) => {
       next({
         type: ERROR,
         error: err,

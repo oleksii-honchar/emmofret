@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import Router from 'react-router'
 import { Provider } from 'react-redux'
 
@@ -29,7 +29,7 @@ function createTransitionHook (store) {
 }
 
 export default (location, history, store) => {
-  return new Promise( (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const routes = createRoutes(store)
     Router.run(routes, location, [createTransitionHook(store)], (error, routerState, transition) => {
       if (error) {
@@ -41,7 +41,7 @@ export default (location, history, store) => {
       }
 
       const content = (
-        <Provider store={store} key="provider">
+        <Provider store={store} key='provider'>
           {() => <RouterContainer {...routerState} children={routes}/>}
         </Provider>
       )

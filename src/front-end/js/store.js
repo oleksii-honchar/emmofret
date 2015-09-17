@@ -1,17 +1,17 @@
-import _ from 'lodash'
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+/* global __CLIENT__, __DEVELOPMENT__ */
+import { createStore, compose, applyMiddleware } from 'redux'
 import thunkMdlwr from 'redux-thunk'
 import promiseMdlwr from 'redux-promise'
 import apiMdlwr from './middleware/apiMdlwr.js'
 import createRootReducer from './reducers'
 
 let combinedCreateStore
-//if (_.result(process.env, 'NODE_ENV') == 'development') {
+// if (_.result(process.env, 'NODE_ENV') == 'development') {
 //  const { devTools } = require('redux-devtools')
 //  combinedCreateStore = compose(devTools(), createStore)
-//} else {
+// } else {
 //  combinedCreateStore = compose(createStore)
-//}
+// }
 combinedCreateStore = compose(createStore)
 
 let finalCreateStore = null
@@ -35,7 +35,6 @@ if (__CLIENT__ && __DEVELOPMENT__) {
     promiseMdlwr
   )(combinedCreateStore)
 }
-
 
 export default () => {
   const rootReducer = createRootReducer()

@@ -4,7 +4,6 @@ import TopNavbar from '../components/TopNavbar.js'
 
 export default class Private extends React.Component {
   render () {
-    const {props} = this
     return (
       <div>
         <TopNavbar/>

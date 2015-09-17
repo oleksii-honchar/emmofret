@@ -12,13 +12,13 @@ import _ from 'lodash'
 import { Modal, Button } from 'react-bootstrap'
 let { Dialog, Header, Body, Title, Footer } = Modal
 
-function select(state) {
+function select (state) {
   return {
-    nextTransitionPath: state.application.nextTransitionPath,
+    nextTransitionPath: state.application.nextTransitionPath
   }
 }
 
-function actions(dispatch) {
+function actions (dispatch) {
   return {
     actions: {
       logIn: bindActionCreators(AppActions.logIn, dispatch),
@@ -29,6 +29,10 @@ function actions(dispatch) {
 
 @connect(select, actions)
 export default class Login extends React.Component {
+  static propTypes = {
+    actions: React.PropTypes.object
+  }
+
   constructor (props) {
     super(props)
 
@@ -105,7 +109,7 @@ export default class Login extends React.Component {
     return (
       <div className='static-modal'>
         <Dialog bsSize='sm'
-               data-class='Login' onHide={ ()=>{} }
+               data-class='Login' onHide={ () => {} }
           >
           <Header>
             <Title>Login</Title>
@@ -113,7 +117,7 @@ export default class Login extends React.Component {
           <Body>
             <form>
               <EmailInput autoFocus onSave={this.onChangeFormState('email')} {...inputProps}/>
-              <PasswordInput  onSave={this.onChangeFormState('password')} {...inputProps}/>
+              <PasswordInput onSave={this.onChangeFormState('password')} {...inputProps}/>
             </form>
           </Body>
           <Footer>

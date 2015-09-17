@@ -4,7 +4,7 @@ import modals from './ModalsReducer'
 
 export default () => {
   return combineReducers({
-    application : createAppReducer(),
+    application: createAppReducer(),
     modals
   })
 }

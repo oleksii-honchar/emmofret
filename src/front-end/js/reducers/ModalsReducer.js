@@ -30,6 +30,6 @@ function show (state, action) {
 }
 
 export default handleActions({
-  SHOW_MODAL: show,
-  HIDE_MODAL: hide
+  [SHOW_MODAL]: show,
+  [HIDE_MODAL]: hide
 }, initialState)

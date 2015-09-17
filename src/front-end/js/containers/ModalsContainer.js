@@ -13,6 +13,11 @@ function select (state) {
 
 @connect(select)
 export default class ModalsContainer extends React.Component {
+  static propTypes = {
+    modals: React.PropTypes.object.isRequired,
+    dispatch: React.PropTypes.func.isRequired
+  }
+
   shouldComponentUpdate (nextProps, nextState) {
     return !_.isEqual(this.props, nextProps)
   }
@@ -26,7 +31,7 @@ export default class ModalsContainer extends React.Component {
     const props = {
       modal: modal,
       actions: {
-        hide: bindActionCreators( () => hide(modalName), this.props.dispatch)
+        hide: bindActionCreators(() => hide(modalName), this.props.dispatch)
       }
     }
 
