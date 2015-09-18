@@ -4,11 +4,15 @@ __Full stack js boilerplate__
 
 [![GitHub version](https://badge.fury.io/gh/aleksey-gonchar%2Femmofret.svg)](http://badge.fury.io/gh/aleksey-gonchar%2Femmofret)
 
-__CONTENTS__
-[Preface](#preface)
-[Installation & running](#installation)
-[Contribution](#contribution)
-[FAQ](#faq)
+__CONTENTS__:
+
+* [Preface](#preface)
+* [Installation & running](#installation--running)
+* [Demo](#demo)
+* [Explanation](#explanation)
+    * [Server architecture and helpers](#sever)
+* [Contribution](#contribution)
+* [FAQ](#faq)
 
 ## Preface
 
@@ -54,6 +58,37 @@ Build dev bundle and run dev server:
 npm run build
 npm start
 ```
+
+Build prod bundle and run prod server:
+
+```
+npm run build-prod
+npm run start-prop
+```
+## Demo
+pending
+
+## Explanation
+pending
+
+### Server architecture and helpers
+
+* config - initial app config
+* Logger
+* CRUD
+* api helpers: allowLogged
+* models
+* views
+* responders
+
+### Client architecture and helpers
+
+* router + routes
+* app store
+* constants
+* containers
+* helpers
+* middleware
 
 
 ## Contribution
