@@ -10,7 +10,8 @@ __CONTENTS__:
 * [Installation & running](#installation--running)
 * [Demo](#demo)
 * [Explanation](#explanation)
-    * [Server architecture and helpers](#sever)
+    * [Server architecture and helpers](#server-architecture-and-helpers)
+    * [Client architecture and helpers](#client-architecture-and-helpers)
 * [Contribution](#contribution)
 * [FAQ](#faq)
 
