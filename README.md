@@ -4,6 +4,8 @@ __Full stack js boilerplate__
 
 [![GitHub version](https://badge.fury.io/gh/aleksey-gonchar%2Femmofret.svg)](http://badge.fury.io/gh/aleksey-gonchar%2Femmofret)
 
+[Preface](#preface)
+
 ## Preface
 
 The main purpose of this boiler plate is to shorten scaffolding for every new project with ready to use universal solution bundle. It can be easily extended and customized. It contains implementation of basic features such as:
