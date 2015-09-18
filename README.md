@@ -4,7 +4,11 @@ __Full stack js boilerplate__
 
 [![GitHub version](https://badge.fury.io/gh/aleksey-gonchar%2Femmofret.svg)](http://badge.fury.io/gh/aleksey-gonchar%2Femmofret)
 
+__CONTENTS__
 [Preface](#preface)
+[Installation & running](#installation)
+[Contribution](#contribution)
+[FAQ](#faq)
 
 ## Preface
 
