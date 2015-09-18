@@ -1,7 +1,7 @@
 # EMMOFRET
-( __E__xpress __M__ongoose __MO__ngo __F__lux __RE__act __T__witterbootstrap )
-__Full stack js boilerplate__
 ---
+__Full stack js boilerplate__
+
 [![GitHub version](https://badge.fury.io/gh/aleksey-gonchar%2Femmofret.svg)](http://badge.fury.io/gh/aleksey-gonchar%2Femmofret)
 
 ## Preface
@@ -45,3 +45,7 @@ npm i
 ## Contribution
 
 I was using a tons of different web sources and examples, but big redux part of this repo is based on [react-redux-universal-hot-example](https://github.com/erikras/react-redux-universal-hot-example) example.
+
+## FAQ
+###### Why EMMOFRET?
+Because `E`xpress `M`ongoose `MO`ngo `F`lux `RE`act `T`witterbootstrap 
