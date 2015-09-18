@@ -36,11 +36,19 @@ Base technology stack consist of:
 * webpack@1.12.1 - source code bundle maker
 * konphyg@1.4.0 - multi environment json based app config
 
-## Installation
+## Installation & running
 
 ```
 npm i
 ```
+
+Build dev bundle and run dev server:
+
+```
+npm run build
+npm start
+```
+
 
 ## Contribution
 
