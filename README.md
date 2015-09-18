@@ -32,20 +32,64 @@ The main purpose of this boiler plate is to shorten scaffolding for every new pr
 
 Base technology stack consist of:
  
-* express.js@4.13.1 - http server
-* bunyan@1.4.0 - full featured logging
-* mongoose@4.1.6 - schema based MongoDB interface
-* mocha@2.2.5 + chai@2.3.0 - testing framework
-* react@0.13.3 - client side virtual DOM view manipulation and rendering 
-* react-router@1.0.0-beta3 - universal router
-* react-redux@1.0.1 - binding redux state and actions into react components
-* react-bootstrap@0.24.3 - easy rendering of twitter-bootstrap elements in react style
-* redux@1.0.1 - flux implementation with single app state and reducers
-* redux-devtools@2.1.0 - DX tool
-* bootstrap@3.3.5 - facebook UI/UX framework
-* babel@5.8.23 - ES5/6/7 polyfill
-* webpack@1.12.1 - source code bundle maker
-* konphyg@1.4.0 - multi environment json based app config
+<table>
+ <tr>
+  <td>express.js@4.13.1</td>
+  <td>http server</td>
+ </tr>
+ <tr>
+  <td>bunyan@1.4.0</td>
+  <td>full featured logging</td>
+ </tr>
+ <tr>
+  <td>mongoose@4.1.6</td>
+  <td>schema based MongoDB interface</td>
+ </tr>
+ <tr>
+  <td>mocha@2.2.5 + chai@2.3.0</td>
+  <td>testing framework</td>
+ </tr>
+ <tr>
+  <td>react@0.13.3</td>
+  <td>client side virtual DOM view manipulation and rendering</td>
+ </tr>
+ <tr>
+  <td>react-router@1.0.0-beta3</td>
+  <td>universal router</td>
+ </tr>
+ <tr>
+  <td>react-redux@1.0.1</td>
+  <td>binding redux state and actions into react components</td>
+ </tr>
+ <tr>
+  <td>react-bootstrap@0.24.3</td>
+  <td>easy rendering of twitter-bootstrap elements in react style</td>
+ </tr>
+ <tr>
+  <td>redux@1.0.1</td>
+  <td>flux implementation with single app state and reducers</td>
+ </tr>
+ <tr>
+  <td>redux-devtools@2.1.0</td>
+  <td>DX tool</td>
+ </tr>
+ <tr>
+  <td>bootstrap@3.3.5</td>
+  <td>facebook UI/UX framework</td>
+ </tr>
+ <tr>
+  <td>babel@5.8.23</td>
+  <td>ES5/6/7 polyfill</td>
+ </tr>
+ <tr>
+  <td>webpack@1.12.1</td>
+  <td>source code bundle maker</td>
+ </tr>
+ <tr>
+  <td>konphyg@1.4.0</td>
+  <td>multi environment json based app config</td>
+ </tr>
+</table> 
 
 ## Installation & running
 
@@ -98,4 +142,4 @@ I was using a tons of different web sources and examples, but big redux part of 
 
 ## FAQ
 ###### Why EMMOFRET?
-Because `E`xpress `M`ongoose `MO`ngo `F`lux `RE`act `T`witterbootstrap 
+Because `E`xpress `M`ongoose `MO`ngo `F`lux `RE`act `T`witterbootstrap =8)
