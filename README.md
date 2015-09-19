@@ -128,9 +128,9 @@ On the top of entry point `server.js` `babel/register` is included for server si
 ### Server architecture and helpers
 
 #### Configuration
-For multi environment configuration used [konphyg](https://www.npmjs.com/package/konphyg). The key feature of this approach is to put only __defference__ in new env config file:
+For multi environment configuration used [konphyg](https://www.npmjs.com/package/konphyg). The key feature of this approach is to put only __difference__ in new env config file:
 
-config/server.json
+__config/server.json__
 
  ```
 {
@@ -142,6 +142,16 @@ config/server.json
   }
 } 
  ```
+ 
+__config/server.test.json__
+
+ ```
+{
+  "port": "3021"
+}
+ ```
+
+Usually you will need to store different API keys somewhere. And `secrets.json` is used for this. It's git ignored by default and nothing will be committed to the repo. You need just create and update this file manually on every environment where you plan to use this app.
 
 * Logger
 * CRUD
