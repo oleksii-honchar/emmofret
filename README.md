@@ -13,6 +13,8 @@ __CONTENTS__:
     * [Server architecture and helpers](#server-architecture-and-helpers)
         * [API helpers](#api-helpers)
             * [CRUD](#crud)
+            * [allowLogged](#allowLogged)
+        * [Views](#views)            
     * [Client architecture and helpers](#client-architecture-and-helpers)
 * [Contribution](#contribution)
 * [FAQ](#faq)
@@ -174,7 +176,7 @@ module.exports = function (router) {
 
 In this example we've defined CRUD actions for `User` resource mounted on `/users` of `router` mount point.
  
-Also we can disabled `update` action and defined `pre-` filter for actions - `allowLogged`. It will check before every request to resource is there some user.
+Also we can disable any action and define `pre-` & `post-` filter for actions.
 
 
 ```javascript
@@ -222,11 +224,17 @@ module.exports = function (router) {
   }))
 }
 ```
+##### allowLogged helper
+Binded JWT [middleware](https://github.com/aleksey-gonchar/emmofret/blob/development/routes/auth/jwt.js) automatically transforms request token to `req.session.userId` and then `allowLogged` helper check for proper user or respond with [not-authorized](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/api-err-responders/not-authorized.js) error.
 
-* api helpers: allowLogged
-* models
-* views
-* responders
+In this way it can be used in `pre-` hook for any non-public api's.
+
+#### Views
+Handlebars used as main template engine, but it can be easily replaced with what you want.
+
+Main html meta tags are set via [redux-handler.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/responders/redux-handler.js) from `package.json`
+
+#### Responders
 
 ### Client architecture and helpers
 
