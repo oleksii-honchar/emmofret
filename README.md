@@ -250,7 +250,7 @@ To simplify common error repsonses usage there is a couple of predefined error r
 * [not-enough-permissions.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/api-err-responders/not-enough-permissions.js)
 * [resource-not-found.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/api-err-responders/resource-not-found.js)
 
-For exmaple let' take a look on `allowLogged` api helper:
+For exmaple let's take a look on `allowLogged` api helper:
 ```javascript
 var $require = require(process.cwd() + '/lib/require')
 var User = $require('models/user')
@@ -275,7 +275,7 @@ module.exports = function allowLogged (req, res, next) {
 }
 ```
 
-When user is not authorized we use `not-authorized` and when there is no such user found - `resource-not-found`
+When user is not authorized we use `not-authorized` and when there is no such user found - `resource-not-found` error responder.
 
 
 
