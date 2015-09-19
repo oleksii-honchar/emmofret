@@ -32,6 +32,8 @@ The main purpose of this boiler plate is to shorten scaffolding for every new pr
 
 Base technology stack consist of:
  
+* node@0.12.7 
+ 
 <table>
  <tr>
   <td>babel@5.8.23</td>
@@ -43,14 +45,14 @@ Base technology stack consist of:
  </tr>
  <tr>
   <td>bunyan@1.4.0</td>
-  <td>full featured logging</td>
+  <td>full featured JSON logging</td>
  </tr>
  <tr>
   <td>express.js@4.13.1</td>
   <td>http server</td>
  </tr>
  <tr>
-  <td>konphyg@1.4.0</td>
+  <td>[konphyg](https://www.npmjs.com/package/konphyg)@1.4.0</td>
   <td>multi environment json based app config</td>
  </tr>
  <tr>
@@ -97,6 +99,12 @@ Base technology stack consist of:
 npm i
 ```
 
+Before running server you need to create local git ignored secrets.json
+
+```
+npm run init
+```
+
 Build dev bundle and run dev server:
 
 ```
@@ -114,11 +122,27 @@ npm run start-prop
 pending
 
 ## Explanation
-pending
+Express app is wrapped in basic http server in order to be easy extended. E.g. to use sockets.
+On the top of entry point `server.js` `babel/register` is included for server side render of client es6 modules in [redux-handler.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/responders/redux-handler.js). This gave possibility to use es6 all over the server app but it was not the main purpose of this boilerplate. And now with Node.js v4 it(ES6) can be used without `babel` in general. But this is another story. 
 
 ### Server architecture and helpers
 
-* config - initial app config
+#### Configuration
+For multi environment configuration used [konphyg](https://www.npmjs.com/package/konphyg). The key feature of this approach is to put only __defference__ in new env config file:
+
+config/server.json
+
+ ```
+{
+  "host": "127.0.0.1",
+  "port": "3020",
+  "uploadsDir": "uploads/",
+  "api": {
+    "mountPoint":"/api"
+  }
+} 
+ ```
+
 * Logger
 * CRUD
 * api helpers: allowLogged
