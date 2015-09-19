@@ -11,6 +11,8 @@ __CONTENTS__:
 * [Demo](#demo)
 * [Explanation](#explanation)
     * [Server architecture and helpers](#server-architecture-and-helpers)
+        * [API helpers](#api-helpers)
+            * [CRUD](#crud)
     * [Client architecture and helpers](#client-architecture-and-helpers)
 * [Contribution](#contribution)
 * [FAQ](#faq)
@@ -132,7 +134,7 @@ For multi environment configuration used [konphyg](https://www.npmjs.com/package
 
 config/server.json
 
- ```
+ ```json
 {
   "host": "127.0.0.1",
   "port": "3020",
@@ -145,7 +147,7 @@ config/server.json
  
 config/server.test.json
 
- ```
+ ```json
 {
   "port": "3021"
 }
@@ -156,7 +158,71 @@ Usually you will need to store different API keys somewhere. And `secrets.json` 
 #### Logger
 On the top of `bunyan` JSON logging module `bunyan-format` is used to make logs human friendly on dev environment. You can adjust log serializers in [logger.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/logger.js) 
 
-#### CRUD
+#### API helpers
+
+##### CRUD
+To make api endpoint creation easy and really fast [buildCRUD.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/api-helpers/buildCRUD.js) helper is used. It has predefined set of mapped actions and automatically apply it for defined model:
+
+```javascript
+var apiHelpers = requireTree('../lib/api-helpers')
+var User = $require('models/user')
+
+module.exports = function (router) {
+  router.use('/users', apiHelpers.buildCRUD(User))
+}
+```
+
+In this example we've defined CRUD actions for `User` resource mounted on `/users` of `router` mount point.
+ 
+Also we can disabled `update` action and defined `pre-` filter for actions - `allowLogged`. It will check before every request to resource is there some user.
+
+
+```javascript
+var apiHelpers = requireTree('../lib/api-helpers')
+var User = $require('models/user')
+
+module.exports = function (router) {
+  router.use('/users', apiHelpers.buildCRUD(User, {
+    actions: {
+      'pre-list': apiHelpers.allowLogged,
+      'pre-retrieve': apiHelpers.allowLogged,
+      'pre-patch': apiHelpers.allowLogged,
+      'pre-remove': apiHelpers.allowLogged,
+      update: false
+    }
+  }))
+}
+```
+
+You can use array of functions in `pre-` and `post-`. Complete set of predefined mapping is:
+ 
+* `create` -> `POST`
+* `list`-> `GET`
+* `retrieve` -> `GET /:objectId`
+* `retrieve-set` -> `GET /$idListRegExp` : `/([0-9a-fA-F;]{25,256})/` reg exp used to determine object id set in query and serve it in one request and response
+* `update` -> `PUT /:objectId`
+* `remove` -> `DELETE /:objectId`
+* `patch` -> `PATCH /:objectId`
+
+
+__Note__: `objectId` when defined in action mapping will be availabale in `req.params.objectId`
+
+To populate some fields of result `populate` option of `buildCRUD` is used:
+
+```
+var apiHelpers = requireTree('../lib/api-helpers')
+var User = $require('models/user')
+
+module.exports = function (router) {
+  router.use('/users', apiHelpers.buildCRUD(User, {
+    actions: {
+      update: false
+    },
+    populate: ['prop1', 'prop2']
+  }))
+}
+```
+
 * api helpers: allowLogged
 * models
 * views
