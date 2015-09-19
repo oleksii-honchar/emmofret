@@ -14,7 +14,8 @@ __CONTENTS__:
         * [API helpers](#api-helpers)
             * [CRUD](#crud)
             * [allowLogged](#allowLogged)
-        * [Views](#views)            
+        * [Views](#views)
+        * [Responders](#responders)
     * [Client architecture and helpers](#client-architecture-and-helpers)
 * [Contribution](#contribution)
 * [FAQ](#faq)
@@ -130,7 +131,7 @@ Express app is wrapped in basic http server in order to be easy extended. E.g. t
 On the top of entry point `server.js` `babel/register` is included for server side render of client es6 modules in [redux-handler.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/responders/redux-handler.js). This gave possibility to use es6 all over the server app but it was not the main purpose of this boilerplate. And now with Node.js v4 it(ES6) can be used without `babel` in general. But this is another story. 
 
 ### Server architecture and helpers
-
+---
 #### Configuration
 For multi environment configuration used [konphyg](https://www.npmjs.com/package/konphyg). The key feature of this approach is to put only __difference__ in new env config file:
 
@@ -201,7 +202,7 @@ You can use array of functions in `pre-` and `post-`. Complete set of predefined
 * `create` -> `POST`
 * `list`-> `GET`
 * `retrieve` -> `GET /:objectId`
-* `retrieve-set` -> `GET /$idListRegExp` : `/([0-9a-fA-F;]{25,256})/` reg exp used to determine object id set in query and serve it in one request and response
+* `retrieve-set` -> `GET /$idListRegExp` : `/([0-9a-fA-F;]{25,256})/` reg exp used to determine object id set in query and serve it in one request and response. Usefull for `backbone` style client model organisation.
 * `update` -> `PUT /:objectId`
 * `remove` -> `DELETE /:objectId`
 * `patch` -> `PATCH /:objectId`
@@ -235,9 +236,51 @@ Handlebars used as main template engine, but it can be easily replaced with what
 Main html meta tags are set via [redux-handler.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/responders/redux-handler.js) from `package.json`
 
 #### Responders
+Every incoming request to the server passing through all the middlewares and routers. And when target route handler is defined and does his job at the end it just call `next()`. Or if some error occurs then handler will call `next(err)`. In such a way we put at the very end of middleware chain 3 main responders:
+
+1. [redux-handler.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/responders/redux-handler.js) - it dedicated to catch all `/app` request and serve it as `html` page with prefetched state and layout. All client side javascript loaded by reference in `head`. So it very usefull for indexing by search engines.
+* [err-handlers.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/responders/err-handlers.js) - will catch all `next(err)` calls. It mean all catched error will be processed to the client with error message.
+* [send-response.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/responders/send-response.js) - will send to client content of `res.body` as JSON with `res.code` status.
+
+This approach give us ability to process response body trhough couple of hooks. And have only single `exit`-point from server.
+
+To simplify common error repsonses usage there is a couple of predefined error responders which are just wrapper for specific kind of error message and status:
+
+* [not-authorized.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/api-err-responders/not-authorized.js)
+* [not-enough-permissions.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/api-err-responders/not-enough-permissions.js)
+* [resource-not-found.js](https://github.com/aleksey-gonchar/emmofret/blob/development/lib/api-err-responders/resource-not-found.js)
+
+For exmaple let' take a look on `allowLogged` api helper:
+```javascript
+var $require = require(process.cwd() + '/lib/require')
+var User = $require('models/user')
+var errResNotFound = require('../api-err-responders/resource-not-found')
+var errResNotAuthorized = require('../api-err-responders/not-authorized')
+
+module.exports = function allowLogged (req, res, next) {
+  if (!req.session.userId) {
+    return next(errResNotAuthorized())
+  }
+
+  if (!req.user) {
+    User.findById(req.session.userId, function (err, user) {
+      if (err) return next(err)
+      if (!user) return next(errResNotFound(req.session.userId, 'User'))
+      req.user = user
+      next()
+    })
+  } else {
+    next()
+  }
+}
+```
+
+When user is not authorized we use `not-authorized` and when there is no such user found - `resource-not-found`
+
+
 
 ### Client architecture and helpers
-
+---
 * router + routes
 * app store
 * constants

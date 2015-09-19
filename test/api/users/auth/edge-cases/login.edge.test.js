@@ -34,7 +34,7 @@ describe('[EDGE CASES] login', function () {
       .set('Accept', 'application/json')
       .end(function (err, res) {
         expect(err).to.be.an('object')
-        expect(res.statusCode).to.be.equal(401)
+        expect(res.statusCode).to.be.equal(403)
         expect(res.body).to.be.deep.equal(expectedRes)
         next()
       })
@@ -53,7 +53,7 @@ describe('[EDGE CASES] login', function () {
       .set('Accept', 'application/json')
       .end(function (err, res) {
         expect(err).to.be.an('object')
-        expect(res.statusCode).to.be.equal(401)
+        expect(res.statusCode).to.be.equal(403)
         expect(res.body).to.be.deep.equal(expectedRes)
         next()
       })
