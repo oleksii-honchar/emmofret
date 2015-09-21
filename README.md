@@ -60,7 +60,7 @@ Base technology stack consist of:
   <td>http server</td>
  </tr>
  <tr>
-  <td>[konphyg](https://www.npmjs.com/package/konphyg)@1.4.0</td>
+  <td><a href='https://www.npmjs.com/package/konphyg'>konphyg</a>@1.4.0</td>
   <td>multi environment json based app config</td>
  </tr>
  <tr>
