@@ -290,7 +290,7 @@ Redux app architecture is clear and extensible enough, so you can find all its p
 
 Constants lives in single file to not to produce a lot of small files. Custom `keyMirror` function is applyed to  key tree - when there is already a value set for key - it ignored. This is convenient for api call state constants:
 
-```json
+```javascript
 {
     FETCH_APP_STATE: {
       REQUEST: 'FETCH_APP_STATE_REQUEST',
@@ -326,7 +326,6 @@ In terms of React DOM architecture we have couple of basic containers to wrap in
 * `containers/ModalsContainer.js` - container to manage popup windows.
 * `containers/RouterContainer.js` - wrapper for router to bind auth check logic.
 
-* helpers
 
 #### Application store
 
@@ -334,7 +333,7 @@ App store is constructed from middlewares and reducers in `store.js`. Please not
 
 #### API middleware
 There is also simple middleware to make API call from actions in async manner with promises. To make api call you need to define special actons type:
-```json
+```javascript
 {
     FETCH_APP_STATE: {
       REQUEST: 'FETCH_APP_STATE_REQUEST',
@@ -353,6 +352,8 @@ store.dispatch({
 ```
 
 Middleware then will dispatch `REQUEST` action with no payload and return promise so you can wait for finish of request execution. Then `SUCCESS` or `ERROR` will be dispatched with corresponding payload. And you need not to forget to implement reducers for all this 3 actions: `REQUEST`, `SUCCESS`, `ERROR`.
+
+---
 
 ## Contribution
 
