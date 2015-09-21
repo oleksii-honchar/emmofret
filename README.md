@@ -17,6 +17,9 @@ __CONTENTS__:
         * [Views](#views)
         * [Responders](#responders)
     * [Client architecture and helpers](#client-architecture-and-helpers)
+		* [Universal router](#universal-router)
+		* [Application store](#application-store)
+		* [API middleware](#api-helper-middleware) 
 * [Contribution](#contribution)
 * [FAQ](#faq)
 
@@ -281,13 +284,75 @@ When user is not authorized we use `not-authorized` and when there is no such us
 
 ### Client architecture and helpers
 ---
-* router + routes
-* app store
-* constants
-* containers
-* helpers
-* middleware
+Redux app architecture is clear and extensible enough, so you can find all its part in `/src/front-end/js` with small difference described below. 
 
+#### Constants
+
+Constants lives in single file to not to produce a lot of small files. Custom `keyMirror` function is applyed to  key tree - when there is already a value set for key - it ignored. This is convenient for api call state constants:
+
+```json
+{
+    FETCH_APP_STATE: {
+      REQUEST: 'FETCH_APP_STATE_REQUEST',
+      SUCCESS: 'FETCH_APP_STATE_SUCCESS',
+      ERROR: 'FETCH_APP_STATE_ERROR'
+    }
+}
+```
+
+#### Router and routes
+
+Routes resides in single file `routes.js` where all layout components imported. Universal router resides in `router.js` and here is router started logic is applayed in such a way that this module can be imported both in client start script `index.js` and in server `redux-handler.js`.
+
+#### App state prefetch
+
+In most cases your app will need some server data to have in app state before to render. So you can write static method `fetchState` for you class and it will be called on router start. It's very usefull for server render - you can fetch some data and render in one request.
+
+```javascript
+  //  inside of App class definition
+  static fetchState (store, params, query) {
+    if (isFetched(store.getState())) {
+      return Promise.resolve()
+    } else {
+      return Promise.all([store.dispatch(AppActions.fetchState(params, query))])
+    }
+  }
+```
+
+#### Containers
+In terms of React DOM architecture we have couple of basic containers to wrap in default logic:
+
+* `containers/App.js` - application itself. The root app component
+* `containers/ModalsContainer.js` - container to manage popup windows.
+* `containers/RouterContainer.js` - wrapper for router to bind auth check logic.
+
+* helpers
+
+#### Application store
+
+App store is constructed from middlewares and reducers in `store.js`. Please note that global consts `__CLIENT__` and other are defined for server and client rendering in different places. When script is running in browser - they set via webpack bundle. And when on server - as `GLOBAL` constants.
+
+#### API middleware
+There is also simple middleware to make API call from actions in async manner with promises. To make api call you need to define special actons type:
+```json
+{
+    FETCH_APP_STATE: {
+      REQUEST: 'FETCH_APP_STATE_REQUEST',
+      SUCCESS: 'FETCH_APP_STATE_SUCCESS',
+      ERROR: 'FETCH_APP_STATE_ERROR'
+    }
+}
+```
+And dispatch `FETCH_APP_STATE` with API url:
+
+```javascript
+store.dispatch({
+	type: FETCH_APP_STATE,
+	payload: '/users/current'
+})
+```
+
+Middleware then will dispatch `REQUEST` action with no payload and return promise so you can wait for finish of request execution. Then `SUCCESS` or `ERROR` will be dispatched with corresponding payload. And you need not to forget to implement reducers for all this 3 actions: `REQUEST`, `SUCCESS`, `ERROR`.
 
 ## Contribution
 
