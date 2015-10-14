@@ -5,7 +5,11 @@ var serverCfg = require('konphyg')(process.cwd() + '/config')('server')
 
 module.exports = (app) => {
   app.get('/', function (req, res) {
-    res.redirect('/app')
+    res.redirect('/app/dasboard')
+  })
+
+  app.get('/app', function (req, res) {
+    res.redirect('/app/dasboard')
   })
 
   require('./auth/jwt')(app) // we need jwt check for all routes

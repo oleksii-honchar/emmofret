@@ -5,5 +5,4 @@
 --recursive
 --no-exit
 --trace
---harmony
 --globals projection

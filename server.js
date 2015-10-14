@@ -16,10 +16,6 @@ var Promise = require('bluebird')
 var log = require('./lib/logger')
 var _ = require('lodash')
 
-if (_.include(['development', 'test'], process.env.NODE_ENV)) {
-  require('longjohn')
-}
-
 log.info('Starting app in [' + process.env.NODE_ENV + '] mode')
 
 var port = serverCfg.port || 3000
