@@ -12,7 +12,7 @@ module.exports = {
   entry: {
     'index.bundle': path.join(srcPath, 'front-end/js/index.js'),
     'common.bundle': [
-      'lodash', 'jquery', 'underscore.string', 'keymirror', 'moment', 'superagent',
+      'lodash', 'jquery', 'underscore.string', 'moment', 'superagent',
       'react', 'react-router', 'react-bootstrap', 'react-router-bootstrap',
       'redux', 'react-redux', 'redux-actions', 'js-cookie', 'lodash', 'keymirror'
     ],
